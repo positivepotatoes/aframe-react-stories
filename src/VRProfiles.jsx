@@ -1,7 +1,3 @@
-import aframe from 'aframe';
-import 'aframe-particle-system-component';
-// import 'babel-polyfill';
-import {Entity, Scene, Options} from 'aframe-react';
 import React from 'react';
 import Profile from './VRProfile.jsx';
 
@@ -40,22 +36,22 @@ class VRProfiles extends React.Component {
 
     return (
 
-      <Entity>
-        
-
-        
-        <Entity
-          geometry={{primitive: 'box', width: 2, height: 2, depth: 0.15}}
-          material={{color: 'white', opacity: 0.5}}
-          position={{x: -Math.cos(theta) * radius, y: y, z: -Math.sin(theta) * radius}}
-          rotation={{x: -Math.atan(Math.abs(y) / radius) * 180 / Math.PI, y: ((Math.PI / 2) - theta) * 180 / Math.PI}}
-          events={{click: this.onMoreFriendsClick, mouseenter: this.props.toggleInEntity, mouseleave: this.props.toggleInEntity}}></Entity>
-
-        <Entity
-          text={{value: 'show\nmore\nfriends', align: 'center', color: 'white', width: 10}}
-          position={{x: -Math.cos(theta) * radius, y: y, z: .1 - Math.sin(theta) * radius}}
-          rotation={{x: -Math.atan(Math.abs(y) / radius) * 180 / Math.PI, y: ((Math.PI / 2) - theta) * 180 / Math.PI}}>
-        </Entity>
+      <a-entity>
+        <a-box
+          geometry="width: 2; height: 2; depth: 0.15"
+          material="color: white; opacity: 0.5"
+          position={`${(-Math.cos(theta) * radius)} ${y} ${(-Math.sin(theta) * radius)}`}
+          rotation={`${(-Math.atan(Math.abs(y) / radius) * 180 / Math.PI)} ${((Math.PI / 2) - theta) * 180 / Math.PI} 0`}
+          onClick={this.onMoreFriendsClick}
+        />
+        <a-text
+          value='show\nmore\nfriends'
+          align='center'
+          material='color: white'
+          width='10'
+          position={`${-Math.cos(theta) * radius} ${y} ${.1 - Math.sin(theta) * radius}`}
+          rotation={`${-Math.atan(Math.abs(y) / radius) * 180 / Math.PI} ${((Math.PI / 2) - theta) * 180 / Math.PI} 0`}
+        />
         {
           this.state.friendsToShow.map((friend, i) => {
             theta += (Math.PI / 12);
@@ -83,7 +79,7 @@ class VRProfiles extends React.Component {
             );
           })
         }
-      </Entity>
+      </a-entity>
     );
   }
 }

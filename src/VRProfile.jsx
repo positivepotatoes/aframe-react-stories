@@ -1,7 +1,4 @@
 import React from 'react';
-import 'aframe';
-import 'aframe-animation-component';
-import { Entity } from 'aframe-react';
 
 const VRProfile = props => {
   let picRadius = 1;
@@ -24,42 +21,52 @@ const VRProfile = props => {
     let progressYPos = -picRadius * 1.45;
     
     progressBar = 
-      <Entity 
-        geometry={{primitive: 'cylinder', radius: progressRadius, height: progress}}
+      <a-cylinder
+        radius={progressRadius} 
+        height={progress}
         rotation='0 0 90'
-        material={{color: '#89b6ff', opacity: .8}}
-        position={{y: progressYPos, x: progressXPos}}
+        color='#89b6ff' 
+        opacity='0.8'
+        position={`${progressXPos} ${progressYPos} 0`}
       />;
+
     progressBarTotal = 
-      <Entity 
-        geometry={{primitive: 'cylinder', radius: progressRadius, height: picRadius * 2}}
+      <a-cylinder
+        radius={progressRadius} 
+        height={picRadius * 2}
         rotation='0 0 90'
-        material={{color: '#b2b2b2', opacity: .3}}
-        position={{y: progressYPos}}
+        color='#b2b2b2'
+        opacity='0.3'
+        position={`0 ${progressYPos} 0`}
       />;
   }
-
-
-
+  //* animation__move={animateScaleMove} */
   return (
-    <Entity position={{x: props.x, y: props.y, z: props.z}} rotation={{x: props.xRotation, y: props.yRotation, z: 0}}>
-      <Entity id='cylinder'
-        geometry={{primitive: 'cylinder', radius: picRadius, height: 0.15}}
+    <a-entity position={`${props.x} ${props.y}, ${props.z}`} rotation={`${props.xRotation} ${props.yRotation} ${0}`}>
+      <a-cylinder 
+        className={'friend'} 
+        radius={picRadius}
+        height='0.15'
         rotation="0 90 90"
-        material={{src: props.friend.profile.img_url}}
+        material={`src: ${props.friend.profile.img_url}`}
         // animation__rotate={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
-        animation__scale={animateScaleClick}
+        
         // animation__yoyo={{property: 'position', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: true, to: '0 2 0'}}
-        events={{click: (() => props.onFriendClick(props.friend)), mouseenter: props.toggleInEntity, mouseleave: props.toggleInEntity}}
+        onClick={() => props.onFriendClick(props.friend)}
+        events={{click: (() => props.onFriendClick(props.friend)), mouseenter: props.toggleInEntity, mouseleave: props.toggleInEntity}}  
       />
-      <Entity 
-        text={{value: props.friend.profile.first, align: 'center', color: 'white', width: 6}} 
-        position={{y: - picRadius * 1.2}}
-        animation__move={animateScaleMove}
+      {/* <a-animation {animateScaleClick}/> */}
+      <a-text 
+        value={props.friend.profile.first} 
+        align='center' 
+        color='white'
+        width='6'
+        position={`0 ${- picRadius * 1.2} 0`}
+        
       />
       {progressBar}
       {progressBarTotal}
-    </Entity>
+    </a-entity>
   );
 };
 

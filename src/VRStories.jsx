@@ -1,13 +1,8 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
-import { Entity, Scene, Options } from 'aframe-react';
+import ReactDOM from 'react-dom';
 import VRProfiles from './VRProfiles.jsx';
 import VRPrimitive from './VRPrimitive.jsx';
 import VRExit from './VRExit.jsx';
-// import mockData from './mockData.js';
-import 'aframe-animation-component';
-import 'aframe';
-import 'babel-polyfill';
 
 class VRStories extends React.Component {
   constructor(props) {
@@ -49,11 +44,12 @@ class VRStories extends React.Component {
     this.setId(this.state.friends);
     this.setId([this.state.user], true);
     this.setAutoPlayOrSplash();
-    this.clickInSkyListener();
+    // this.clickInSkyListener();
     this.createAssets();
   }
 
   toggleInEntity() {
+    console.log('toggle');
     this.setState({
       inEntity: !this.state.inEntity
     });
@@ -264,7 +260,7 @@ class VRStories extends React.Component {
     const { currentStory, friends, user, splashScreen, currentStoriesDuration } = this.state;
 
     return (
-      <Entity>
+      <a-entity>
         <VRProfiles
           friends={friends}
           currentStory={currentStory}
@@ -275,7 +271,7 @@ class VRStories extends React.Component {
         <VRPrimitive currentStory={currentStory}/>
 
         <VRExit toggleInEntity={this.toggleInEntity} exitCallback={this.props.exitCallback}/>
-      </Entity>
+      </a-entity>
     );
   }
 }
