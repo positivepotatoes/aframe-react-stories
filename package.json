@@ -29,7 +29,8 @@
   },
   "scripts": {
     "dev-start": "webpack --watch",
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest"
   },
   "author": "Alexander Schnapp, Anna Zharkova, Corey Chau, David Oh",
   "devDependencies": {
@@ -38,6 +39,9 @@
     "babel-loader": "^7.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "babel-preset-latest": "^6.24.1",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^2.9.1",
+    "jest": "^20.0.4",
+    "react-test-renderer": "^15.6.1"
   }
 }

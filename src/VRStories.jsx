@@ -92,7 +92,7 @@ class VRStories extends React.Component {
       for (var i = 0; i < n; i++) {
         let storyObject = this.state.currentStories[i];
         let storyDom = document.getElementById(storyObject.id + ',' + storyObject.index);
-        if (!storyDom.duration) {
+        if (this.state.currentStory.type.slice(0, 5) === 'image') {
           totalDuration += this.state.defaultDuration / 1000;
         } else {
           totalDuration += storyDom.duration;
