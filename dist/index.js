@@ -10208,7 +10208,7 @@ var VRStories = function (_React$Component) {
         for (var i = 0; i < n; i++) {
           var storyObject = _this2.state.currentStories[i];
           var storyDom = document.getElementById(storyObject.id + ',' + storyObject.index);
-          if (!storyDom.duration) {
+          if (_this2.state.currentStory.type.slice(0, 5) === 'image') {
             totalDuration += _this2.state.defaultDuration / 1000;
           } else {
             totalDuration += storyDom.duration;
