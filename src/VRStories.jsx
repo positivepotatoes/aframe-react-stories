@@ -44,12 +44,10 @@ class VRStories extends React.Component {
     this.setId(this.state.friends);
     this.setId([this.state.user], true);
     this.setAutoPlayOrSplash();
-    // this.clickInSkyListener();
     this.createAssets();
   }
 
   toggleInEntity() {
-    console.log('toggle');
     this.setState({
       inEntity: !this.state.inEntity
     });
@@ -277,12 +275,11 @@ class VRStories extends React.Component {
           friends={friends}
           currentStory={currentStory}
           onFriendClick={this.onFriendClick}
-          toggleInEntity={this.toggleInEntity}
           currentStoriesDuration={currentStoriesDuration}
         />
+        
         <VRPrimitive currentStory={currentStory}/>
-
-        <VRExit toggleInEntity={this.toggleInEntity} exitCallback={this.props.exitCallback}/>
+        <VRExit exitCallback={this.props.exitCallback}/>
       </a-entity>
     );
   }

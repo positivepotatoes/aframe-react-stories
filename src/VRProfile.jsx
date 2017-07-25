@@ -50,10 +50,8 @@ const VRProfile = props => {
         rotation="0 90 90"
         material={`src: ${props.friend.profile.img_url}`}
         // animation__rotate={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
-        
         // animation__yoyo={{property: 'position', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: true, to: '0 2 0'}}
         onClick={() => props.onFriendClick(props.friend)}
-        events={{click: (() => props.onFriendClick(props.friend)), mouseenter: props.toggleInEntity, mouseleave: props.toggleInEntity}}  
       />
       {/* <a-animation {animateScaleClick}/> */}
       <a-text 
