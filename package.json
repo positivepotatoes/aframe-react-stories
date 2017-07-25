@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/TeamRocketThesis/react-vr-textinput"
+    "url": "https://github.com/positivepotatoes/aframe-react-stories.git"
   },
   "dependencies": {
     "aframe": "^0.6.1",
@@ -28,8 +28,7 @@
     "webpack": "^2.6.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --watch",
+    "dev-start": "webpack --watch",
     "build": "webpack"
   },
   "author": "Alexander Schnapp, Anna Zharkova, Corey Chau, David Oh",
