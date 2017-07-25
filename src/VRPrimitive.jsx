@@ -1,5 +1,3 @@
-import 'aframe';
-import { Entity } from 'aframe-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -12,9 +10,9 @@ const VRPrimitive = (props) => {
   }
 
   return (
-    <Entity>
+    <a-entity>
       {primitive}
-    </Entity>
+    </a-entity>
   );
 };
 
