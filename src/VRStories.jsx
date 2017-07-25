@@ -102,9 +102,10 @@ class VRStories extends React.Component {
       for (var i = 0; i < n; i++) {
         let storyObject = this.state.currentStories[i];
         let storyDom = document.getElementById(storyObject.id + ',' + storyObject.index);
-        if (this.state.currentStory.type.slice(0, 5) === 'image') {
+        if (!this.state.currentStory.type.slice(0, 5) === 'image') {
           totalDuration += this.state.defaultDuration / 1000;
         } else {
+          console.log('duration', storyDom.duration);
           totalDuration += storyDom.duration;
         }
       }
@@ -277,7 +278,7 @@ class VRStories extends React.Component {
           onFriendClick={this.onFriendClick}
           currentStoriesDuration={currentStoriesDuration}
         />
-        
+
         <VRPrimitive currentStory={currentStory}/>
         <VRExit exitCallback={this.props.exitCallback}/>
       </a-entity>
