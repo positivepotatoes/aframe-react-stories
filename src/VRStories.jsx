@@ -9,6 +9,7 @@ class VRStories extends React.Component {
     this.state = {
       user: props.user || {},
       friends: props.friends || [],
+      profiles: [],
       autoPlayNext: props.autoPlayNext || false,
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
@@ -41,13 +42,34 @@ class VRStories extends React.Component {
   }
 
   componentWillMount() {
+<<<<<<< HEAD
     // this.removeFriendsWithNoStories();
+=======
+    this.makeProfiles();
+    this.removeFriendsWithNoStories();
+>>>>>>> Move show more friends box to the right side
     this.setId(this.state.friends);
     this.setId([this.state.user], true);
     this.setAutoPlayOrSplash();
     this.createAssets();
   }
 
+<<<<<<< HEAD
+=======
+  makeProfiles() {
+    let allProfiles = [this.state.user].concat(this.state.friends);
+    console.log('allprofiles', allProfiles)
+    this.setState({profiles: allProfiles});
+  }
+
+  toggleInEntity() {
+    console.log('toggle');
+    this.setState({
+      inEntity: !this.state.inEntity
+    });
+  }
+
+>>>>>>> Move show more friends box to the right side
   removeFriendsWithNoStories() {
     this.setState({
       friends: this.state.friends.filter(friend => friend.stories.length > 1)
@@ -110,8 +132,12 @@ class VRStories extends React.Component {
         total: getDuration(this.state.currentStories.length)
       }
     });
+<<<<<<< HEAD
 
     this.countStoriesDuration();
+=======
+    // this.countStoriesDuration();
+>>>>>>> Move show more friends box to the right side
   }
 
   pauseStories() {
@@ -261,7 +287,6 @@ class VRStories extends React.Component {
 
   render () {
     const { currentStory, friends, user, splashScreen, currentStoriesDuration } = this.state;
-
     return (
       <a-entity>
         <VRProfiles
