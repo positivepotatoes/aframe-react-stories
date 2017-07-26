@@ -267,7 +267,7 @@ class VRStories extends React.Component {
         />
 
         <VRPrimitive currentStory={currentStory}/>
-        <VRExit exitCallback={this.props.exitCallback}/>
+        {/* <VRExit exitCallback={this.props.exitCallback}/> */}
       </a-entity>
     );
   }
