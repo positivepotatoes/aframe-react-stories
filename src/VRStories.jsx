@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import VRProfiles from './VRProfiles.jsx';
 import VRPrimitive from './VRPrimitive.jsx';
 import VRExit from './VRExit.jsx';
