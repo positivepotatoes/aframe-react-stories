@@ -68,20 +68,14 @@ class VRStories extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.currentStory.index !== this.state.currentStory.index) {
-      // console.log('story changed!');
-      if (this.state.currentStory.type === 'image/jpeg') {
-        setTimeout(() => this.props.viewCountCallback(this.state.currentStory.storyDBId), 5000);
-      } else if (this.state.currentStory.type === 'video/mp4') {
-        setTimeout(() => this.props.viewCountCallback(this.state.currentStory.storyDBId), 10000);
-      }
+      this.props.viewCountCallback(this.state.currentStory.storyDBId)
     }
   }
-
 
   countStoriesDuration() {
     let that = this;
     this.state.durationInTimeout = setInterval(() => {
-      
+
       that.setState({
         currentStoriesDuration: {
           current: that.state.currentStoriesDuration.current + .1,
