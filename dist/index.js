@@ -9782,9 +9782,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var VRExit = function VRExit(props) {
   return _react2.default.createElement(
     'a-entity',
-    { position: '0 0 3' },
+    { position: '0 0 -3' },
     _react2.default.createElement('a-cylinder', { id: 'cylinder',
       radius: '0.1',
+      position: '0 -5.2 -10',
       rotation: '0 90 90',
       color: 'red',
       onClick: props.exitCallback
@@ -9794,7 +9795,7 @@ var VRExit = function VRExit(props) {
       align: 'center',
       color: 'white',
       width: '6',
-      position: '0 -1.8 0'
+      position: '0 -5 -10'
     })
   );
 };
