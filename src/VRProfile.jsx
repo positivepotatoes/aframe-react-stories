@@ -12,12 +12,16 @@ const VRProfile = props => {
     picRadius = 1.2;
 
     let current = props.currentStoriesDuration.current;
+    let currentOfStory = props.currentStoriesDuration.storyBeginning;
     let max = props.currentStoriesDuration.total;
     let ratioCompleted = current / max;
+    let ratioCompletedOfStory = currentOfStory / max;
     
     let progressRadius = .1;
     let progress = ratioCompleted * picRadius * 2;
+    let progressOfStory = ratioCompletedOfStory * picRadius * 2;
     let progressXPos = -picRadius + (picRadius * ratioCompleted);
+    let progressXPosOfStory = -picRadius + (picRadius * ratioCompletedOfStory);
     let progressYPos = -picRadius * 1.45;
     
     progressBar = 
@@ -25,7 +29,7 @@ const VRProfile = props => {
         radius={progressRadius} 
         height={progress}
         rotation='0 0 90'
-        color='#89b6ff' 
+        color='#54d1ff' 
         opacity='0.8'
         position={`${progressXPos} ${progressYPos} 0`}
       />;
@@ -33,9 +37,9 @@ const VRProfile = props => {
     progressBarStoryBeginning = 
       <a-cylinder
         radius={progressRadius} 
-        height={progress}
+        height={progressOfStory}
         rotation='0 0 90'
-        color='#5b5b5b' 
+        color='#b2b2b2' 
         opacity='0.8'
         position={`${progressXPos} ${progressYPos} 0`}
       />;
@@ -72,8 +76,8 @@ const VRProfile = props => {
         position={`0 ${- picRadius * 1.2} 0`}
         
       />
+      {progressBar}
       
-      {progressBarStoryBeginning}
       {progressBarTotal}
     </a-entity>
   );

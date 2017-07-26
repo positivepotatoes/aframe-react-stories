@@ -14,6 +14,7 @@ class VRStories extends React.Component {
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
       assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assetes for all your media')),
+      exitCallback: props.exitCallback || (() => console.log('exitCallback was not provided as a prop to VRStories'))
       splashScreen: {
         id: -2,
         index: -2,
@@ -27,7 +28,7 @@ class VRStories extends React.Component {
       durationInTimeout: null,
       currentStoriesDuration: {
         current: 0,
-        storyBegining: 0,
+        storyBeginning: 0,
         total: 0
       },
       lastClickedFriendIndex: null,
@@ -81,11 +82,11 @@ class VRStories extends React.Component {
   countStoriesDuration() {
     let that = this;
     this.state.durationInTimeout = setInterval(() => {
-      // console.log('setting interval', this.state.currentStoriesDuration.current + .1)
+      
       that.setState({
         currentStoriesDuration: {
           current: that.state.currentStoriesDuration.current + .1,
-          storyBegining: that.state.currentStoriesDuration.storyBegining,
+          storyBeginning: that.state.currentStoriesDuration.storyBeginning,
           total: that.state.currentStoriesDuration.total
         }
       });
@@ -111,7 +112,7 @@ class VRStories extends React.Component {
     this.setState({
       currentStoriesDuration: {
         current: getDuration(this.state.currentStory.index),
-        storyBegining: getDuration(this.state.currentStory.index),
+        storyBeginning: getDuration(this.state.currentStory.index),
         total: getDuration(this.state.currentStories.length)
       }
     });
