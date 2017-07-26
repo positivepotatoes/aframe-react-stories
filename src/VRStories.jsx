@@ -92,35 +92,24 @@ class VRStories extends React.Component {
 
   setInitialStoriesDuration() {
     const getDuration = (n) => {
-      console.log('here is n: ', n);
       let totalDuration = 0;
-      for (var i = 0; i < n; i++) {
-        console.log('here is i: ', i);
+      for (let i = 0; i < n; i++) {
         let storyObject = this.state.currentStories[i];
-        var storyDom = document.getElementById(storyObject.id + ',' + storyObject.index);
-        //for testing, use the below IF statement instead
-        // console.log('why bugging', this.state.currentStory.type.slice(0, 5), this.state.currentStory.type)
-        console.log('this is currentStory type...', this.state.currentStory.type);
-        console.log('checking storyDom duration..', storyDom.duration);
+        let storyDom = document.getElementById(storyObject.id + ',' + storyObject.index);
+
         if (storyObject.type.slice(0, 5) === 'image' ) {
           totalDuration += this.state.defaultDuration / 1000;
         } else {
-          // console.log('its a video, and adding...', storyDom.duration)
           totalDuration += storyDom.duration;
         }
       }
       return totalDuration;
     };
 
-    var current = getDuration(this.state.currentStory.index);
-    var total = getDuration(this.state.currentStories.length);
-
-    // console.log('aaaaa', getDuration(this.state.currentStories.length), 'should be same as', getDuration(2))
-    // console.log('out of: ', getDuration(this.state.currentStory.index), ':', getDuration(this.state.currentStories.length))
     this.setState({
       currentStoriesDuration: {
-        current: current,
-        total: total
+        current: getDuration(this.state.currentStory.index),
+        total: getDuration(this.state.currentStories.length)
       }
     });
 
