@@ -20,7 +20,7 @@ module.exports = {
   friends: [
     {
       'profile': {
-        'first': 'A',
+        'first': '0A',
         'last': 'B',
         'display': 'A B',
         'img_url': 'https://thumb1.shutterstock.com/display_pic_with_logo/3799793/416374336/stock-vector-light-bulb-line-icon-vector-isolated-on-white-background-idea-sign-solution-thinking-concept-416374336.jpg'
@@ -42,7 +42,7 @@ module.exports = {
     },
     {
       'profile': {
-        'first': 'C',
+        'first': '1C',
         'last': 'D',
         'display': 'C D',
         'img_url': 'https://thumb1.shutterstock.com/display_pic_with_logo/3020312/289551026/stock-vector-people-icon-289551026.jpg'
@@ -64,7 +64,7 @@ module.exports = {
     },
     {
       'profile': {
-        'first': 'E',
+        'first': '2E',
         'last': 'F',
         'display': 'E F',
         'img_url': 'https://thumb9.shutterstock.com/display_pic_with_logo/2239973/363717575/stock-vector-heart-icon-vector-love-symbol-valentine-s-day-sign-emblem-isolated-on-white-background-with-363717575.jpg'
@@ -86,7 +86,7 @@ module.exports = {
     },
     {
       'profile': {
-        'first': 'G',
+        'first': '3G',
         'last': 'H',
         'display': 'G H',
         'img_url': 'https://thumb1.shutterstock.com/display_pic_with_logo/2299580/211546936/stock-vector-smartphone-icon-vector-illustration-211546936.jpg'
@@ -108,7 +108,7 @@ module.exports = {
     },
     {
       'profile': {
-        'first': 'I',
+        'first': '4I',
         'last': 'J',
         'display': 'I J',
         'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg'
@@ -130,12 +130,34 @@ module.exports = {
     },
     {
       'profile': {
-        'first': 'I',
-        'last': 'J',
-        'display': 'I J',
+        'first': '5K',
+        'last': 'L',
+        'display': 'K L',
         'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg'
       },
       'stories': []
+    },
+    {
+      'profile': {
+        'first': '6M',
+        'last': 'N',
+        'display': 'M N',
+        'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg'
+      },
+      'stories': [
+        {
+          'type': 'image/jpeg',
+          'src': 'https://thumb9.shutterstock.com/display_pic_with_logo/1332355/438858262/stock-vector-email-icon-438858262.jpg',
+        },
+        {
+          'type': 'image/mp4',
+          'src': 'https://s3-us-west-1.amazonaws.com/vrstoriesmockdata/video+(5).mov',
+        },
+        {
+          'type': 'image/jpeg',
+          'src': 'https://thumb9.shutterstock.com/display_pic_with_logo/3673289/390595618/stock-vector-camera-icon-in-trendy-flat-style-isolated-on-grey-background-camera-symbol-for-your-web-site-390595618.jpg',
+        }
+      ]
     },
   ]
 };
