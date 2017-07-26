@@ -32,6 +32,7 @@ class VRProfiles extends React.Component {
     let theta = (Math.PI - start) / 2;
     let x, z, yRotation;
     let radius = 10;
+    let showFriendsRadius = radius - 0.1;
     let y = -4;
 
     return (
@@ -76,8 +77,8 @@ class VRProfiles extends React.Component {
           align='center'
           material='color: white'
           width='10'
-          position={`${-Math.cos(theta) * radius} ${y} ${.1 - Math.sin(theta) * radius}`}
-          rotation={`${-Math.atan(Math.abs(y) / radius) * 180 / Math.PI} ${((Math.PI / 2) - theta) * 180 / Math.PI} 0`}
+          position={`${-Math.cos(theta) * showFriendsRadius} ${y} ${-Math.sin(theta) * showFriendsRadius}`}
+          rotation={`${-Math.atan(Math.abs(y) / showFriendsRadius) * 180 / Math.PI} ${((Math.PI / 2) - theta) * 180 / Math.PI} 0`}
         />
       </a-entity>
     );
