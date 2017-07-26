@@ -19,6 +19,7 @@ describe('<VRStories />', () => {
         autoPlayStart={false}
         splashScreen={'./abc.jpg'}
         assetsCallback={() => { return; }}
+        viewCountCallback={() => { return; }}
       />
     );
 
@@ -183,7 +184,7 @@ describe('<VRStories />', () => {
           wrapper.instance().playNext();
         });
           it('should skip that friend and go to the following friend\'s stories', () => {
-            expect(wrapper.state().currentStory.id).toBe(0);
+            expect(wrapper.state().currentStory.id).toBe(6);
             expect(wrapper.state().currentStory.index).toBe(0);
           });
         });

@@ -14,6 +14,7 @@ class VRStories extends React.Component {
       defaultDuration: props.defaultDuration || 7000,
       assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assetes for all your media')),
       exitCallback: props.exitCallback || (() => console.log('exitCallback was not provided as a prop to VRStories')),
+      viewCountCallback: props.viewCountCallback || (() => console.log('viewCallback was not provided as a prop to VRStories')),
       splashScreen: {
         id: -2,
         index: -2,
@@ -137,10 +138,6 @@ class VRStories extends React.Component {
 
   // THIS NEEDS TO BE INVOKED EVERYTIME THE STATE OF THE CURRENT STORY IS CHANGED
   invokePlay() {
-    if (this.state.currentStories.length === 0) {
-      this.playNext();
-    }
-
     let that = this;
     let storyDom = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
     const setStoryTimeout = (duration) => {
@@ -177,8 +174,8 @@ class VRStories extends React.Component {
   // THIS FUNCTION WILL PLAY THE NEXT STORY OF currentStories AND IF AUTOPLAY IS ON, THE NEXT FRIEND'S STORIES WILL BE PLAYED
   playNext() {
     const { friends, autoPlayNext, currentStories, currentStory, lastClickedFriendIndex } = this.state;
-    let nextStoryIndex = currentStory.index + 1;
-    let nextFriendIndex = currentStory.id + 1;
+    let nextStoryIndex = currentStory.index + 1 || 0;
+    let nextFriendIndex = currentStory.id + 1 || 0;
     let reachedLastStory = nextStoryIndex === currentStories.length;
     this.playNextStoryOfFriend();
 
@@ -193,6 +190,11 @@ class VRStories extends React.Component {
           }, () => this.invokePlay());
         }
       };
+
+      while (this.state.friends[nextFriendIndex].stories.length === 0) {
+        nextFriendIndex++;
+        console.log('next firend hasn o stories');
+      }
 
       if (nextFriendIndex < friends.length) {
         nextstate(nextFriendIndex);
