@@ -74,6 +74,18 @@ class VRStories extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentStory.index !== this.state.currentStory.index) {
+      console.log('story changed!');
+      if (this.state.currentStory.type === 'image/jpeg') {
+        setTimeout(() => this.props.viewCountCallback(this.state.currentStory.storyDBId), 5000);
+      } else if (this.state.currentStory.type === 'video/mp4') {
+        setTimeout(() => this.props.viewCountCallback(this.state.currentStory.storyDBId), 10000);
+      }
+    }
+  }
+
+
   countStoriesDuration() {
     let that = this;
     this.state.durationInTimeout = setInterval(() => {
@@ -162,7 +174,7 @@ class VRStories extends React.Component {
   playNextStoryOfFriend() {
     const { currentStories, currentStory } = this.state;
     let nextStoryIndex = currentStory.index + 1;
-    
+
     if (nextStoryIndex < currentStories.length) {
       this.setState({
         currentStory: currentStories[nextStoryIndex]
@@ -183,7 +195,7 @@ class VRStories extends React.Component {
         if (lastClickedFriendIndex === i) {
           this.setSplashScreen();
         } else {
-          this.setState({ 
+          this.setState({
             currentStories: friends[i].stories,
             currentStory: friends[i].stories[0]
           }, () => this.invokePlay());
@@ -238,7 +250,7 @@ class VRStories extends React.Component {
       });
     });
     let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous'/>);
-    
+
     let assets = allStories.map((story, i) => {
       let id = story.id + ',' + story.index;
       if (story.type.slice(0, 5) === 'image') {
