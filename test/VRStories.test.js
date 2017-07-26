@@ -168,24 +168,45 @@ describe('<VRStories />', () => {
           });
           wrapper.instance().playNext();
         });
+
         describe('when next friend has stories', () => {
           it('should play the next friend\'s stories', () => {
             expect(wrapper.state().currentStory.id).toBe(1);
             expect(wrapper.state().currentStory.index).toBe(0);
           });
         });
-        describe('when next friend as no stories', () => {
+
+        describe('when next friend has no stories', () => {
           beforeEach(() => {
-          wrapper.setState({ 
-            currentStories: mockData.friends[4].stories,
-            currentStory: mockData.friends[4].stories[2],
-            autoPlayNext: true 
+            wrapper.setState({ 
+              currentStories: mockData.friends[4].stories,
+              currentStory: mockData.friends[4].stories[2],
+              autoPlayNext: true 
+            });
+            wrapper.instance().playNext();
           });
-          wrapper.instance().playNext();
-        });
-          it('should skip that friend and go to the following friend\'s stories', () => {
-            expect(wrapper.state().currentStory.id).toBe(6);
-            expect(wrapper.state().currentStory.index).toBe(0);
+
+          describe('and the following friend has stories', () => {
+            it('should skip the previous friend and go to the following friend\'s stories', () => {
+              expect(wrapper.state().currentStory.id).toBe(6);
+              expect(wrapper.state().currentStory.index).toBe(0);
+            });
+          });
+
+          describe('but the following friend loops to the beggining of friend\'s list', () => {
+            beforeEach(() => {
+              wrapper.setState({ 
+                currentStories: mockData.friends[6].stories,
+                currentStory: mockData.friends[6].stories[2],
+                autoPlayNext: true 
+              });
+              wrapper.instance().playNext();
+            });
+            it('should loop back to the beginning of the user\'s first friend\'s story', () => {
+              // console.log(wrapper.state(), 'state');
+              expect(wrapper.state().currentStory.id).toBe(0);
+              expect(wrapper.state().currentStory.index).toBe(0);
+            });
           });
         });
       });

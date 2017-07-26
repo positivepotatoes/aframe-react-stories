@@ -192,12 +192,11 @@ class VRStories extends React.Component {
       };
 
       while (this.state.friends[nextFriendIndex].stories.length === 0) {
-        if (nextFriendIndex > friends.length) {
+        if (nextFriendIndex + 1 === friends.length) {
           nextFriendIndex = 0;
         } else {
           nextFriendIndex++;
         }
-        console.log('next firend hasn o stories');
       }
 
       if (nextFriendIndex < friends.length) {
