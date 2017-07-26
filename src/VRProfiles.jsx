@@ -71,7 +71,6 @@ class VRProfiles extends React.Component {
                 yRotation={yRotation}
                 radius={radius}
                 friend={friend}
-                toggleInEntity={this.props.toggleInEntity}
                 currentStory={this.props.currentStory}
                 onFriendClick={this.props.onFriendClick}
                 currentStoriesDuration={this.props.currentStoriesDuration}

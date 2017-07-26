@@ -5,19 +5,23 @@ const VRProfile = props => {
   let spacing = 0.2;
 
 
-  let animateScaleClick, animateScaleMove, progressBar, progressBarTotal;
+  let animateScaleClick, animateScaleMove, progressBar, progressBarTotal, progressBarStoryBeginning;
   if (props.currentStory.id === props.friend.profile.id) {
     animateScaleClick = {property: 'scale', dir: 'alternate', dur: 100, easing: 'easeInOutQuad', repeat: 1, to: '1.12 1.12 1.12'};
     // animateScaleMove = {property: 'position', dir: 'to', dur: 200, easing: 'easeInOutQuad', repeat: 1, to: `0 3 0`};
     picRadius = 1.2;
 
     let current = props.currentStoriesDuration.current;
+    let currentOfStory = props.currentStoriesDuration.storyBeginning;
     let max = props.currentStoriesDuration.total;
     let ratioCompleted = current / max;
+    let ratioCompletedOfStory = currentOfStory / max;
     
     let progressRadius = .1;
     let progress = ratioCompleted * picRadius * 2;
+    let progressOfStory = ratioCompletedOfStory * picRadius * 2;
     let progressXPos = -picRadius + (picRadius * ratioCompleted);
+    let progressXPosOfStory = -picRadius + (picRadius * ratioCompletedOfStory);
     let progressYPos = -picRadius * 1.45;
     
     progressBar = 
@@ -25,7 +29,17 @@ const VRProfile = props => {
         radius={progressRadius} 
         height={progress}
         rotation='0 0 90'
-        color='#89b6ff' 
+        color='#54d1ff' 
+        opacity='0.8'
+        position={`${progressXPos} ${progressYPos} 0`}
+      />;
+
+    progressBarStoryBeginning = 
+      <a-cylinder
+        radius={progressRadius} 
+        height={progressOfStory}
+        rotation='0 0 90'
+        color='#b2b2b2' 
         opacity='0.8'
         position={`${progressXPos} ${progressYPos} 0`}
       />;
@@ -50,10 +64,8 @@ const VRProfile = props => {
         rotation="0 90 90"
         material={`src: ${props.friend.profile.img_url}`}
         // animation__rotate={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
-        
         // animation__yoyo={{property: 'position', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: true, to: '0 2 0'}}
         onClick={() => props.onFriendClick(props.friend)}
-        events={{click: (() => props.onFriendClick(props.friend)), mouseenter: props.toggleInEntity, mouseleave: props.toggleInEntity}}  
       />
       {/* <a-animation {animateScaleClick}/> */}
       <a-text 
@@ -65,6 +77,7 @@ const VRProfile = props => {
         
       />
       {progressBar}
+      
       {progressBarTotal}
     </a-entity>
   );

@@ -13,6 +13,8 @@ class VRStories extends React.Component {
       autoPlayNext: props.autoPlayNext || false,
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
+      assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assetes for all your media')),
+      exitCallback: props.exitCallback || (() => console.log('exitCallback was not provided as a prop to VRStories')),
       splashScreen: {
         id: -2,
         index: -2,
@@ -20,13 +22,13 @@ class VRStories extends React.Component {
         src: props.splashScreen,
       },
 
-      inEntity: false,
       currentStory: {},
       currentStories: [],
       storyInTimeout: null,
       durationInTimeout: null,
       currentStoriesDuration: {
         current: 0,
+        storyBeginning: 0,
         total: 0
       },
       lastClickedFriendIndex: null,
@@ -36,23 +38,14 @@ class VRStories extends React.Component {
     };
     this.playNext = this.playNext.bind(this);
     this.onFriendClick = this.onFriendClick.bind(this);
-    this.toggleInEntity = this.toggleInEntity.bind(this);
   }
 
   componentWillMount() {
-    this.removeFriendsWithNoStories();
+    // this.removeFriendsWithNoStories();
     this.setId(this.state.friends);
     this.setId([this.state.user], true);
     this.setAutoPlayOrSplash();
-    // this.clickInSkyListener();
     this.createAssets();
-  }
-
-  toggleInEntity() {
-    console.log('toggle');
-    this.setState({
-      inEntity: !this.state.inEntity
-    });
   }
 
   removeFriendsWithNoStories() {
@@ -76,7 +69,7 @@ class VRStories extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.currentStory.index !== this.state.currentStory.index) {
-      console.log('story changed!');
+      // console.log('story changed!');
       if (this.state.currentStory.type === 'image/jpeg') {
         setTimeout(() => this.props.viewCountCallback(this.state.currentStory.storyDBId), 5000);
       } else if (this.state.currentStory.type === 'video/mp4') {
@@ -89,9 +82,11 @@ class VRStories extends React.Component {
   countStoriesDuration() {
     let that = this;
     this.state.durationInTimeout = setInterval(() => {
+      
       that.setState({
         currentStoriesDuration: {
           current: that.state.currentStoriesDuration.current + .1,
+          storyBeginning: that.state.currentStoriesDuration.storyBeginning,
           total: that.state.currentStoriesDuration.total
         }
       });
@@ -101,10 +96,11 @@ class VRStories extends React.Component {
   setInitialStoriesDuration() {
     const getDuration = (n) => {
       let totalDuration = 0;
-      for (var i = 0; i < n; i++) {
-        let storyObject = this.state.currentStories[i];
-        let storyDom = document.getElementById(storyObject.id + ',' + storyObject.index);
-        if (this.state.currentStory.type.slice(0, 5) === 'image') {
+      for (let i = 0; i < n; i++) {
+        let story = this.state.currentStories[i];
+        let storyDom = document.getElementById(story.id + ',' + story.index);
+
+        if (story.type.slice(0, 5) === 'image' ) {
           totalDuration += this.state.defaultDuration / 1000;
         } else {
           totalDuration += storyDom.duration;
@@ -116,9 +112,11 @@ class VRStories extends React.Component {
     this.setState({
       currentStoriesDuration: {
         current: getDuration(this.state.currentStory.index),
+        storyBeginning: getDuration(this.state.currentStory.index),
         total: getDuration(this.state.currentStories.length)
       }
     });
+
     this.countStoriesDuration();
   }
 
@@ -151,7 +149,7 @@ class VRStories extends React.Component {
     }
 
     let that = this;
-    let story = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
+    let storyDom = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
     const setStoryTimeout = (duration) => {
       this.state.storyInTimeout = setTimeout(function() {
         that.playNext();
@@ -163,8 +161,9 @@ class VRStories extends React.Component {
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
       setStoryTimeout(this.state.defaultDuration);
     } else {
-      story.play();
-      setStoryTimeout(story.duration * 1000);
+      storyDom.currentTime = 0;
+      storyDom.play();
+      setStoryTimeout(storyDom.duration * 1000);
     }
 
     this.setInitialStoriesDuration();
@@ -212,14 +211,6 @@ class VRStories extends React.Component {
     }
   }
 
-  clickInSkyListener() {
-    document.body.addEventListener('click', () => {
-      if (!this.state.inEntity && (this.state.currentStory.id !== -2)) {
-        this.playNext();
-      }
-    });
-  }
-
   // THIS FUNCTION WILL UPDATE THE STATE OF THE MOST RECENTLY CLICKED FRIEND
   //
   // THIS IS ALSO NECESSARY TO KNOW WHICH FRIEND WAS LAST CLICKED TO KNOW WHEN TO END STORIES LOOP
@@ -227,7 +218,9 @@ class VRStories extends React.Component {
   onFriendClick(friendData) {
     const { currentStory, currentStories, splashScreen } = this.state;
 
-    if (friendData.profile.id === currentStory.id) {
+    if (friendData.stories.length === 0) {
+      this.setSplashScreen();
+    } else if (friendData.profile.id === currentStory.id) {
       if ((currentStory.index + 1) === currentStories.length) {
         this.setSplashScreen();
       } else {
@@ -265,7 +258,7 @@ class VRStories extends React.Component {
     });
     assets.push(splashScreenAsset);
 
-    this.props.assetsCallback(assets);
+    this.state.assetsCallback(assets);
   }
 
   render () {
@@ -277,12 +270,11 @@ class VRStories extends React.Component {
           friends={friends}
           currentStory={currentStory}
           onFriendClick={this.onFriendClick}
-          toggleInEntity={this.toggleInEntity}
           currentStoriesDuration={currentStoriesDuration}
         />
-        <VRPrimitive currentStory={currentStory}/>
 
-        <VRExit toggleInEntity={this.toggleInEntity} exitCallback={this.props.exitCallback}/>
+        <VRPrimitive currentStory={currentStory}/>
+        <VRExit exitCallback={this.props.exitCallback}/>
       </a-entity>
     );
   }
