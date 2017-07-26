@@ -18,8 +18,7 @@
     "url": "https://github.com/positivepotatoes/aframe-react-stories.git"
   },
   "dependencies": {
-    "react": "^15.5.4",
-    "webpack": "^2.6.1"
+    "react": "^15.5.4"
   },
   "scripts": {
     "dev-start": "webpack --watch",
@@ -36,6 +35,8 @@
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.9.1",
     "jest": "^20.0.4",
-    "react-test-renderer": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
+    "webpack": "^3.4.1"
   }
 }
