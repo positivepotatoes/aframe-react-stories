@@ -5,8 +5,8 @@
   "description": "Social media style stories in VR with A-Frame",
   "main": "dist/index.js",
   "peerDependencies": {
-    "react": "^15.5.4",
-    "aframe": "^0.6.1"
+    "aframe": "^0.6.1",
+    "react": "^15.5.4"
   },
   "keywords": [
     "react",
@@ -19,6 +19,7 @@
     "url": "https://github.com/positivepotatoes/aframe-react-stories.git"
   },
   "dependencies": {
+    "aframe-animation-component": "^3.2.5",
     "react": "^15.5.4"
   },
   "scripts": {

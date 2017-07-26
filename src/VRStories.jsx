@@ -1,7 +1,9 @@
 import React from 'react';
 import VRProfiles from './VRProfiles.jsx';
 import VRPrimitive from './VRPrimitive.jsx';
+import VRNext from './VRNext.jsx';
 import VRExit from './VRExit.jsx';
+
 
 class VRStories extends React.Component {
   constructor(props) {
@@ -175,8 +177,12 @@ class VRStories extends React.Component {
   // THIS FUNCTION WILL PLAY THE NEXT STORY OF currentStories AND IF AUTOPLAY IS ON, THE NEXT FRIEND'S STORIES WILL BE PLAYED
   playNext() {
     const { friends, autoPlayNext, currentStories, currentStory, lastClickedFriendIndex } = this.state;
-    let nextStoryIndex = currentStory.index + 1;
+
+    if (currentStory.index === -2) {return; }
+
+    let nextFriend = friends[nextFriendIndex]
     let nextFriendIndex = currentStory.id + 1;
+    let nextStoryIndex = currentStory.index + 1;
     let reachedLastStory = nextStoryIndex === currentStories.length;
     this.playNextStoryOfFriend();
 
@@ -192,7 +198,8 @@ class VRStories extends React.Component {
         }
       };
 
-      while (this.state.friends[nextFriendIndex].stories.length === 0) {
+      
+      while (nextFriend && nextFriend.stories.length === 0) {
         if (nextFriendIndex + 1 === friends.length) {
           nextFriendIndex = 0;
         } else {
@@ -272,6 +279,7 @@ class VRStories extends React.Component {
         />
 
         <VRPrimitive currentStory={currentStory}/>
+        <VRNext playNext={this.playNext}/>
         {/* <VRExit exitCallback={this.props.exitCallback}/> */}
       </a-entity>
     );
