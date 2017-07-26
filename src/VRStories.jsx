@@ -174,8 +174,8 @@ class VRStories extends React.Component {
   // THIS FUNCTION WILL PLAY THE NEXT STORY OF currentStories AND IF AUTOPLAY IS ON, THE NEXT FRIEND'S STORIES WILL BE PLAYED
   playNext() {
     const { friends, autoPlayNext, currentStories, currentStory, lastClickedFriendIndex } = this.state;
-    let nextStoryIndex = currentStory.index + 1 || 0;
-    let nextFriendIndex = currentStory.id + 1 || 0;
+    let nextStoryIndex = currentStory.index + 1;
+    let nextFriendIndex = currentStory.id + 1;
     let reachedLastStory = nextStoryIndex === currentStories.length;
     this.playNextStoryOfFriend();
 
