@@ -10108,7 +10108,7 @@ var VRStories = function (_React$Component) {
     _this.state = {
       user: props.user || {},
       friends: props.friends || [],
-      profiles: [],
+      profiles: [props.user].concat(props.friends),
       autoPlayNext: props.autoPlayNext || false,
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
@@ -10142,20 +10142,13 @@ var VRStories = function (_React$Component) {
   _createClass(VRStories, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      this.makeProfiles();
       this.removeFriendsWithNoStories();
       this.setId(this.state.friends);
       this.setId([this.state.user], true);
       this.setAutoPlayOrSplash();
+      // this.makeProfiles();
       // this.clickInSkyListener();
       this.createAssets();
-    }
-  }, {
-    key: 'makeProfiles',
-    value: function makeProfiles() {
-      var allProfiles = [this.state.user].concat(this.state.friends);
-      console.log('allprofiles', allProfiles);
-      this.setState({ profiles: allProfiles });
     }
   }, {
     key: 'toggleInEntity',
@@ -10405,7 +10398,8 @@ var VRStories = function (_React$Component) {
     key: 'createAssets',
     value: function createAssets() {
       var allStories = [];
-      this.state.friends.forEach(function (friend) {
+      console.log('create assets profiles', this.state.profiles);
+      this.state.profiles.forEach(function (friend) {
         friend.stories.forEach(function (story) {
           allStories.push(story);
         });
@@ -10421,7 +10415,7 @@ var VRStories = function (_React$Component) {
         }
       });
       assets.push(splashScreenAsset);
-
+      console.log('assets', assets);
       this.props.assetsCallback(assets);
     }
   }, {
@@ -10432,13 +10426,14 @@ var VRStories = function (_React$Component) {
           friends = _state4.friends,
           user = _state4.user,
           splashScreen = _state4.splashScreen,
-          currentStoriesDuration = _state4.currentStoriesDuration;
+          currentStoriesDuration = _state4.currentStoriesDuration,
+          profiles = _state4.profiles;
 
       return _react2.default.createElement(
         'a-entity',
         null,
         _react2.default.createElement(_VRProfiles2.default, {
-          friends: friends,
+          friends: profiles,
           currentStory: currentStory,
           onFriendClick: this.onFriendClick,
           toggleInEntity: this.toggleInEntity,
