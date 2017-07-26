@@ -67,7 +67,7 @@ class VRStories extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentStory.index !== this.state.currentStory.index) {
+    if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined) {
       this.props.viewCountCallback(this.state.currentStory.storyDBId)
     }
   }
