@@ -1,3 +1,7 @@
 /node_modules
 .vscode
+<<<<<<< HEAD
 dist
+=======
+dist
+>>>>>>> add dist in gitignore
