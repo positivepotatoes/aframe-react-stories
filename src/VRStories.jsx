@@ -14,6 +14,7 @@ class VRStories extends React.Component {
       defaultDuration: props.defaultDuration || 7000,
       assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assetes for all your media')),
       exitCallback: props.exitCallback || (() => console.log('exitCallback was not provided as a prop to VRStories')),
+      viewCountCallback: props.viewCountCallback || (() => console.log('viewCallback was not provided as a prop to VRStories')),
       splashScreen: {
         id: -2,
         index: -2,
@@ -137,10 +138,6 @@ class VRStories extends React.Component {
 
   // THIS NEEDS TO BE INVOKED EVERYTIME THE STATE OF THE CURRENT STORY IS CHANGED
   invokePlay() {
-    if (this.state.currentStories.length === 0) {
-      this.playNext();
-    }
-
     let that = this;
     let storyDom = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
     const setStoryTimeout = (duration) => {
@@ -193,6 +190,14 @@ class VRStories extends React.Component {
           }, () => this.invokePlay());
         }
       };
+
+      while (this.state.friends[nextFriendIndex].stories.length === 0) {
+        if (nextFriendIndex + 1 === friends.length) {
+          nextFriendIndex = 0;
+        } else {
+          nextFriendIndex++;
+        }
+      }
 
       if (nextFriendIndex < friends.length) {
         nextstate(nextFriendIndex);
