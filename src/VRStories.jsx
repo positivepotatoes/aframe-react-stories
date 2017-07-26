@@ -148,8 +148,9 @@ class VRStories extends React.Component {
         that.playNext();
       }, duration);
     };
+    
+    that.pauseStories();
 
-    this.pauseStories();
 
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
       setStoryTimeout(this.state.defaultDuration);
@@ -178,7 +179,10 @@ class VRStories extends React.Component {
   playNext() {
     const { friends, autoPlayNext, currentStories, currentStory, lastClickedFriendIndex } = this.state;
 
-    if (currentStory.index === -2) {return; }
+    if (currentStory.index === -2) {
+      this.onFriendClick(this.state.friends[0]);
+      return;
+    }
 
     let nextFriend = friends[nextFriendIndex]
     let nextFriendIndex = currentStory.id + 1;

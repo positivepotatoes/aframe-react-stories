@@ -6,6 +6,7 @@ const VRProfile = props => {
 
 
   let animateScaleClick, animateScaleMove, progressBar, progressBarTotal, progressBarStoryBeginning;
+  console.log('props.currentStory', props.currentStory)
   if (props.currentStory.id === props.friend.profile.id) {
     animateScaleClick = {property: 'scale', dir: 'alternate', dur: 100, easing: 'easeInOutQuad', repeat: 1, to: '1.12 1.12 1.12'};
     // animateScaleMove = {property: 'position', dir: 'to', dur: 200, easing: 'easeInOutQuad', repeat: 1, to: `0 3 0`};
