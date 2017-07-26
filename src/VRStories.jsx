@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import VRProfiles from './VRProfiles.jsx';
 import VRPrimitive from './VRPrimitive.jsx';
 import VRExit from './VRExit.jsx';
@@ -270,7 +269,7 @@ class VRStories extends React.Component {
 
   render () {
     const { currentStory, friends, user, splashScreen, currentStoriesDuration } = this.state;
-//
+
     return (
       <a-entity>
         <VRProfiles

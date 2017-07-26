@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const VRPrimitive = (props) => {
   let src = '#' + props.currentStory.id + ',' + props.currentStory.index;
