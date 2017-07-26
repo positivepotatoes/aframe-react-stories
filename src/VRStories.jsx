@@ -236,7 +236,7 @@ class VRStories extends React.Component {
 
   createAssets() {
     let allStories = [];
-    this.state.friends.forEach(friend => {
+    this.state.profiles.forEach(friend => {
       friend.stories.forEach(story => {
         allStories.push(story);
       });
