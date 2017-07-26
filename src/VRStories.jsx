@@ -36,7 +36,6 @@ class VRStories extends React.Component {
     };
     this.playNext = this.playNext.bind(this);
     this.onFriendClick = this.onFriendClick.bind(this);
-    this.toggleInEntity = this.toggleInEntity.bind(this);
   }
 
   componentWillMount() {
@@ -45,12 +44,6 @@ class VRStories extends React.Component {
     this.setId([this.state.user], true);
     this.setAutoPlayOrSplash();
     this.createAssets();
-  }
-
-  toggleInEntity() {
-    this.setState({
-      inEntity: !this.state.inEntity
-    });
   }
 
   removeFriendsWithNoStories() {
@@ -87,9 +80,10 @@ class VRStories extends React.Component {
   countStoriesDuration() {
     let that = this;
     this.state.durationInTimeout = setInterval(() => {
+      // console.log('setting interval', this.state.currentStoriesDuration.current + .1)
       that.setState({
         currentStoriesDuration: {
-          current: that.state.currentStoriesDuration.current + .1,
+          current: (that.state.currentStoriesDuration.current + .1),
           total: that.state.currentStoriesDuration.total
         }
       });
@@ -98,26 +92,38 @@ class VRStories extends React.Component {
 
   setInitialStoriesDuration() {
     const getDuration = (n) => {
+      console.log('here is n: ', n);
       let totalDuration = 0;
       for (var i = 0; i < n; i++) {
+        console.log('here is i: ', i);
         let storyObject = this.state.currentStories[i];
-        let storyDom = document.getElementById(storyObject.id + ',' + storyObject.index);
-        if (!this.state.currentStory.type.slice(0, 5) === 'image') {
+        var storyDom = document.getElementById(storyObject.id + ',' + storyObject.index);
+        //for testing, use the below IF statement instead
+        // console.log('why bugging', this.state.currentStory.type.slice(0, 5), this.state.currentStory.type)
+        console.log('this is currentStory type...', this.state.currentStory.type);
+        console.log('checking storyDom duration..', storyDom.duration);
+        if (storyObject.type.slice(0, 5) === 'image' ) {
           totalDuration += this.state.defaultDuration / 1000;
         } else {
-          console.log('duration', storyDom.duration);
+          // console.log('its a video, and adding...', storyDom.duration)
           totalDuration += storyDom.duration;
         }
       }
       return totalDuration;
     };
 
+    var current = getDuration(this.state.currentStory.index);
+    var total = getDuration(this.state.currentStories.length);
+
+    // console.log('aaaaa', getDuration(this.state.currentStories.length), 'should be same as', getDuration(2))
+    // console.log('out of: ', getDuration(this.state.currentStory.index), ':', getDuration(this.state.currentStories.length))
     this.setState({
       currentStoriesDuration: {
-        current: getDuration(this.state.currentStory.index),
-        total: getDuration(this.state.currentStories.length)
+        current: current,
+        total: total
       }
     });
+
     this.countStoriesDuration();
   }
 
@@ -150,7 +156,7 @@ class VRStories extends React.Component {
     }
 
     let that = this;
-    let story = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
+    let storyDom = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
     const setStoryTimeout = (duration) => {
       this.state.storyInTimeout = setTimeout(function() {
         that.playNext();
@@ -162,8 +168,8 @@ class VRStories extends React.Component {
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
       setStoryTimeout(this.state.defaultDuration);
     } else {
-      story.play();
-      setStoryTimeout(story.duration * 1000);
+      storyDom.play();
+      setStoryTimeout(storyDom.duration * 1000);
     }
 
     this.setInitialStoriesDuration();
@@ -209,14 +215,6 @@ class VRStories extends React.Component {
     } else if (!autoPlayNext && reachedLastStory) {
       this.setSplashScreen();
     }
-  }
-
-  clickInSkyListener() {
-    document.body.addEventListener('click', () => {
-      if (!this.state.inEntity && (this.state.currentStory.id !== -2)) {
-        this.playNext();
-      }
-    });
   }
 
   // THIS FUNCTION WILL UPDATE THE STATE OF THE MOST RECENTLY CLICKED FRIEND
