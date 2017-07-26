@@ -157,6 +157,7 @@ class VRStories extends React.Component {
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
       setStoryTimeout(this.state.defaultDuration);
     } else {
+      storyDom.currentTime = 0;
       storyDom.play();
       setStoryTimeout(storyDom.duration * 1000);
     }
