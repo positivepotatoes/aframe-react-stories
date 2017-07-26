@@ -18,7 +18,7 @@ describe('<VRStories />', () => {
         autoPlayNext={false}
         autoPlayStart={false}
         splashScreen={'./abc.jpg'}
-        assetsCallback={() => { return; } }
+        assetsCallback={() => { return; }}
       />
     );
 
@@ -36,11 +36,10 @@ describe('<VRStories />', () => {
 
   describe('upon initialization', () => {
     it('should have multiple friends in props when friend data is provided', () => {
-      // console.log('aaa', wrapper)
       expect(wrapper.state().friends.length).toBeGreaterThan(1);
     });
 
-    it('removing friends from state.friends who do not have at least one story', () => {
+    xit('removing friends from state.friends who do not have at least one story', () => {
       expect(wrapper.state().friends.length).toBe(5);
     });
 
@@ -79,12 +78,20 @@ describe('<VRStories />', () => {
 
   describe('handling onFriendClick', () => {
     describe('when no story is currently playing', () => {
-      describe('when a user is clicked', () => {
+      describe('when a user with stories is clicked', () => {
         it('should play the user\'s first story', () => {
           wrapper.instance().onFriendClick(wrapper.state().friends[2]);
           expect(wrapper.state().currentStory).toBe(wrapper.state().friends[2].stories[0]);
         });
       });
+
+      describe('when a user with no stories is clicked', () => {
+        it('should do nothing and keep the splash screen', () => {
+          wrapper.instance().onFriendClick(wrapper.state().friends[5])
+          expect(wrapper.state().currentStory.id).toBe(-2);
+          expect(wrapper.state().currentStory.index).toBe(-2);
+        });
+      })
     });
 
     describe('when a story is currently playing', () => {
@@ -169,7 +176,20 @@ describe('<VRStories />', () => {
     });
   });
 
-  describe('handling createAssets', () => {
-
+  describe('calling setInitialStoriesDuration', () => {
+    beforeEach(() => {
+      wrapper.setState({
+        currentStories: mockData.friends[0].stories,
+        currentStory: mockData.friends[0].stories[0]
+      });
+      wrapper.instance().setInitialStoriesDuration();
+    });
+    describe('when starting a brand new stories', () => {
+      it('should set currentStoriesDuration to correct states', () => {
+        expect(wrapper.state().currentStoriesDuration.current).toBe(0);
+        expect(wrapper.state().currentStoriesDuration.storyBeginning).toBe(0);
+        expect(wrapper.state().currentStoriesDuration.total).toBe(21);
+      });
+    });
   });
 });

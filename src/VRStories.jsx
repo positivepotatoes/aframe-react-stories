@@ -41,7 +41,7 @@ class VRStories extends React.Component {
   }
 
   componentWillMount() {
-    this.removeFriendsWithNoStories();
+    // this.removeFriendsWithNoStories();
     this.setId(this.state.friends);
     this.setId([this.state.user], true);
     this.setAutoPlayOrSplash();
@@ -69,7 +69,7 @@ class VRStories extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.currentStory.index !== this.state.currentStory.index) {
-      console.log('story changed!');
+      // console.log('story changed!');
       if (this.state.currentStory.type === 'image/jpeg') {
         setTimeout(() => this.props.viewCountCallback(this.state.currentStory.storyDBId), 5000);
       } else if (this.state.currentStory.type === 'video/mp4') {
@@ -97,10 +97,10 @@ class VRStories extends React.Component {
     const getDuration = (n) => {
       let totalDuration = 0;
       for (let i = 0; i < n; i++) {
-        let storyObject = this.state.currentStories[i];
-        let storyDom = document.getElementById(storyObject.id + ',' + storyObject.index);
+        let story = this.state.currentStories[i];
+        let storyDom = document.getElementById(story.id + ',' + story.index);
 
-        if (storyObject.type.slice(0, 5) === 'image' ) {
+        if (story.type.slice(0, 5) === 'image' ) {
           totalDuration += this.state.defaultDuration / 1000;
         } else {
           totalDuration += storyDom.duration;
@@ -218,7 +218,9 @@ class VRStories extends React.Component {
   onFriendClick(friendData) {
     const { currentStory, currentStories, splashScreen } = this.state;
 
-    if (friendData.profile.id === currentStory.id) {
+    if (friendData.stories.length === 0) {
+      this.setSplashScreen();
+    } else if (friendData.profile.id === currentStory.id) {
       if ((currentStory.index + 1) === currentStories.length) {
         this.setSplashScreen();
       } else {
