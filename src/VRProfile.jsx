@@ -5,7 +5,7 @@ const VRProfile = props => {
   let spacing = 0.2;
 
 
-  let animateScaleClick, animateScaleMove, progressBar, progressBarTotal;
+  let animateScaleClick, animateScaleMove, progressBar, progressBarTotal, progressBarStoryBeginning;
   if (props.currentStory.id === props.friend.profile.id) {
     animateScaleClick = {property: 'scale', dir: 'alternate', dur: 100, easing: 'easeInOutQuad', repeat: 1, to: '1.12 1.12 1.12'};
     // animateScaleMove = {property: 'position', dir: 'to', dur: 200, easing: 'easeInOutQuad', repeat: 1, to: `0 3 0`};
@@ -26,6 +26,16 @@ const VRProfile = props => {
         height={progress}
         rotation='0 0 90'
         color='#89b6ff' 
+        opacity='0.8'
+        position={`${progressXPos} ${progressYPos} 0`}
+      />;
+
+    progressBarStoryBeginning = 
+      <a-cylinder
+        radius={progressRadius} 
+        height={progress}
+        rotation='0 0 90'
+        color='#5b5b5b' 
         opacity='0.8'
         position={`${progressXPos} ${progressYPos} 0`}
       />;
@@ -62,7 +72,8 @@ const VRProfile = props => {
         position={`0 ${- picRadius * 1.2} 0`}
         
       />
-      {progressBar}
+      
+      {progressBarStoryBeginning}
       {progressBarTotal}
     </a-entity>
   );

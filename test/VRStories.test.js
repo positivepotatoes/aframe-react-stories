@@ -135,7 +135,7 @@ describe('<VRStories />', () => {
       });
     });
 
-    describe('when there is\'nt a next story available in currentStories', () => {
+    describe('when there isn\'t a next story available in currentStories', () => {
       beforeEach(() => {
         wrapper.setState({
           currentStories: mockData.friends[0].stories,
@@ -167,5 +167,9 @@ describe('<VRStories />', () => {
         });
       });
     });
+  });
+
+  describe('handling createAssets', () => {
+
   });
 });
