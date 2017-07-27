@@ -1,6 +1,6 @@
 {
   "name": "aframe-react-stories",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "Social media style stories in VR with A-Frame",
   "main": "dist/index.js",
