@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "peerDependencies": {
     "aframe": "^0.6.1",
+    "aframe-animation-component": "^3.2.5",
     "react": "^15.5.4"
   },
   "keywords": [
@@ -19,7 +20,6 @@
     "url": "https://github.com/positivepotatoes/aframe-react-stories.git"
   },
   "dependencies": {
-    "aframe-animation-component": "^3.2.5",
     "react": "^15.5.4"
   },
   "scripts": {

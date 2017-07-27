@@ -1,5 +1,4 @@
 import React from 'react';
-import 'aframe-animation-component';
 
 const VRNext = (props) => (
   <a-entity position='0 0 -3' rotation='0 0 270' >
