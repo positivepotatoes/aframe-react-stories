@@ -128,6 +128,12 @@ class VRStories extends React.Component {
     this.pauseStories();
     this.setState({
       currentStory: this.state.splashScreen
+    }, () => {
+      // listener is in VRNext which listens when to stop playing animation
+      document.getElementById('playnextbutton').emit('finishedplay')
+      setTimeout(() => {
+        document.getElementById('playnextbutton').emit('bounce')
+      }, 2000)
     });
   }
 
@@ -159,7 +165,8 @@ class VRStories extends React.Component {
       storyDom.play();
       setStoryTimeout(storyDom.duration * 1000);
     }
-
+    console.log('getting called')
+    document.getElementById('playnextbutton').emit('initializeplay')
     this.setInitialStoriesDuration();
   }
 
@@ -178,6 +185,8 @@ class VRStories extends React.Component {
   // THIS FUNCTION WILL PLAY THE NEXT STORY OF currentStories AND IF AUTOPLAY IS ON, THE NEXT FRIEND'S STORIES WILL BE PLAYED
   playNext() {
     const { friends, autoPlayNext, currentStories, currentStory, lastClickedFriendIndex } = this.state;
+
+
 
     if (currentStory.index === -2) {
       this.onFriendClick(this.state.friends[0]);
