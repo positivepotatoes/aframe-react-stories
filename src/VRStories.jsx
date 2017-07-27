@@ -16,7 +16,7 @@ class VRStories extends React.Component {
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
       assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assetes for all your media')),
-      exitCallback: props.exitCallback || (() => console.log('exitCallback was not provided as a prop to VRStories')),
+      exitCallback: props.exitCallback,
       viewCountCallback: props.viewCountCallback || (() => console.log('viewCallback was not provided as a prop to VRStories')),
       splashScreen: {
         id: -2,
@@ -288,7 +288,14 @@ class VRStories extends React.Component {
   }
 
   render () {
-    const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration } = this.state;
+
+    const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback } = this.state;
+
+    let exitButton;
+    if (exitCallback) {
+      exitButton = <VRExit exitCallback={this.props.exitCallback}/>
+    }
+
     return (
       <a-entity>
         <VRProfiles
@@ -301,7 +308,7 @@ class VRStories extends React.Component {
 
         <VRPrimitive currentStory={currentStory}/>
         <VRNext playNext={this.playNext}/>
-        {/* <VRExit exitCallback={this.props.exitCallback}/> */}
+        {exitButton}
       </a-entity>
     );
   }
