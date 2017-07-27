@@ -5,7 +5,7 @@ class VRProfiles extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sliceIndex: 5,
+      sliceIndex: 6,
       friends: this.props.friends,
       friendsToShow: this.props.friends.slice(0, 6)
     };
@@ -13,10 +13,10 @@ class VRProfiles extends React.Component {
   }
 
   onMoreFriendsClick() {
-    if (this.state.sliceIndex > this.state.friends.length) {
+    if (this.state.sliceIndex >= this.state.friends.length) {
       this.setState({
         friendsToShow: this.props.friends.slice(0, 6),
-        sliceIndex: 5
+        sliceIndex: 6
       });
     } else {
       this.setState({
