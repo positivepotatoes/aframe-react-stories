@@ -34,10 +34,7 @@ class VRStories extends React.Component {
       currentStories: [],
       storyInTimeout: null,
       durationInTimeout: null,
-      currentStoriesDuration: {
-        current: 0,
-        total: 0
-      },
+      currentStoriesDuration: {},
       lastClickedFriendIndex: null,
       // USE FOR MOCK DATA
       // friends: mockData.friends,
@@ -306,6 +303,7 @@ class VRStories extends React.Component {
           onFriendClick={this.onFriendClick}
           currentStoriesDuration={currentStoriesDuration}
         />
+        
 
         <VRPrimitive currentStory={currentStory}/>
         <VRNext playNext={this.playNext}/>

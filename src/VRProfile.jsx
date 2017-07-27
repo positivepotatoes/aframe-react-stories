@@ -1,7 +1,7 @@
 import React from 'react';
 
 const VRProfile = props => {
-  let animateScaleClick, animateScaleMove, progressBar, progressBarTotal, storiesFraction;
+  let animateScaleClick, animateScaleMove, progressBar, progressBarTotal, storiesFractionBar, circleFraction, circleProgress;
   let picRadius = 1;
   let spacing = 0.2;
 
@@ -34,7 +34,7 @@ const VRProfile = props => {
         position={`${getXPosition(current, max, picRadius)} ${progressYPos} 0`}
       />;
 
-    storiesFraction = 
+    storiesFractionBar = 
       <a-cylinder
         radius={progressRadius} 
         opacity='0.4'
@@ -53,6 +53,37 @@ const VRProfile = props => {
         height={picRadius * 2}
         position={`0 ${progressYPos} 0`}
       />;
+
+
+      //////////////////
+    const getArcProgress = (i, total) => {
+      if (i / total * 360 > .001) {
+        return i / total * 360;
+      } else {
+        return .001;
+      }
+    };
+    
+    circleFraction =
+      <a-torus
+        radius='1'
+        opacity='0.7'
+        color='#b2b2b2'
+        rotation='0 180 90'
+        radius-tubular='.09'
+
+        arc={getArcProgress(storyFraction, storyFractionTotal)}
+      />;
+
+    circleProgress =
+      <a-torus
+        radius='1'
+        opacity='0.7'
+        color='#54d1ff'
+        rotation='0 180 90'
+        radius-tubular='.09'
+        arc={getArcProgress(current, max)}
+      />;
   }
   
   return (
@@ -63,8 +94,8 @@ const VRProfile = props => {
         height='0.15'
         rotation="0 90 90"
         material={`src: ${props.friend.profile.img_url}`}
-        animation__scale={`property: scale; dir: alternate; dur: 1800; easing: easeInSine; loop: true; to: .940 .940 .940; delay: ${Math.round(Math.random()*1000) + 1}`}
-        animation__float={`property: rotation; dir: alternate; dur: 1800; easing: easeInSine; loop: true; from: 0 78 90; to: 0 102 90; delay: ${Math.round(Math.random()*1000) + 1}`}
+        // animation__scale={`property: scale; dir: alternate; dur: 1800; easing: easeInSine; loop: true; to: .940 .940 .940; delay: ${Math.round(Math.random()*1000) + 1}`}
+        // animation__float={`property: rotation; dir: alternate; dur: 1800; easing: easeInSine; loop: true; from: 0 78 90; to: 0 102 90; delay: ${Math.round(Math.random()*1000) + 1}`}
         animation__bounce={`property: scale; dir: alternate; dur: 150; easing: easeInSine; repeat: 1; to: 1.1 1.1 1.1; startEvents: click, nextplay`}
         onClick={() => props.onFriendClick(props.friend)}
       />
@@ -77,9 +108,17 @@ const VRProfile = props => {
         position={`0 ${-picRadius * 1.2} 0`}
         
       />
+
+      
+      {circleFraction}
+      {circleProgress}
+      
+      {/*
       {progressBar}
-      {storiesFraction}
+      {storiesFractionBar}
       {progressBarTotal}
+      */}
+      
     </a-entity>
   );
 };
