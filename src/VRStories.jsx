@@ -165,7 +165,7 @@ class VRStories extends React.Component {
       storyDom.play();
       setStoryTimeout(storyDom.duration * 1000);
     }
-    console.log('getting called')
+
     document.getElementById('playnextbutton').emit('initializeplay')
     this.setInitialStoriesDuration();
   }
