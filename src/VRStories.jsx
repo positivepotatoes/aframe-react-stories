@@ -45,6 +45,7 @@ class VRStories extends React.Component {
     };
     this.playNext = this.playNext.bind(this);
     this.onFriendClick = this.onFriendClick.bind(this);
+    this.setSplashScreen = this.setSplashScreen.bind(this);
   }
 
   componentWillMount() {
@@ -293,7 +294,7 @@ class VRStories extends React.Component {
 
     let exitButton;
     if (exitCallback) {
-      exitButton = <VRExit exitCallback={this.props.exitCallback}/>
+      exitButton = <VRExit exitCallback={exitCallback} setSplashScreen={this.setSplashScreen}/>
     }
 
     return (

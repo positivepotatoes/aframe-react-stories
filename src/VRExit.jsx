@@ -8,7 +8,10 @@ const VRExit = (props) => (
       rotation= '0 90 90'
       color='#ff0000'
       material='transparent: true; opacity: .7'
-      onClick={props.exitCallback}
+      onClick={() => {
+        props.setSplashScreen();
+        props.exitCallback();
+      }}
 
       animation__exitcolor='property: color; dir: alternate; dur: 1100; easing: easeInSine; loop: true; to: #ff2d2d'
       animation__exitscale='property: scale; dir: alternate; dur: 1800; easing: easeInSine; loop: true; to: .940 .940 .940;'
