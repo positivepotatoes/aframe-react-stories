@@ -64,8 +64,8 @@ const VRProfile = props => {
         height='0.15'
         rotation="0 90 90"
         material={`src: ${props.friend.profile.img_url}`}
-        animation__scale={`property: scale; dir: alternate; dur: 800; easing: easeInSine; loop: true; to: .980 .980 .980; delay: ${Math.round(Math.random()*1000) + 1}`}
-        animation__float='property: rotation; dir: alternate; dur: 800; easing: easeInSine; loop: true; from: 0 85 90; to: 0 95 90'
+        animation__scale={`property: scale; dir: alternate; dur: 800; easing: easeInSine; loop: true; to: .976 .976 .976; delay: ${Math.round(Math.random()*1000) + 1}`}
+        animation__float={`property: rotation; dir: alternate; dur: 800; easing: easeInSine; loop: true; from: 0 82 90; to: 0 98 90; delay: ${Math.round(Math.random()*1000) + 1}`}
         animation__bounce='property: scale; dir: alternate; dur: 150; easing: easeInSine; repeat: 1; to: 1.1 1.1 1.1; startEvents: click, nextplay'
         // animation__rotate={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
         // animation__yoyo={{property: 'position', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: true, to: '0 2 0'}}
