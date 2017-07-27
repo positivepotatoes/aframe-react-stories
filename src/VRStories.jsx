@@ -9,6 +9,7 @@ class VRStories extends React.Component {
     this.state = {
       user: props.user || {},
       friends: props.friends || [],
+      profiles: [props.user].concat(props.friends),
       autoPlayNext: props.autoPlayNext || false,
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
@@ -235,7 +236,7 @@ class VRStories extends React.Component {
 
   createAssets() {
     let allStories = [];
-    this.state.friends.forEach(friend => {
+    this.state.profiles.forEach(friend => {
       friend.stories.forEach(story => {
         allStories.push(story);
       });
@@ -260,12 +261,11 @@ class VRStories extends React.Component {
   }
 
   render () {
-    const { currentStory, friends, user, splashScreen, currentStoriesDuration } = this.state;
-
+    const { currentStory, friends, user, splashScreen, profiles, currentStoriesDuration } = this.state;
     return (
       <a-entity>
         <VRProfiles
-          friends={friends}
+          friends={profiles}
           currentStory={currentStory}
           onFriendClick={this.onFriendClick}
           currentStoriesDuration={currentStoriesDuration}
