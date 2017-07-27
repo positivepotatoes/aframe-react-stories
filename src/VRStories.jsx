@@ -158,7 +158,7 @@ class VRStories extends React.Component {
   // THIS NEEDS TO BE INVOKED EVERYTIME THE STATE OF THE CURRENT STORY IS CHANGED
   invokePlay() {
     let storyDom = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
-    const setStoryTimeoutAndEmitAndDuration = (duration) => {
+    const initTimeoutAndProgress = (duration) => {
       this.state.storyInTimeout = setTimeout(() => {
         this.playNext();
       }, duration);
@@ -168,11 +168,11 @@ class VRStories extends React.Component {
 
     this.pauseStories();
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
-      setStoryTimeoutAndEmitAndDuration(this.state.defaultDuration);
+      initTimeoutAndProgress(this.state.defaultDuration);
     } else {
       storyDom.play()
         .then(() => {
-          setStoryTimeoutAndEmitAndDuration(storyDom.duration * 1000);
+          initTimeoutAndProgress(storyDom.duration * 1000);
         });
     }
   }
