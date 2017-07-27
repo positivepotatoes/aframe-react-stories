@@ -201,7 +201,7 @@ class VRStories extends React.Component {
 
     if (autoPlayNext && reachedLastStory) {
       let nextstate = (i) => {
-        if (lastClickedFriendIndex === i) {
+        if (lastClickedFriendIndex === i || lastClickedFriendIndex === -1) {
           this.setSplashScreen();
         } else {
           this.setState({
