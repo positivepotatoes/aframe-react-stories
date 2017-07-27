@@ -1,6 +1,5 @@
 import React from 'react';
 import VRStories from '../src/VRStories';
-// import VRProfile from '../src/VRProfile';
 import { shallow, mount, render } from 'enzyme';
 
 import mockData from './mockTestData.js';
@@ -128,6 +127,14 @@ describe('<VRStories />', () => {
   });
 
   describe('handling playNext', () => {
+    describe('when no story is currently playing', () => {
+      it('should do nothing', () => {
+        wrapper.instance().playNext();
+        expect(wrapper.state().currentStory.id).toBe(-2);
+        expect(wrapper.state().currentStory.index).toBe(-2);
+      });
+    });
+
     describe('when there is a next story available in currentStories', () => {
       beforeEach(() => {
         wrapper.setState({
