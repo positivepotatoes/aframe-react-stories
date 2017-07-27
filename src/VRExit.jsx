@@ -10,7 +10,7 @@ const VRExit = (props) => (
       material='transparent: true; opacity: .7'
       onClick={props.exitCallback}
 
-      animation__exitcolor='property: color; dir: alternate; dur: 1100; easing: easeInSine; loop: true; to: #ff7777'
+      animation__exitcolor='property: color; dir: alternate; dur: 1100; easing: easeInSine; loop: true; to: #ff2d2d'
       animation__exitscale='property: scale; dir: alternate; dur: 1800; easing: easeInSine; loop: true; to: .940 .940 .940;'
     />
     <a-text 
