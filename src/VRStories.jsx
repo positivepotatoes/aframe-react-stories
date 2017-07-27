@@ -48,14 +48,10 @@ class VRStories extends React.Component {
   }
 
   componentWillMount() {
-    // this.removeFriendsWithNoStories();
     this.setId(this.state.friends);
     this.setId([this.state.user], true);
     this.createAssets();
     this.setAutoPlayOrSplash();
-  }
-
-  componentDidMount() {
   }
 
   removeFriendsWithNoStories() {
@@ -134,7 +130,10 @@ class VRStories extends React.Component {
 
   pauseStories() {
     let stories = Array.prototype.slice.call(document.getElementsByTagName('video'));
-    stories.forEach(story => story.pause());
+    stories.forEach(story => {
+      story.pause();
+      story.currentTime = 0;
+    });
     clearTimeout(this.state.storyInTimeout);
     clearInterval(this.state.durationInTimeout);
   }
@@ -158,33 +157,24 @@ class VRStories extends React.Component {
 
   // THIS NEEDS TO BE INVOKED EVERYTIME THE STATE OF THE CURRENT STORY IS CHANGED
   invokePlay() {
-    let that = this;
     let storyDom = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
-    const setStoryTimeout = (duration) => {
-      this.state.storyInTimeout = setTimeout(function() {
-        that.playNext();
+    const setStoryTimeoutAndEmitAndDuration = (duration) => {
+      this.state.storyInTimeout = setTimeout(() => {
+        this.playNext();
       }, duration);
-    };
-    
-    that.pauseStories();
-
-
-    if (this.state.currentStory.type.slice(0, 5) === 'image') {
-      setStoryTimeout(this.state.defaultDuration);
       document.getElementById('playnextbutton').emit('initializeplay')
       this.setInitialStoriesDuration();
+    };
+
+    this.pauseStories();
+    if (this.state.currentStory.type.slice(0, 5) === 'image') {
+      setStoryTimeoutAndEmitAndDuration(this.state.defaultDuration);
     } else {
-      storyDom.currentTime = 0;
       storyDom.play()
         .then(() => {
-          setStoryTimeout(storyDom.duration * 1000);
-          document.getElementById('playnextbutton').emit('initializeplay')
-          this.setInitialStoriesDuration();
+          setStoryTimeoutAndEmitAndDuration(storyDom.duration * 1000);
         });
     }
-
-    // document.getElementById('playnextbutton').emit('initializeplay')
-    // this.setInitialStoriesDuration();
   }
 
   // THIS FUNCTION WILL UPDATE currentStory TO BE THE NEXT STORY
@@ -202,16 +192,16 @@ class VRStories extends React.Component {
   // THIS FUNCTION WILL PLAY THE NEXT STORY OF currentStories AND IF AUTOPLAY IS ON, THE NEXT FRIEND'S STORIES WILL BE PLAYED
   playNext() {
     const { friends, autoPlayNext, currentStories, currentStory, lastClickedFriendIndex } = this.state;
+    let nextFriendIndex = currentStory.id + 1;
+    let nextFriend = friends[nextFriendIndex];
+    let nextStoryIndex = currentStory.index + 1;
+    let reachedLastStory = nextStoryIndex === currentStories.length;
 
     if (currentStory.index === -2) {
       this.onFriendClick(this.state.friends[0]);
       return;
     }
 
-    let nextFriend = friends[nextFriendIndex]
-    let nextFriendIndex = currentStory.id + 1;
-    let nextStoryIndex = currentStory.index + 1;
-    let reachedLastStory = nextStoryIndex === currentStories.length;
     this.playNextStoryOfFriend();
 
     if (autoPlayNext && reachedLastStory) {
@@ -265,19 +255,20 @@ class VRStories extends React.Component {
       this.setState({
         lastClickedFriendIndex: friendData.profile.id,
         currentStories: friendData.stories,
-        currentStory: friendData.stories[0]
+        currentStory: friendData.stories[0],
+        currentStoriesDuration: {}
       }, () => this.invokePlay());
     }
   }
 
   createAssets() {
+    let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous'/>);
     let allStories = [];
     this.state.profiles.forEach(friend => {
       friend.stories.forEach(story => {
         allStories.push(story);
       });
     });
-    let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous'/>);
 
     let assets = allStories.map((story, i) => {
       let id = story.id + ',' + story.index;
