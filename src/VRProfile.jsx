@@ -5,44 +5,55 @@ const VRProfile = props => {
   let spacing = 0.2;
 
 
-  let animateScaleClick, animateScaleMove, progressBar, progressBarTotal, progressBarStoryBeginning;
+  let animateScaleClick, animateScaleMove, progressBar, progressBarTotal, storiesFraction;
   
   if (props.currentStory.id === props.friend.profile.id) {
     // animateScaleClick = {property: 'scale', dir: 'alternate', dur: 100, easing: 'easeInOutQuad', repeat: 1, to: '1.12 1.12 1.12'};
     // animateScaleMove = {property: 'position', dir: 'to', dur: 200, easing: 'easeInOutQuad', repeat: 1, to: `0 3 0`};
     // picRadius = 1.2;
+    let progressRadius = .1;
 
     let current = props.currentStoriesDuration.current;
-    let currentOfStory = props.currentStoriesDuration.storyBeginning;
     let max = props.currentStoriesDuration.total;
-    let ratioCompleted = current / max;
-    let ratioCompletedOfStory = currentOfStory / max;
+
+    // let ratioCompleted = current / max;
+    // let progress = ratioCompleted * picRadius * 2;
+    // let progressXPos = -picRadius + (picRadius * ratioCompleted);
     
-    let progressRadius = .1;
-    let progress = ratioCompleted * picRadius * 2;
-    let progressOfStory = ratioCompletedOfStory * picRadius * 2;
-    let progressXPos = -picRadius + (picRadius * ratioCompleted);
-    let progressXPosOfStory = -picRadius + (picRadius * ratioCompletedOfStory);
+    // let ratioCompletedOfStory = props.currentStory.index / props.currentStories.length;
+    // let progressOfStory = ratioCompletedOfStory * picRadius * 2;
+    // let progressXPosOfStory = -picRadius + (picRadius * ratioCompletedOfStory);
+
+
+    const getProgress = (i, total, radius) => {
+      return i / total * radius * 2;      
+    };
+
+    const getXPosition = (i, total, radius) => {
+      return -radius + (radius * i / total);
+    }
+
+    
     let progressYPos = -picRadius * 1.45;
     
     progressBar = 
       <a-cylinder
         radius={progressRadius} 
-        height={progress}
+        height={getProgress(current, max, picRadius)}
         rotation='0 0 90'
         color='#54d1ff' 
-        opacity='0.8'
-        position={`${progressXPos} ${progressYPos} 0`}
+        opacity='.8'
+        position={`${getXPosition(current, max, picRadius)} ${progressYPos} 0`}
       />;
 
-    progressBarStoryBeginning = 
+    storiesFraction = 
       <a-cylinder
         radius={progressRadius} 
-        height={progressOfStory}
+        height={getProgress(props.currentStory.index + 1, props.currentStories.length, picRadius)}
         rotation='0 0 90'
         color='#b2b2b2' 
-        opacity='0.8'
-        position={`${progressXPos} ${progressYPos} 0`}
+        opacity='0.4'
+        position={`${getXPosition(props.currentStory.index + 1, props.currentStories.length, picRadius)} ${progressYPos} -.01`}
       />;
 
     progressBarTotal = 
@@ -51,7 +62,7 @@ const VRProfile = props => {
         height={picRadius * 2}
         rotation='0 0 90'
         color='#b2b2b2'
-        opacity='0.3'
+        opacity='0.2'
         position={`0 ${progressYPos} 0`}
       />;
   }
@@ -64,8 +75,8 @@ const VRProfile = props => {
         height='0.15'
         rotation="0 90 90"
         material={`src: ${props.friend.profile.img_url}`}
-        animation__scale={`property: scale; dir: alternate; dur: 800; easing: easeInSine; loop: true; to: .976 .976 .976; delay: ${Math.round(Math.random()*1000) + 1}`}
-        animation__float={`property: rotation; dir: alternate; dur: 800; easing: easeInSine; loop: true; from: 0 82 90; to: 0 98 90; delay: ${Math.round(Math.random()*1000) + 1}`}
+        animation__scale={`property: scale; dir: alternate; dur: 1800; easing: easeInSine; loop: true; to: .940 .940 .940; delay: ${Math.round(Math.random()*1000) + 1}`}
+        animation__float={`property: rotation; dir: alternate; dur: 1800; easing: easeInSine; loop: true; from: 0 78 90; to: 0 102 90; delay: ${Math.round(Math.random()*1000) + 1}`}
         animation__bounce='property: scale; dir: alternate; dur: 150; easing: easeInSine; repeat: 1; to: 1.1 1.1 1.1; startEvents: click, nextplay'
         // animation__rotate={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
         // animation__yoyo={{property: 'position', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: true, to: '0 2 0'}}
@@ -81,6 +92,7 @@ const VRProfile = props => {
         
       />
       {progressBar}
+      {storiesFraction}
       {progressBarTotal}
     </a-entity>
   );

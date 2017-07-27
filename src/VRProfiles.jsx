@@ -59,6 +59,7 @@ class VRProfiles extends React.Component {
                 radius={radius}
                 friend={friend}
                 currentStory={this.props.currentStory}
+                currentStories={this.props.currentStories}
                 onFriendClick={this.props.onFriendClick}
                 currentStoriesDuration={this.props.currentStoriesDuration}
               />
