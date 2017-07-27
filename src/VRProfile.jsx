@@ -8,9 +8,9 @@ const VRProfile = props => {
   let animateScaleClick, animateScaleMove, progressBar, progressBarTotal, progressBarStoryBeginning;
   
   if (props.currentStory.id === props.friend.profile.id) {
-    animateScaleClick = {property: 'scale', dir: 'alternate', dur: 100, easing: 'easeInOutQuad', repeat: 1, to: '1.12 1.12 1.12'};
+    // animateScaleClick = {property: 'scale', dir: 'alternate', dur: 100, easing: 'easeInOutQuad', repeat: 1, to: '1.12 1.12 1.12'};
     // animateScaleMove = {property: 'position', dir: 'to', dur: 200, easing: 'easeInOutQuad', repeat: 1, to: `0 3 0`};
-    picRadius = 1.2;
+    // picRadius = 1.2;
 
     let current = props.currentStoriesDuration.current;
     let currentOfStory = props.currentStoriesDuration.storyBeginning;
@@ -59,11 +59,14 @@ const VRProfile = props => {
   return (
     <a-entity position={`${props.x} ${props.y}, ${props.z}`} rotation={`${props.xRotation} ${props.yRotation} ${0}`}>
       <a-cylinder 
-        className={'friend'} 
+        id={`friend${props.friend.profile.id}`} 
         radius={picRadius}
         height='0.15'
         rotation="0 90 90"
         material={`src: ${props.friend.profile.img_url}`}
+        animation__scale={`property: scale; dir: alternate; dur: 800; easing: easeInSine; loop: true; to: .980 .980 .980; delay: ${Math.round(Math.random()*1000) + 1}`}
+        animation__float='property: rotation; dir: alternate; dur: 800; easing: easeInSine; loop: true; from: 0 85 90; to: 0 95 90'
+        animation__bounce='property: scale; dir: alternate; dur: 150; easing: easeInSine; repeat: 1; to: 1.1 1.1 1.1; startEvents: click, nextplay'
         // animation__rotate={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
         // animation__yoyo={{property: 'position', dir: 'alternate', dur: 1000, easing: 'easeInSine', loop: true, to: '0 2 0'}}
         onClick={() => props.onFriendClick(props.friend)}
@@ -78,7 +81,6 @@ const VRProfile = props => {
         
       />
       {progressBar}
-      
       {progressBarTotal}
     </a-entity>
   );
