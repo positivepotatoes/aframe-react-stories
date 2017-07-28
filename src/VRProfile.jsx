@@ -11,10 +11,10 @@ const VRProfile = props => {
     let current = props.currentStoriesDuration.current;
 
     const getArcProgress = (i, total, arcMax) => {
-      if (i / total * arcMax > 1) {
+      if (i / total * arcMax > .001) {
         return i / total * arcMax;
       } else {
-        return 1;
+        return .001;
       }
     };
 
