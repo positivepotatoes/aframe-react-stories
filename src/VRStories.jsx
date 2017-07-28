@@ -146,7 +146,8 @@ class VRStories extends React.Component {
 
     if (nextStoryIndex < currentStories.length) {
       this.setState({
-        currentStory: currentStories[nextStoryIndex]
+        currentStory: currentStories[nextStoryIndex],
+        currentStoriesDuration: {}
       }, () => this.invokePlay());
     }
 
