@@ -55,8 +55,9 @@ const VRProfile = props => {
     <a-entity position={`${props.x} ${props.y}, ${props.z}`} rotation={`${props.xRotation} ${props.yRotation} ${0}`}>
       <a-entity 
         animation__bounce={`property: scale; dir: alternate; dur: 150; easing: easeInSine; repeat: 1; to: 1.1 1.1 1.1; startEvents: click, nextplay`}
-        animation__scale={`property: scale; dir: alternate; dur: 1800; easing: easeInSine; loop: true; to: .940 .940 .940; delay: ${Math.round(Math.random()*1000) + 1}`}
-        animation__float={`property: rotation; dir: alternate; dur: 1800; easing: easeInSine; loop: true; from: 0 -10 0; to: 0 10 0; delay: ${Math.round(Math.random()*1000) + 1}`}
+        animation__scale={`property: scale; dir: alternate; dur: 1800; easing: easeInSine; loop: true; to: .920 .920 .920; delay: ${Math.round(Math.random()*1000) + 1}`}
+        animation__float={`property: rotation; dir: alternate; dur: 1800; easing: easeInSine; loop: true; from: 0 -13 0; to: 0 13 0; delay: ${Math.round(Math.random()*1000) + 1}`}
+        // animation__float={`property: position; dir: alternate; dur: 1800; easing: easeInSine; loop: true; from: 0 0 1; to: 0 0 -1; delay: ${props.key * 1200}`}
       >
         <a-cylinder 
           id={`friend${props.friend.profile.id}`} 
