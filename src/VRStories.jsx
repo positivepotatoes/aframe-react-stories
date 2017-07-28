@@ -56,8 +56,7 @@ class VRStories extends React.Component {
     if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined) {
       this.props.viewCountCallback(this.state.currentStory.storyDBId)
     }
-    if (this.props.user.profile.uploadId === this.state.profiles[0].profile.uploadId) {
-      console.log('!!');
+    if (this.state.currentStory.uploadId === this.state.user.profile.uploadId) {
       this.props.ownStoryViewsCallback();
     }
   }
