@@ -78,32 +78,48 @@ class VRStories extends React.Component {
   }
 
   countStoriesDuration() {
-    this.state.durationInTimeout = setInterval(() => {
-      this.setState({
-        currentStoriesDuration: {
-          current: this.state.currentStoriesDuration.current + .01,
-          total: this.state.currentStoriesDuration.total
-        }
-      });
-    }, 10);
+    let story = this.state.currentStory;
+    let storyDom = document.getElementById(story.id + ',' + story.index);
+
+    if (story.type.slice(0, 5) === 'image') {
+      this.state.durationInTimeout = setInterval(() => {
+        this.setState({
+          currentStoriesDuration: {
+            current: this.state.currentStoriesDuration.current + .01,
+            total: this.state.currentStoriesDuration.total
+          }
+        });
+      }, 10);
+    } else {
+      this.state.durationInTimeout = setInterval(() => {
+        this.setState({
+          currentStoriesDuration: {
+            current: storyDom.currentTime,
+            total: this.state.currentStoriesDuration.total
+          }
+        });
+      }, 10);
+    }
   }
 
   setInitialStoriesDuration() {
     // getEntireDuration was used in beta version, saving for potential future use
     //
-    // const getEntireDuration = (n) => {
-    //   let totalDuration = 0;
-    //   for (let i = 0; i < n; i++) {
-    //     let story = this.state.currentStories[i];
-    //     let storyDom = document.getElementById(story.id + ',' + story.index);
-    //     if (story.type.slice(0, 5) === 'image' ) {
-    //       totalDuration += this.state.defaultDuration / 1000;
-    //     } else {
-    //       totalDuration += storyDom.duration;
-    //     }
-    //   }
-    //   return totalDuration;
-    // };
+    const getEntireDuration = (n) => {
+      let totalDuration = 0;
+      for (let i = 0; i < n; i++) {
+        let story = this.state.currentStories[i];
+
+        let storyDom = document.getElementById(story.id + ',' + story.index);
+        if (story.type.slice(0, 5) === 'image' ) {
+          totalDuration += this.state.defaultDuration / 1000;
+        } else {
+          totalDuration += storyDom.duration;
+        }
+      }
+      console.log('total duration', totalDuration)
+      return totalDuration;
+    };
 
     const getDuration = (i) => {
       let story = this.state.currentStories[i];
@@ -115,6 +131,8 @@ class VRStories extends React.Component {
         return storyDom.duration;
       }
     }
+
+
 
     this.setState({
       currentStoriesDuration: {

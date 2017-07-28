@@ -1,7 +1,7 @@
 import React from 'react';
 
 const VRProfile = props => {
-  let animateScaleClick, animateScaleMove, progressBar, progressBarTotal, storiesFractionBar, circleFraction, circleProgress;
+  let circleFraction, circleProgress, circlePrevProgress;
   let picRadius = 1;
   let spacing = 0.2;
 
@@ -18,72 +18,105 @@ const VRProfile = props => {
     let progressYPos = -picRadius * 1.45;
 
     let current = props.currentStoriesDuration.current;
-    let max = props.currentStoriesDuration.total;
+    let total = props.currentStoriesDuration.total;
 
     let storyFraction = props.currentStory.index + 1;
     let storyFractionTotal = props.currentStories.length;
     
-    
-    progressBar = 
-      <a-cylinder
-        radius={progressRadius} 
-        opacity='.8'
-        color='#54d1ff' 
-        rotation='0 0 90'
-        height={getProgress(current, max, picRadius)}
-        position={`${getXPosition(current, max, picRadius)} ${progressYPos} 0`}
-      />;
-
-    storiesFractionBar = 
-      <a-cylinder
-        radius={progressRadius} 
-        opacity='0.4'
-        color='#b2b2b2' 
-        rotation='0 0 90'
-        height={getProgress(storyFraction, storyFractionTotal, picRadius)}
-        position={`${getXPosition(storyFraction, storyFractionTotal, picRadius)} ${progressYPos} -.01`}
-      />;
-
-    progressBarTotal = 
-      <a-cylinder
-        radius={progressRadius} 
-        opacity='0.2'
-        color='#b2b2b2'
-        rotation='0 0 90'
-        height={picRadius * 2}
-        position={`0 ${progressYPos} 0`}
-      />;
 
 
-      //////////////////
-    const getArcProgress = (i, total) => {
-      if (i / total * 360 > .001) {
-        return i / total * 360;
+
+
+    const getArcProgress = (i, total, arcMax) => {
+      if (i / total * arcMax > .001) {
+        return i / total * arcMax;
       } else {
         return .001;
       }
     };
     
-    circleFraction =
-      <a-torus
-        radius='1'
-        opacity='0.7'
-        color='#b2b2b2'
-        rotation='0 180 90'
-        radius-tubular='.09'
+    const setLoading = () => {
+      let segmentLength = 360 / props.currentStories.length;
+      segmentLength -= 3.5;
+      let rotate = 360 / props.currentStories.length;
+      let startingRotation = 90
 
-        arc={getArcProgress(storyFraction, storyFractionTotal)}
-      />;
+      let loaders = [];
 
-    circleProgress =
-      <a-torus
-        radius='1'
-        opacity='0.7'
-        color='#54d1ff'
-        rotation='0 180 90'
-        radius-tubular='.09'
-        arc={getArcProgress(current, max)}
-      />;
+      for (var i = 0; i < props.currentStories.length; i++) {
+        loaders.push( 
+          <a-torus
+            key={i}
+            radius='1'
+            opacity='0.7'
+            color='#b2b2b2'
+            radius-tubular='.15'
+            arc={segmentLength}
+            rotation={`0 180 ${startingRotation}`}
+          />
+        )
+        startingRotation += rotate
+      }
+      return loaders;
+    }
+    circleFraction = setLoading();
+
+
+
+
+    const setProgress = (n) => {
+      let segmentLength = 360 / props.currentStories.length;
+      segmentLength -= 3.5;
+      let rotate = 360 / props.currentStories.length;
+      let startingRotation = 90
+
+      let loaders = [];
+
+      for (var i = 0; i <= n; i++) {
+        
+
+        if (i === n) {
+          segmentLength = getArcProgress(current, total, segmentLength)
+        }
+
+        loaders.push(
+          <a-torus
+            key={i}
+            radius='1'
+            opacity='0.7'
+            color='#54d1ff'
+            radius-tubular='.15'
+            arc={segmentLength}
+            rotation={`0 180 ${startingRotation}`}
+          />
+        )
+        startingRotation += rotate
+      }
+      return loaders;
+    }
+
+    circleProgress = setProgress(props.currentStory.index);
+
+    // circleFraction =
+    //   <a-torus
+    //     radius='1'
+    //     opacity='0.7'
+    //     color='#b2b2b2'
+    //     rotation='0 180 90'
+    //     radius-tubular='.09'
+
+    //     arc={getArcProgress(storyFraction, storyFractionTotal)}
+    //   />;
+
+    // circleProgress =
+      // <a-torus
+      //   radius='1'
+      //   opacity='0.7'
+      //   color='#54d1ff'
+      //   rotation='0 180 90'
+      //   radius-tubular='.09'
+      //   arc={getArcProgress(props.currentStoriesDuration.current, total)}
+      // />;
   }
   
   return (
@@ -112,12 +145,6 @@ const VRProfile = props => {
       
       {circleFraction}
       {circleProgress}
-      
-      {/*
-      {progressBar}
-      {storiesFractionBar}
-      {progressBarTotal}
-      */}
       
     </a-entity>
   );
