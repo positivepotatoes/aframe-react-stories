@@ -52,10 +52,10 @@ class VRStories extends React.Component {
     this.setAutoPlayOrSplash();
   }
 
-  removeFriendsWithNoStories() {
-    this.setState({
-      friends: this.state.friends.filter(friend => friend.stories.length > 1)
-    });
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined) {
+      this.props.viewCountCallback(this.state.currentStory.storyDBId)
+    }
   }
 
   // SINCE USER OF THIS MODULE WILL ONLY PROVIDE LIST OF FRIENDS AND NOT ANY KEYS
@@ -71,84 +71,6 @@ class VRStories extends React.Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined) {
-      this.props.viewCountCallback(this.state.currentStory.storyDBId)
-    }
-  }
-
-  countStoriesDuration() {
-    let story = this.state.currentStory;
-    let storyDom = document.getElementById(story.id + ',' + story.index);
-
-    this.state.durationInTimeout = setInterval(() => {
-      this.setState({
-        currentStoriesDuration: {
-          current: storyDom.currentTime || this.state.currentStoriesDuration.current + .01,
-          total: this.state.currentStoriesDuration.total
-        }
-      });
-    }, 10);
-  }
-
-  setInitialStoriesDuration() {
-    // getEntireDuration was used in previous version of this app. may delete soon
-    // const getEntireDuration = (n) => {
-    //   let totalDuration = 0;
-    //   for (let i = 0; i < n; i++) {
-    //     let story = this.state.currentStories[i];
-
-    //     let storyDom = document.getElementById(story.id + ',' + story.index);
-    //     if (story.type.slice(0, 5) === 'image' ) {
-    //       totalDuration += this.state.defaultDuration / 1000;
-    //     } else {
-    //       totalDuration += storyDom.duration;
-    //     }
-    //   }
-    //   return totalDuration;
-    // };
-
-    let story = this.state.currentStory;
-    let storyDom = document.getElementById(story.id + ',' + story.index);
-
-    // const getDuration = (i) => {
-    //   let story = this.state.currentStories[i];
-    //   let storyDom = document.getElementById(story.id + ',' + story.index);
-
-    //   if (story.type.slice(0, 5) === 'image' ) {
-    //     return this.state.defaultDuration / 1000;
-    //   } else {
-    //     return storyDom.duration;
-    //   }
-    // }
-
-    const getDuration = () => {
-      if (story.type.slice(0, 5) === 'image' ) {
-        return this.state.defaultDuration / 1000;
-      } else {
-        return storyDom.duration;
-      }
-    }
-
-    this.setState({
-      currentStoriesDuration: {
-        current: 0,
-        total: getDuration()
-      }
-    });
-
-    // this.countStoriesDuration();
-
-    this.state.durationInTimeout = setInterval(() => {
-      this.setState({
-        currentStoriesDuration: {
-          current: storyDom.currentTime || this.state.currentStoriesDuration.current + .01,
-          total: this.state.currentStoriesDuration.total
-        }
-      });
-    }, 10);
-  }
-
   pauseStories() {
     let stories = Array.prototype.slice.call(document.getElementsByTagName('video'));
     stories.forEach(story => {
@@ -157,6 +79,28 @@ class VRStories extends React.Component {
     });
     clearTimeout(this.state.storyInTimeout);
     clearInterval(this.state.durationInTimeout);
+  }
+
+  setDurationCounter() {
+    let story = this.state.currentStory;
+    let storyDom = document.getElementById(story.id + ',' + story.index);
+    let totalDuration = storyDom.duration || this.state.defaultDuration / 1000;
+
+    this.setState({
+      currentStoriesDuration: {
+        current: 0,
+        total: totalDuration
+      }
+    });
+
+    this.state.durationInTimeout = setInterval(() => {
+      this.setState({
+        currentStoriesDuration: {
+          current: storyDom.currentTime || this.state.currentStoriesDuration.current + .01,
+          total: this.state.currentStoriesDuration.total
+        }
+      });
+    }, 10);
   }
 
   setSplashScreen() {
@@ -168,20 +112,12 @@ class VRStories extends React.Component {
     });
   }
 
-  setAutoPlayOrSplash() {
-    if (this.state.autoPlayStart) {
-      this.onFriendClick(this.state.friends[0]);
-    } else {
-      this.setSplashScreen();
-    }
-  }
-
   // THIS NEEDS TO BE INVOKED EVERYTIME THE STATE OF THE CURRENT STORY IS CHANGED
   invokePlay() {
     let storyDom = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
     const initTimeoutAndProgress = (duration) => {
       this.state.storyInTimeout = setTimeout(() => this.playNext(), duration);
-      this.setInitialStoriesDuration();
+      this.setDurationCounter();
     };
 
     this.pauseStories();
@@ -196,19 +132,6 @@ class VRStories extends React.Component {
     document.getElementById('playnextbutton').emit('initializeplay')
   }
 
-  // THIS FUNCTION WILL UPDATE currentStory TO BE THE NEXT STORY
-  playNextStoryOfFriend() {
-    const { currentStories, currentStory } = this.state;
-    let nextStoryIndex = currentStory.index + 1;
-
-    if (nextStoryIndex < currentStories.length) {
-      this.setState({
-        currentStory: currentStories[nextStoryIndex]
-      }, () => this.invokePlay());
-    }
-  }
-
-  // THIS FUNCTION WILL PLAY THE NEXT STORY OF currentStories AND IF AUTOPLAY IS ON, THE NEXT FRIEND'S STORIES WILL BE PLAYED
   playNext() {
     const { friends, autoPlayNext, currentStories, currentStory, lastClickedFriendIndex } = this.state;
     let nextFriendIndex = currentStory.id + 1;
@@ -221,7 +144,11 @@ class VRStories extends React.Component {
       return;
     }
 
-    this.playNextStoryOfFriend();
+    if (nextStoryIndex < currentStories.length) {
+      this.setState({
+        currentStory: currentStories[nextStoryIndex]
+      }, () => this.invokePlay());
+    }
 
     if (autoPlayNext && reachedLastStory) {
       let nextstate = (i) => {
@@ -235,7 +162,6 @@ class VRStories extends React.Component {
           }, () => this.invokePlay());
         }
       };
-
       
       while (nextFriend && nextFriend.stories.length === 0) {
         if (nextFriendIndex + 1 === friends.length) {
@@ -255,10 +181,6 @@ class VRStories extends React.Component {
     }
   }
 
-  // THIS FUNCTION WILL UPDATE THE STATE OF THE MOST RECENTLY CLICKED FRIEND
-  //
-  // THIS IS ALSO NECESSARY TO KNOW WHICH FRIEND WAS LAST CLICKED TO KNOW WHEN TO END STORIES LOOP
-  // AND TO MAKE THIS FRIEND THE CURRENT STORIES SHOWING
   onFriendClick(friendData) {
     const { currentStory, currentStories, splashScreen } = this.state;
 
@@ -277,6 +199,14 @@ class VRStories extends React.Component {
         currentStory: friendData.stories[0],
         currentStoriesDuration: {}
       }, () => this.invokePlay());
+    }
+  }
+
+  setAutoPlayOrSplash() {
+    if (this.state.autoPlayStart) {
+      this.onFriendClick(this.state.friends[0]);
+    } else {
+      this.setSplashScreen();
     }
   }
 
