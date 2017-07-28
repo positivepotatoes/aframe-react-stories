@@ -245,7 +245,6 @@ class VRStories extends React.Component {
 
     assets.push(splashScreenAsset);
     assets = assets.concat(allPics);
-    debugger;
     this.state.assetsCallback(assets);
   }
 
