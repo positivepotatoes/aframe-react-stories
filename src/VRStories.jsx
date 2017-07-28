@@ -56,6 +56,10 @@ class VRStories extends React.Component {
     if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined) {
       this.props.viewCountCallback(this.state.currentStory.storyDBId)
     }
+    if (this.props.user.profile.uploadId === this.state.profiles[0].profile.uploadId) {
+      console.log('!!');
+      this.props.ownStoryViewsCallback();
+    }
   }
 
   // SINCE USER OF THIS MODULE WILL ONLY PROVIDE LIST OF FRIENDS AND NOT ANY KEYS
