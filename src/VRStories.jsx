@@ -163,7 +163,7 @@ class VRStories extends React.Component {
           }, () => this.invokePlay());
         }
       };
-      
+
       while (nextFriend && nextFriend.stories.length === 0) {
         if (nextFriendIndex + 1 === friends.length) {
           nextFriendIndex = 0;
