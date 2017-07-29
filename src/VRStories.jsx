@@ -113,7 +113,7 @@ class VRStories extends React.Component {
     this.setState({
       currentStory: this.state.splashScreen
     }, () => {
-      this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('storystopping'));
+      this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('stopping'));
     });
   }
 
@@ -134,7 +134,7 @@ class VRStories extends React.Component {
           initTimeoutAndProgress(storyDom.duration * 1000);
         });
     }
-    this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('storyplaying'));
+    this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('playing'));
   }
 
   playNext() {
@@ -247,8 +247,8 @@ class VRStories extends React.Component {
       scaleTo: `property: scale; dur: 450; easing: easeInSine; to: ${to}; startEvents: ${status}`,
       moveTo: `property: position; dur: 450; easing: easeInSine; to: ${to}; startEvents: ${status}`,
       fadeTextTo: `property: opacity; dur: 1400; easing: easeInSine; to: ${to}; startEvents: ${status}`,
-      shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
       fadingTo: `property: color; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
+      shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
       tiltingTo: `property: rotation; dur: 800; easing: easeInSine; to: 0 0 -${to}; from: 0 0 ${to}; dir: alternate; loop: true`
     }
 
