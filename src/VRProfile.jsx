@@ -55,8 +55,8 @@ const VRProfile = props => {
     <a-entity position={`${props.x} ${props.y}, ${props.z}`} rotation={`${props.xRotation} ${props.yRotation} ${0}`}>
       <a-entity 
         animation__bounce={`property: scale; dir: alternate; dur: 150; easing: easeInSine; repeat: 1; to: 1.1 1.1 1.1; startEvents: click, nextplay`}
-        animation__scale={`property: scale; dir: alternate; dur: 1800; easing: easeInSine; loop: true; to: .920 .920 .920; delay: ${Math.round(Math.random()*1000) + 1}`}
-        animation__float={`property: rotation; dir: alternate; dur: 1800; easing: easeInSine; loop: true; from: 0 -13 0; to: 0 13 0; delay: ${Math.round(Math.random()*1000) + 1}`}
+        animation__scale={`property: scale; dir: alternate; dur: 1800; easing: easeInSine; loop: true; to: .920 .920 .920; delay: ${Math.round(Math.random()*1000) * props.friend.profile.id + 1}`}
+        animation__float={`property: rotation; dir: alternate; dur: 1800; easing: easeInSine; loop: true; from: 0 -13 0; to: 0 13 0; delay: ${Math.round(Math.random()*1000) * props.friend.profile.id + 1}`}
         // animation__float={`property: position; dir: alternate; dur: 1000; easing: easeInSine; loop: true; from: 0 0 .5; to: 0 0 -.5; delay: ${props.key * 1200}`}
       >
         <a-cylinder 
@@ -72,7 +72,7 @@ const VRProfile = props => {
           align='center' 
           color='white'
           width='6'
-          position={`0 ${-picRadius * 1.2} 0`}
+          position={`0 ${-picRadius * 1.25} 0`}
         />
         {circleFraction}
         {circleProgress}

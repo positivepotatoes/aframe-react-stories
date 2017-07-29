@@ -108,7 +108,12 @@ class VRStories extends React.Component {
     this.setState({
       currentStory: this.state.splashScreen
     }, () => {
-      document.getElementById('playnextbutton').emit('finishedplay', 'bounce')
+      document.getElementById('playnextbutton').emit('finishedplay')
+      document.getElementById('exitbutton').emit('finishedplay')
+      document.getElementById('exittext').emit('finishedplay')
+      document.getElementById('stoptext').emit('finishedplay')
+      document.getElementById('nexttext').emit('finishedplay')
+      document.getElementById('playposition').emit('finishedplay')
     });
   }
 
@@ -130,6 +135,12 @@ class VRStories extends React.Component {
         });
     }
     document.getElementById('playnextbutton').emit('initializeplay')
+    document.getElementById('exitbutton').emit('initializeplay')
+    document.getElementById('exittext').emit('initializeplay')
+    document.getElementById('stoptext').emit('initializeplay')
+    document.getElementById('nexttext').emit('initializeplay')
+    document.getElementById('playposition').emit('initializeplay')
+
   }
 
   playNext() {
@@ -242,7 +253,7 @@ class VRStories extends React.Component {
 
     let exitButton;
     if (exitCallback) {
-      exitButton = <VRExit exitCallback={exitCallback} setSplashScreen={this.setSplashScreen}/>
+      exitButton = <VRExit exitCallback={exitCallback} setSplashScreen={this.setSplashScreen} currentStory={currentStory}/>
     }
 
     return (
