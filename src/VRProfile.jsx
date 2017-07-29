@@ -50,7 +50,7 @@ const VRProfile = props => {
     circleFraction = setProgress(length, '#b2b2b2', false);
     circleProgress = setProgress(props.currentStory.index, '#4286f4');
   }
-  // modded for assets --> material={`src: #profile${props.friend.profile.id - 1}`}
+  // modded for assets --> material={`src: #profile${props.friend.profile.id}`}
   // original ----> material={`src: ${props.friend.profile.img_url}`}
   return (
     <a-entity position={`${props.x} ${props.y}, ${props.z}`} rotation={`${props.xRotation} ${props.yRotation} ${0}`}>
@@ -65,7 +65,7 @@ const VRProfile = props => {
           radius={picRadius}
           height='0.15'
           rotation="0 90 90"
-          material={`src: ${props.friend.profile.img_url}`}
+          material={`src: #profile${props.friend.profile.id}`}
           onClick={() => props.onFriendClick(props.friend)}
         />
         <a-text 
