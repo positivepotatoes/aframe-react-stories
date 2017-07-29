@@ -36,6 +36,7 @@ class VRStories extends React.Component {
       durationInTimeout: null,
       currentStoriesDuration: {},
       lastClickedFriendIndex: null,
+      animationRefs: ['exit', 'exitbutton', 'exittext1', 'exittext2', 'next', 'nextbutton', 'nexttext']
       // USE FOR MOCK DATA
       // friends: mockData.friends,
       // user: mockData.user,
@@ -108,12 +109,7 @@ class VRStories extends React.Component {
     this.setState({
       currentStory: this.state.splashScreen
     }, () => {
-      document.getElementById('playnextbutton').emit('finishedplay')
-      document.getElementById('exitbutton').emit('finishedplay')
-      document.getElementById('exittext').emit('finishedplay')
-      document.getElementById('stoptext').emit('finishedplay')
-      document.getElementById('nexttext').emit('finishedplay')
-      document.getElementById('playposition').emit('finishedplay')
+      this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('finishplay'));
     });
   }
 
@@ -134,13 +130,7 @@ class VRStories extends React.Component {
           initTimeoutAndProgress(storyDom.duration * 1000);
         });
     }
-    document.getElementById('playnextbutton').emit('initializeplay')
-    document.getElementById('exitbutton').emit('initializeplay')
-    document.getElementById('exittext').emit('initializeplay')
-    document.getElementById('stoptext').emit('initializeplay')
-    document.getElementById('nexttext').emit('initializeplay')
-    document.getElementById('playposition').emit('initializeplay')
-
+    this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('initializeplay'));
   }
 
   playNext() {
