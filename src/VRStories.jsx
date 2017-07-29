@@ -36,6 +36,7 @@ class VRStories extends React.Component {
       durationInTimeout: null,
       currentStoriesDuration: {},
       lastClickedFriendIndex: null,
+      animationRefs: ['exit', 'exitbutton', 'exittext1', 'exittext2', 'next', 'nextbutton', 'nexttext']
       // USE FOR MOCK DATA
       // friends: mockData.friends,
       // user: mockData.user,
@@ -108,7 +109,7 @@ class VRStories extends React.Component {
     this.setState({
       currentStory: this.state.splashScreen
     }, () => {
-      document.getElementById('playnextbutton').emit('finishedplay', 'bounce')
+      this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('finishplay'));
     });
   }
 
@@ -129,7 +130,7 @@ class VRStories extends React.Component {
           initTimeoutAndProgress(storyDom.duration * 1000);
         });
     }
-    document.getElementById('playnextbutton').emit('initializeplay')
+    this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('initializeplay'));
   }
 
   playNext() {
@@ -242,7 +243,7 @@ class VRStories extends React.Component {
 
     let exitButton;
     if (exitCallback) {
-      exitButton = <VRExit exitCallback={exitCallback} setSplashScreen={this.setSplashScreen}/>
+      exitButton = <VRExit exitCallback={exitCallback} setSplashScreen={this.setSplashScreen} currentStory={currentStory}/>
     }
 
     return (
