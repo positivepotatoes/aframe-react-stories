@@ -50,8 +50,7 @@ const VRProfile = props => {
     circleFraction = setProgress(length, '#b2b2b2', false);
     circleProgress = setProgress(props.currentStory.index, '#4286f4');
   }
-  // modded for assets --> material={`src: #profile${props.friend.profile.id}`}
-  // original ----> material={`src: ${props.friend.profile.img_url}`}
+
   return (
     <a-entity position={`${props.x} ${props.y}, ${props.z}`} rotation={`${props.xRotation} ${props.yRotation} ${0}`}>
       <a-entity 
