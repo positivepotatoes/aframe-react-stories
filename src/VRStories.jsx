@@ -54,8 +54,11 @@ class VRStories extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined) {
+    if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined && this.state.currentStory.uploadId !== this.state.user.profile.uploadId) {
       this.props.viewCountCallback(this.state.currentStory.storyDBId)
+    }
+    if (this.state.currentStory.uploadId === this.state.user.profile.uploadId) {
+      this.props.ownStoryViewsCallback(this.state.currentStory.storyDBId);
     }
   }
 
@@ -164,7 +167,7 @@ class VRStories extends React.Component {
           }, () => this.invokePlay());
         }
       };
-      
+
       while (nextFriend && nextFriend.stories.length === 0) {
         if (nextFriendIndex + 1 === friends.length) {
           nextFriendIndex = 0;
