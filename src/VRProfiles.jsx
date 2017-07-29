@@ -61,6 +61,7 @@ class VRProfiles extends React.Component {
                 currentStory={this.props.currentStory}
                 currentStories={this.props.currentStories}
                 onFriendClick={this.props.onFriendClick}
+                animations={this.props.animations}
                 currentStoriesDuration={this.props.currentStoriesDuration}
               />
             );

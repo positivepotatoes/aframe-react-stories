@@ -135,6 +135,7 @@ class VRStories extends React.Component {
         });
     }
     this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('playing'));
+    document.getElementById(`animatefriend${this.state.currentStory.id}`).emit('trigger');
   }
 
   playNext() {
@@ -253,10 +254,12 @@ class VRStories extends React.Component {
       scaleTo: `property: scale; dur: 450; easing: easeInSine; to: ${to}; startEvents: ${status}`,
       moveTo: `property: position; dur: 450; easing: easeInSine; to: ${to}; startEvents: ${status}`,
       fadeTextTo: `property: opacity; dur: 1400; easing: easeInSine; to: ${to}; startEvents: ${status}`,
+      bounceTo: `property: scale; dur: 150; easing: easeInSine; to: ${to}; startEvents: ${status}; dir: alternate`,
       fadingTo: `property: color; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
-      shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
-      tiltingTo: `property: rotation; dur: 800; easing: easeInSine; to: 0 0 -${to}; from: 0 0 ${to}; dir: alternate; loop: true`
-    }
+      tiltingTo: `property: rotation; dur: 1100; easing: easeInSine; from: 0 0 -${to}; to: 0 0 ${to}; dir: alternate; loop: true`,
+      shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`,
+      turningTo: `property: rotation; dur: 1100; easing: easeInSine; to: 0 ${to} 0; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`
+    };
 
     return animations[animation];
   }
@@ -274,6 +277,7 @@ class VRStories extends React.Component {
         <VRProfiles
           friends={profiles}
           currentStory={currentStory}
+          animations={this.animations}
           currentStories={currentStories}
           onFriendClick={this.onFriendClick}
           currentStoriesDuration={currentStoriesDuration}
