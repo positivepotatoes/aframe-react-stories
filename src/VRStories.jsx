@@ -44,6 +44,7 @@ class VRStories extends React.Component {
     this.playNext = this.playNext.bind(this);
     this.onFriendClick = this.onFriendClick.bind(this);
     this.setSplashScreen = this.setSplashScreen.bind(this);
+    this.animations = this.animations.bind(this);
   }
 
   componentWillMount() {
@@ -112,7 +113,7 @@ class VRStories extends React.Component {
     this.setState({
       currentStory: this.state.splashScreen
     }, () => {
-      this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('finishplay'));
+      this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('stopping'));
     });
   }
 
@@ -133,7 +134,7 @@ class VRStories extends React.Component {
           initTimeoutAndProgress(storyDom.duration * 1000);
         });
     }
-    this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('initializeplay'));
+    this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('playing'));
   }
 
   playNext() {
@@ -241,12 +242,25 @@ class VRStories extends React.Component {
     this.state.assetsCallback(assets);
   }
 
+  animations(status, animation, to) {
+    let animations = {
+      scaleTo: `property: scale; dur: 450; easing: easeInSine; to: ${to}; startEvents: ${status}`,
+      moveTo: `property: position; dur: 450; easing: easeInSine; to: ${to}; startEvents: ${status}`,
+      fadeTextTo: `property: opacity; dur: 1400; easing: easeInSine; to: ${to}; startEvents: ${status}`,
+      fadingTo: `property: color; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
+      shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
+      tiltingTo: `property: rotation; dur: 800; easing: easeInSine; to: 0 0 -${to}; from: 0 0 ${to}; dir: alternate; loop: true`
+    }
+
+    return animations[animation];
+  }
+
   render () {
     const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback } = this.state;
 
     let exitButton;
     if (exitCallback) {
-      exitButton = <VRExit exitCallback={exitCallback} setSplashScreen={this.setSplashScreen} currentStory={currentStory}/>
+      exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations}/>
     }
 
     return (
@@ -260,7 +274,7 @@ class VRStories extends React.Component {
         />
 
         <VRPrimitive currentStory={currentStory}/>
-        <VRNext playNext={this.playNext}/>
+        <VRNext playNext={this.playNext} animations={this.animations}/>
         {exitButton}
       </a-entity>
     );
