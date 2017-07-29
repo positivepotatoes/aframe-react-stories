@@ -1,11 +1,13 @@
 import React from 'react';
 
 const VRExit = (props) => {
+  // const { animateWhen } = props.animations;
+
   return (
     <a-entity position='0 -2 -3'
       id='exit'
-      animation__playpos='property: position; dur: 800; easing: easeInOutSine; to: -.3 -2 -3; startEvents: initializeplay'
-      animation__pausepos='property: position; dur: 800; easing: easeInOutSine; to: 0 -2 -3; startEvents: finishplay'
+      animation__playpos={props.animations('storyplaying', 'moveTo', '-.3 -2 -3')}
+      animation__pausepos={props.animations('storystopping', 'moveTo', '0 -2 -3')}
     >
       <a-sphere
         id='exitbutton'
@@ -20,27 +22,28 @@ const VRExit = (props) => {
           }
         }}
         //ALWAYS PLAYING
-        animation__scale='property: scale; dir: alternate; dur: 1100; easing: easeInSine; loop: true; to: .95 .95 .95;'
-        animation__color='property: color; dir: alternate; dur: 1100; easing: easeInSine; loop: true; to: #8e8e8e'
+        animation__color={props.animations('always', 'fadingTo', '#8e8e8e')}
+        animation__shrinking={props.animations('always', 'shrinkingTo', '.95 .95 .95')}
+        
       />
       <a-text 
         id='exittext1'
         value='Exit'
-        align='center'
         width='2'
+        align='center'
         position='0 -.13 .12'
-        animation__playtext='property: opacity; dur: 1200; easing: easeInOutSine; to: 0; startEvents: initializeplay'
-        animation__stoptext='property: opacity; dur: 1200; easing: easeInOutSine; to: 1; startEvents: finishplay'
+        animation__showtext={props.animations('storystopping', 'fadeTextTo', '1')}
+        animation__hidetext={props.animations('storyplaying', 'fadeTextTo', '0')}
       />
       <a-text 
         id='exittext2'
         value='Stop'
-        align='center'
         width='2'
         opacity='0'
+        align='center'
         position='0 -.13 .12'
-        animation__playtext='property: opacity; dur: 1200; easing: easeInOutSine; to: 0; startEvents: finishplay'
-        animation__stoptext='property: opacity; dur: 1200; easing: easeInOutSine; to: 1; startEvents: initializeplay'
+        animation__showtext={props.animations('storyplaying', 'fadeTextTo', '1')}
+        animation__hidetext={props.animations('storystopping', 'fadeTextTo', '0')}
       />
     </a-entity>
   )
