@@ -219,8 +219,13 @@ class VRStories extends React.Component {
   createAssets() {
     let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous'/>);
     let allStories = [];
-    this.state.profiles.forEach(friend => {
-      friend.stories.forEach(story => {
+    let allPics = [];
+    this.state.profiles.forEach((profile, profileIndex) => {
+      allPics.push(
+        <img id={'profile' + (profileIndex - 1).toString()} src={profile.profile.img_url} crossOrigin='anonymous'/>
+      );
+
+      profile.stories.forEach(story => {
         allStories.push(story);
       });
     });
@@ -237,8 +242,9 @@ class VRStories extends React.Component {
         );
       }
     });
-    assets.push(splashScreenAsset);
 
+    assets.push(splashScreenAsset);
+    assets = assets.concat(allPics);
     this.state.assetsCallback(assets);
   }
 
