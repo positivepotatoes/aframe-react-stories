@@ -2,9 +2,20 @@ import React from 'react';
 
 const VRExit = (props) => {
   const animateWhen = props.animations;
+  let initPosition = '0 -2 -3';
+  let exitText1Opacity = '1';
+  let exitText2Opacity = '0';
+
+  if (!props.enableAnimation) {
+    initPosition = '-.3 -2 -3';
+    if (props.currentStory.index !== -2) {
+      exitText1Opacity = '0';
+      exitText2Opacity = '1';
+    }
+  }
 
   return (
-    <a-entity position='0 -2 -3'
+    <a-entity position={initPosition}
       id='exit'
       animation__playpos={animateWhen('playing', 'moveTo', '-.3 -2 -3')}
       animation__pausepos={animateWhen('stopping', 'moveTo', '0 -2 -3')}
@@ -32,6 +43,7 @@ const VRExit = (props) => {
         width='2'
         align='center'
         position='0 -.13 .12'
+        opacity={exitText1Opacity}
         animation__showtext={animateWhen('stopping', 'fadeTextTo', '1')}
         animation__hidetext={animateWhen('playing', 'fadeTextTo', '0')}
       />
@@ -39,9 +51,9 @@ const VRExit = (props) => {
         id='exittext2'
         value='Stop'
         width='2'
-        opacity='0'
         align='center'
         position='0 -.13 .12'
+        opacity={exitText2Opacity}
         animation__showtext={animateWhen('playing', 'fadeTextTo', '1')}
         animation__hidetext={animateWhen('stopping', 'fadeTextTo', '0')}
       />
