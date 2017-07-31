@@ -124,7 +124,6 @@ class VRStories extends React.Component {
     this.setState({
       currentStory: this.state.splashScreen
     }, () => {
-      console.log('CALLING STOPPING')
       this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('stopping'));
       // invoke viewCountCallback here, after splash screen appears
       this.props.viewCountCallback(this.state.currentStory);
@@ -151,7 +150,6 @@ class VRStories extends React.Component {
           this.props.viewCountCallback(this.state.currentStory);
         });
     }
-    console.log('CALLING PLAYING')
     this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('playing'));
     document.getElementById(`animatefriend${this.state.currentStory.id}`).emit('trigger');
   }
@@ -276,7 +274,7 @@ class VRStories extends React.Component {
       bounceTo: `property: scale; dur: 150; easing: easeInSine; to: ${to}; startEvents: ${status}; dir: alternate`,
       fadingTo: `property: color; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
       tiltingTo: `property: rotation; dur: 1100; easing: easeInSine; from: 0 0 -${to}; to: 0 0 ${to}; dir: alternate; loop: true`,
-      shrinkingTo: `property: scale; dur: 900; easing: easeInSine; to: ${to}; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`,
+      shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`,
       turningTo: `property: rotation; dur: 1100; easing: easeInSine; to: 0 ${to} 0; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`
     };
 
