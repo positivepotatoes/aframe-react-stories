@@ -301,7 +301,7 @@ class VRStories extends React.Component {
         />;
 
         <VRPrimitive currentStory={currentStory}/>
-        <VRNext playNext={this.playNext} animations={this.animations} enableAnimation={enableAnimation} providedExitCallback={exitCallback}/>
+        <VRNext playNext={this.playNext} animations={this.animations} currentStory={currentStory} enableAnimation={enableAnimation} providedExitCallback={exitCallback}/>
         {exitButton}
       </a-entity>
     );

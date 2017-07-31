@@ -4,6 +4,7 @@ const VRNext = (props) => {
   const animateWhen = props.animations;
   let animationInitPos = '0 0 -3';
   let textOpacity = '0';
+  let nextText = 'Next';
   let playMoveTo = '.3 -2 -3';
   let animationInitScale = { 
     height: '.47',
@@ -19,6 +20,9 @@ const VRNext = (props) => {
       bottom: '.13'
     };
     textOpacity = 1;
+    if (props.currentStory.index === -2) {
+      nextText = 'Play';
+    }
   }
   
   if (!props.providedExitCallback) {
@@ -48,7 +52,7 @@ const VRNext = (props) => {
       />
       <a-text 
         id='nexttext'
-        value='Next'
+        value={nextText}
         width='2'
         opacity={textOpacity}
         align='center'
