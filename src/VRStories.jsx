@@ -49,6 +49,7 @@ class VRStories extends React.Component {
     this.onFriendClick = this.onFriendClick.bind(this);
     this.setSplashScreen = this.setSplashScreen.bind(this);
     this.animations = this.animations.bind(this);
+    this.onShowMoreFriendsClick = this.onShowMoreFriendsClick.bind(this);
   }
 
   componentWillMount() {
@@ -228,11 +229,13 @@ class VRStories extends React.Component {
   }
 
   onShowMoreFriendsClick() {
+    console.log('clicked')
     if (this.state.friendsShowingIndex.end >= this.state.friends.length) {
       this.setState({
         friendsShowingIndex: {start: 0, end: this.state.displayNumFriends}
       });
     } else {
+      console.log('onshowmorefriendsclicked', this.state.friendsShowingIndex.end + this.state.displayNumFriends)
       this.setState({
         friendsShowingIndex: {start: this.state.friendsShowingIndex.end, end: this.state.friendsShowingIndex.end + this.state.displayNumFriends}
       });
@@ -301,12 +304,12 @@ class VRStories extends React.Component {
 
   render () {
     const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback } = this.state;
-    const showProfiles = [this.state.user].concat(this.state.friends).slice(this.state.friendsShowingIndex.start,this.state.friendsShowingIndex.end);
+    const showProfiles = [this.state.user].concat((this.state.friends).slice(this.state.friendsShowingIndex.start,this.state.friendsShowingIndex.end));
+    console.log('show Profiles -------------', showProfiles);
     let exitButton;
     if (exitCallback) {
       exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations} enableAnimation={enableAnimation}/>
     }
-    debugger;
     return (
       <a-entity>
         <VRProfiles
@@ -316,6 +319,7 @@ class VRStories extends React.Component {
           enableAnimation={enableAnimation}
           currentStories={currentStories}
           onFriendClick={this.onFriendClick}
+          onShowMoreFriendsClick={this.onShowMoreFriendsClick}
           currentStoriesDuration={currentStoriesDuration}
         />;
 
