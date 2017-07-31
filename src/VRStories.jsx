@@ -303,7 +303,7 @@ class VRStories extends React.Component {
   }
 
   render () {
-    const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback } = this.state;
+    const { currentStory, currentStories, currentStoriesDuration, exitCallback, enableAnimation } = this.state;
     const showProfiles = [this.state.user].concat((this.state.friends).slice(this.state.friendsShowingIndex.start,this.state.friendsShowingIndex.end));
     let exitButton;
     if (exitCallback) {
