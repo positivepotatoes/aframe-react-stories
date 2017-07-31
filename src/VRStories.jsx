@@ -13,6 +13,8 @@ class VRStories extends React.Component {
       friends: props.friends || [],
 
       profiles: [props.user].concat(props.friends),
+      displayNumFriends: props.displayNumFriends || 5,
+      friendsShowingIndex: {start: 0, end: props.displayNumFriends || 5},
       autoPlayNext: props.autoPlayNext || false,
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
@@ -225,6 +227,18 @@ class VRStories extends React.Component {
     }
   }
 
+  onShowMoreFriendsClick() {
+    if (this.state.friendsShowingIndex.end >= this.state.friends.length) {
+      this.setState({
+        friendsShowingIndex: {start: 0, end: this.state.displayNumFriends}
+      });
+    } else {
+      this.setState({
+        friendsShowingIndex: {start: this.state.friendsShowingIndex.end, end: this.state.friendsShowingIndex.end + this.state.displayNumFriends}
+      });
+    }
+  }
+
   setAutoPlayOrSplash() {
     if (this.state.autoPlayStart) {
       this.onFriendClick(this.state.friends[0]);
@@ -286,17 +300,17 @@ class VRStories extends React.Component {
   }
 
   render () {
-    const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback, enableAnimation } = this.state;
-
+    const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback } = this.state;
+    const showProfiles = [this.state.user].concat(this.state.friends).slice(this.state.friendsShowingIndex.start,this.state.friendsShowingIndex.end);
     let exitButton;
     if (exitCallback) {
       exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations} enableAnimation={enableAnimation}/>
     }
-
+    debugger;
     return (
       <a-entity>
         <VRProfiles
-          friends={profiles}
+          friends={showProfiles}
           currentStory={currentStory}
           animations={this.animations}
           enableAnimation={enableAnimation}
