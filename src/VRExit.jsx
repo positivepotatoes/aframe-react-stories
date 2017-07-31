@@ -2,12 +2,12 @@ import React from 'react';
 
 const VRExit = (props) => {
   const animateWhen = props.animations;
-  let animationInitPos = '0 -2 -3';
-  let exitText1Opacity = '1'
-  let exitText2Opacity = '0'
+  let initPosition = '0 -2 -3';
+  let exitText1Opacity = '1';
+  let exitText2Opacity = '0';
 
   if (!props.enableAnimation) {
-    animationInitPos = '-.3 -2 -3';
+    initPosition = '-.3 -2 -3';
     if (props.currentStory.index !== -2) {
       exitText1Opacity = '0';
       exitText2Opacity = '1';
@@ -15,7 +15,7 @@ const VRExit = (props) => {
   }
 
   return (
-    <a-entity position={animationInitPos}
+    <a-entity position={initPosition}
       id='exit'
       animation__playpos={animateWhen('playing', 'moveTo', '-.3 -2 -3')}
       animation__pausepos={animateWhen('stopping', 'moveTo', '0 -2 -3')}

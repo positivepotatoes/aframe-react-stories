@@ -124,6 +124,7 @@ class VRStories extends React.Component {
     this.setState({
       currentStory: this.state.splashScreen
     }, () => {
+      console.log('CALLING STOPPING')
       this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('stopping'));
     });
   }
@@ -145,6 +146,7 @@ class VRStories extends React.Component {
           initTimeoutAndProgress(storyDom.duration * 1000);
         });
     }
+    console.log('CALLING PLAYING')
     this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('playing'));
     document.getElementById(`animatefriend${this.state.currentStory.id}`).emit('trigger');
   }
@@ -229,7 +231,7 @@ class VRStories extends React.Component {
   }
 
   createAssets() {
-    let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous' />);
+    let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous'/>);
     let allStories = [];
     let allPics = [];
     this.state.profiles.forEach((profile, profileIndex) => {

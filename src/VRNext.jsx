@@ -2,8 +2,9 @@ import React from 'react';
 
 const VRNext = (props) => {
   const animateWhen = props.animations;
-  let animationInitPos = '0 0 -3';
-  let textOpacity = '0';
+  
+  let initPosition = '0 0 -3';
+  let nextTextOpacity = '0';
   let nextText = 'Next';
   let playMoveTo = '.3 -2 -3';
   let animationInitScale = { 
@@ -13,13 +14,13 @@ const VRNext = (props) => {
   };
 
   if (!props.enableAnimation) {
-    animationInitPos = '.3 -2 -3';
+    initPosition = '.3 -2 -3';
     animationInitScale = { 
       height: '.235',
       top: '.004',
       bottom: '.13'
     };
-    textOpacity = 1;
+    nextTextOpacity = 1;
     if (props.currentStory.index === -2) {
       nextText = 'Play';
     }
@@ -30,7 +31,7 @@ const VRNext = (props) => {
   }
 
   return (
-    <a-entity position={animationInitPos} rotation='0 0 270' 
+    <a-entity position={initPosition} rotation='0 0 270' 
       id='next'
       animation__playpos={animateWhen('playing', 'moveTo', playMoveTo)}
       animation__pausepos={animateWhen('stopping', 'moveTo', '0 0 -3')}
@@ -54,7 +55,7 @@ const VRNext = (props) => {
         id='nexttext'
         value={nextText}
         width='2'
-        opacity={textOpacity}
+        opacity={nextTextOpacity}
         align='center'
         rotation='0 0 90'
         position='.23 0 0'
