@@ -11,7 +11,6 @@ class VRStories extends React.Component {
     this.state = {
       user: props.user || {},
       friends: props.friends || [],
-
       profiles: [props.user].concat(props.friends),
       displayNumFriends: props.displayNumFriends || 5,
       friendsShowingIndex: {start: 0, end: props.displayNumFriends || 5},
@@ -19,7 +18,7 @@ class VRStories extends React.Component {
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
       exitCallback: props.exitCallback,
-      enableAnimation: props.enableAnimation && true,
+      enableAnimation: props.enableAnimation || false,
       assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assetes for all your media')),
       viewCountCallback: props.viewCountCallback || (() => console.log('viewCallback was not provided as a prop to VRStories')),
       splashScreen: {
