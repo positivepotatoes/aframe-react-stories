@@ -4,27 +4,7 @@ import Profile from './VRProfile.jsx';
 class VRProfiles extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   sliceIndex: 6,
-    //   friends: this.props.friends,
-    //   friendsToShow: this.props.friends.slice(0, 6)
-    // };
-    // this.onMoreFriendsClick = this.onMoreFriendsClick.bind(this);
   }
-
-  // onMoreFriendsClick() {
-  //   if (this.state.sliceIndex >= this.state.friends.length) {
-  //     this.setState({
-  //       friendsToShow: this.props.friends.slice(0, 6),
-  //       sliceIndex: 6
-  //     });
-  //   } else {
-  //     this.setState({
-  //       friendsToShow: [this.state.friends[0]].concat(this.state.friends.slice(this.state.sliceIndex, this.state.sliceIndex + 5)),
-  //       sliceIndex: this.state.sliceIndex + 5
-  //     });
-  //   }
-  // }
 
   render() {
     let n = this.props.friends.length;
@@ -34,7 +14,6 @@ class VRProfiles extends React.Component {
     let radius = 10;
     let showFriendsRadius = radius - 0.1;
     let y = -4;
-    console.log('props.friends', this.props.friends)
     return (
 
       <a-entity>
@@ -46,7 +25,6 @@ class VRProfiles extends React.Component {
             let xRotation = -Math.atan(Math.abs(y) / radius) * 180 / Math.PI;
             yRotation = ((Math.PI / 2) - theta) * 180 / Math.PI;
             theta += (Math.PI / 12);
-            // console.log('LINE 69 OF VRPROFILES, this means all the calculations ran through successfully');
             return (
               <Profile
                 i={i}

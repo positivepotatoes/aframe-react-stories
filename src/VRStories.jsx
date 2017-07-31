@@ -165,7 +165,7 @@ class VRStories extends React.Component {
     let reachedLastStory = nextStoryIndex === currentStories.length;
 
     if (currentStory.index === -2) {
-      this.onFriendClick(this.state.friends[0]);
+      this.onFriendClick(this.state.friends[this.state.friendsShowingIndex.start]);
       return;
     }
 
@@ -192,8 +192,10 @@ class VRStories extends React.Component {
       while (nextFriend && nextFriend.stories.length === 0) {
         if (nextFriendIndex + 1 === friends.length) {
           nextFriendIndex = 0;
+          nextFriend = friends[nextFriendIndex];
         } else {
           nextFriendIndex++;
+          nextFriend = friends[nextFriendIndex];
         }
       }
 
@@ -229,13 +231,11 @@ class VRStories extends React.Component {
   }
 
   onShowMoreFriendsClick() {
-    console.log('clicked')
     if (this.state.friendsShowingIndex.end >= this.state.friends.length) {
       this.setState({
         friendsShowingIndex: {start: 0, end: this.state.displayNumFriends}
       });
     } else {
-      console.log('onshowmorefriendsclicked', this.state.friendsShowingIndex.end + this.state.displayNumFriends)
       this.setState({
         friendsShowingIndex: {start: this.state.friendsShowingIndex.end, end: this.state.friendsShowingIndex.end + this.state.displayNumFriends}
       });
@@ -249,7 +249,7 @@ class VRStories extends React.Component {
       this.setSplashScreen();
     }
   }
-
+//
   createAssets() {
     let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous'/>);
     let allStories = [];
@@ -305,7 +305,6 @@ class VRStories extends React.Component {
   render () {
     const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback } = this.state;
     const showProfiles = [this.state.user].concat((this.state.friends).slice(this.state.friendsShowingIndex.start,this.state.friendsShowingIndex.end));
-    console.log('show Profiles -------------', showProfiles);
     let exitButton;
     if (exitCallback) {
       exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations} enableAnimation={enableAnimation}/>
