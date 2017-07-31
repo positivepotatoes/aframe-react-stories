@@ -11,7 +11,7 @@ class VRStories extends React.Component {
     this.state = {
       user: props.user || {},
       friends: props.friends || [],
-      
+
       profiles: [props.user].concat(props.friends),
       autoPlayNext: props.autoPlayNext || false,
       autoPlayStart: props.autoPlayStart || false,
@@ -57,14 +57,14 @@ class VRStories extends React.Component {
     this.setExitRefs();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined && this.state.currentStory.uploadId !== this.state.user.profile.uploadId) {
-      this.props.viewCountCallback(this.state.currentStory.storyDBId)
-    }
-    if (this.state.currentStory.uploadId === this.state.user.profile.uploadId) {
-      this.props.ownStoryViewsCallback(this.state.currentStory.storyDBId);
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined && this.state.currentStory.uploadId !== this.state.user.profile.uploadId) {
+  //     this.props.viewCountCallback(this.state.currentStory.storyDBId)
+  //   }
+  //   if (this.state.currentStory.uploadId === this.state.user.profile.uploadId && prevState.currentStoriesDuration !== this.state.currentStoriesDuration) {
+  //     this.props.ownStoryViewsCallback(this.state.currentStory.storyDBId);
+  //   }
+  // }
 
   setExitRefs() {
     if (this.state.exitCallback) {
@@ -126,6 +126,8 @@ class VRStories extends React.Component {
     }, () => {
       console.log('CALLING STOPPING')
       this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('stopping'));
+      // invoke viewCountCallback here, after splash screen appears
+      this.props.viewCountCallback(this.state.currentStory);
     });
   }
 
@@ -140,10 +142,13 @@ class VRStories extends React.Component {
     this.pauseStories();
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
       initTimeoutAndProgress(this.state.defaultDuration);
+      this.props.viewCountCallback(this.state.currentStory);
     } else {
       storyDom.play()
         .then(() => {
           initTimeoutAndProgress(storyDom.duration * 1000);
+          // put viewCountCallback here
+          this.props.viewCountCallback(this.state.currentStory);
         });
     }
     console.log('CALLING PLAYING')
