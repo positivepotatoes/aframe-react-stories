@@ -2,19 +2,41 @@ import React from 'react';
 
 const VRNext = (props) => {
   const animateWhen = props.animations;
+  let animationInitPos = '0 0 -3';
+  let textOpacity = '0';
+  let playMoveTo = '.3 -2 -3';
+  let animationInitScale = { 
+    height: '.47',
+    top: '.008',
+    bottom: '.26'
+  };
+
+  if (!props.enableAnimation) {
+    animationInitPos = '.3 -2 -3';
+    animationInitScale = { 
+      height: '.235',
+      top: '.004',
+      bottom: '.13'
+    };
+    textOpacity = 1;
+  }
+  
+  if (!props.providedExitCallback) {
+    playMoveTo = '0 -2 -3';
+  }
 
   return (
-    <a-entity position='0 0 -3' rotation='0 0 270' 
+    <a-entity position={animationInitPos} rotation='0 0 270' 
       id='next'
-      animation__playpos={animateWhen('playing', 'moveTo', '.3 -2 -3')}
+      animation__playpos={animateWhen('playing', 'moveTo', playMoveTo)}
       animation__pausepos={animateWhen('stopping', 'moveTo', '0 0 -3')}
     >
       <a-cone 
         id='nextbutton'
         color='#c6c6c6'
-        height='.47'
-        radius-top='.008'
-        radius-bottom='.26'
+        height={animationInitScale.height}
+        radius-top={animationInitScale.top}
+        radius-bottom={animationInitScale.bottom}
         onClick={props.playNext}
         material='transparent: true; opacity: .55'
         //ALWAYS PLAYING
@@ -28,7 +50,7 @@ const VRNext = (props) => {
         id='nexttext'
         value='Next'
         width='2'
-        opacity='0'
+        opacity={textOpacity}
         align='center'
         rotation='0 0 90'
         position='.23 0 0'

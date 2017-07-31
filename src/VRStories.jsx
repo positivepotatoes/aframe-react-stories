@@ -11,11 +11,13 @@ class VRStories extends React.Component {
     this.state = {
       user: props.user || {},
       friends: props.friends || [],
+      
       profiles: [props.user].concat(props.friends),
       autoPlayNext: props.autoPlayNext || false,
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
       exitCallback: props.exitCallback,
+      enableAnimation: props.enableAnimation && true,
       assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assetes for all your media')),
       viewCountCallback: props.viewCountCallback || (() => console.log('viewCallback was not provided as a prop to VRStories')),
       splashScreen: {
@@ -36,7 +38,7 @@ class VRStories extends React.Component {
       durationInTimeout: null,
       currentStoriesDuration: {},
       lastClickedFriendIndex: null,
-      animationRefs: ['exit', 'exitbutton', 'exittext1', 'exittext2', 'next', 'nextbutton', 'nexttext']
+      animationRefs: ['next', 'nextbutton', 'nexttext'],
       // USE FOR MOCK DATA
       // friends: mockData.friends,
       // user: mockData.user,
@@ -52,6 +54,7 @@ class VRStories extends React.Component {
     this.setId([this.state.user], true);
     this.createAssets();
     this.setAutoPlayOrSplash();
+    this.setExitRefs();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -60,6 +63,14 @@ class VRStories extends React.Component {
     }
     if (this.state.currentStory.uploadId === this.state.user.profile.uploadId) {
       this.props.ownStoryViewsCallback(this.state.currentStory.storyDBId);
+    }
+  }
+
+  setExitRefs() {
+    if (this.state.exitCallback) {
+      this.setState({
+        animationRefs: this.state.animationRefs.concat(['exit', 'exitbutton', 'exittext1', 'exittext2'])
+      });
     }
   }
 
@@ -218,12 +229,13 @@ class VRStories extends React.Component {
   }
 
   createAssets() {
-    let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous'/>);
+    let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous' />);
     let allStories = [];
     let allPics = [];
     this.state.profiles.forEach((profile, profileIndex) => {
+      let idenifier = 'profile' + (profileIndex - 1).toString();
       allPics.push(
-        <img id={'profile' + (profileIndex - 1).toString()} src={profile.profile.img_url} crossOrigin='anonymous'/>
+        <img id={idenifier} key={idenifier} src={profile.profile.img_url} crossOrigin='anonymous'/>
       );
 
       profile.stories.forEach(story => {
@@ -257,19 +269,23 @@ class VRStories extends React.Component {
       bounceTo: `property: scale; dur: 150; easing: easeInSine; to: ${to}; startEvents: ${status}; dir: alternate`,
       fadingTo: `property: color; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
       tiltingTo: `property: rotation; dur: 1100; easing: easeInSine; from: 0 0 -${to}; to: 0 0 ${to}; dir: alternate; loop: true`,
-      shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`,
+      shrinkingTo: `property: scale; dur: 900; easing: easeInSine; to: ${to}; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`,
       turningTo: `property: rotation; dur: 1100; easing: easeInSine; to: 0 ${to} 0; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`
     };
 
-    return animations[animation];
+    if (this.state.enableAnimation) {
+      return animations[animation];
+    } else {
+      return false;
+    }
   }
 
   render () {
-    const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback } = this.state;
+    const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback, enableAnimation } = this.state;
 
     let exitButton;
     if (exitCallback) {
-      exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations}/>
+      exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations} enableAnimation={enableAnimation}/>
     }
 
     return (
@@ -278,13 +294,14 @@ class VRStories extends React.Component {
           friends={profiles}
           currentStory={currentStory}
           animations={this.animations}
+          enableAnimation={enableAnimation}
           currentStories={currentStories}
           onFriendClick={this.onFriendClick}
           currentStoriesDuration={currentStoriesDuration}
-        />
+        />;
 
         <VRPrimitive currentStory={currentStory}/>
-        <VRNext playNext={this.playNext} animations={this.animations}/>
+        <VRNext playNext={this.playNext} animations={this.animations} enableAnimation={enableAnimation} providedExitCallback={exitCallback}/>
         {exitButton}
       </a-entity>
     );

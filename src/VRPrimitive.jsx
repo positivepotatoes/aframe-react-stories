@@ -5,7 +5,7 @@ const VRPrimitive = (props) => {
   let primitive = <a-videosphere src={src} rotation="0 -90 0"/>;
   
   if (props.currentStory.type.slice(0, 5) === 'image') {
-    primitive = <a-sky src={src} rotation="0 -90 0"/>;
+    primitive = <a-sky src={src} rotation="0 -90 0" material='npot:true'/>;
   }
 
   return (

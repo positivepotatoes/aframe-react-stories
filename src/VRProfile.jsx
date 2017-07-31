@@ -5,6 +5,11 @@ const VRProfile = (props) => {
   let circleFraction, circleProgress;
   let picRadius = 1;
   let spacing = 0.2;
+  let animationInitPos = '0 -18 0';
+
+  if (!props.enableAnimation) {
+    animationInitPos = '0 0 0';
+  }
 
   if (props.currentStory.id === props.friend.profile.id) {
     let length = props.currentStories.length;
@@ -56,7 +61,7 @@ const VRProfile = (props) => {
     <a-entity position={`${props.x} ${props.y}, ${props.z}`} rotation={`${props.xRotation} ${props.yRotation} ${0}`}>
       <a-entity
         id={`animatefriend${props.friend.profile.id}`}
-        rotation='0 -18 0'
+        rotation={animationInitPos}
         animation__bounce={animateWhen('trigger', 'bounceTo', '1.1 1.1 1.1')}
         animation__shrinking={animateWhen('always', 'shrinkingTo', '.92 .92 .92')}
         animation__turning={animateWhen('always', 'turningTo', '18')}
@@ -66,7 +71,7 @@ const VRProfile = (props) => {
           radius={picRadius}
           height='0.15'
           rotation="0 90 90"
-          material={`src: #profile${props.friend.profile.id}`}
+          material={`src: #profile${props.friend.profile.id}; npot:true`}
           onClick={() => props.onFriendClick(props.friend)}
         />
         <a-text 
