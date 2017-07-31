@@ -126,6 +126,8 @@ class VRStories extends React.Component {
     }, () => {
       console.log('CALLING STOPPING')
       this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('stopping'));
+      // invoke viewCountCallback here, after splash screen appears
+      this.props.viewCountCallback(this.state.currentStory);
     });
   }
 
@@ -140,15 +142,13 @@ class VRStories extends React.Component {
     this.pauseStories();
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
       initTimeoutAndProgress(this.state.defaultDuration);
+      this.props.viewCountCallback(this.state.currentStory);
     } else {
       storyDom.play()
         .then(() => {
           initTimeoutAndProgress(storyDom.duration * 1000);
           // put viewCountCallback here
           this.props.viewCountCallback(this.state.currentStory);
-          // if (this.state.currentStory.storyDBId !== undefined && this.state.currentStory.uploadId !== this.state.user.profile.uploadId) {
-          //   this.props.viewCountCallback(this.state.currentStory.storyDBId);
-          // }
         });
     }
     console.log('CALLING PLAYING')
