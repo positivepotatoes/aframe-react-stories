@@ -13,6 +13,8 @@ class VRStories extends React.Component {
       friends: props.friends || [],
 
       profiles: [props.user].concat(props.friends),
+      displayNumFriends: props.displayNumFriends || 5,
+      friendsShowingIndex: {start: 0, end: props.displayNumFriends || 5},
       autoPlayNext: props.autoPlayNext || false,
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
@@ -47,6 +49,7 @@ class VRStories extends React.Component {
     this.onFriendClick = this.onFriendClick.bind(this);
     this.setSplashScreen = this.setSplashScreen.bind(this);
     this.animations = this.animations.bind(this);
+    this.onShowMoreFriendsClick = this.onShowMoreFriendsClick.bind(this);
   }
 
   componentWillMount() {
@@ -162,7 +165,7 @@ class VRStories extends React.Component {
     let reachedLastStory = nextStoryIndex === currentStories.length;
 
     if (currentStory.index === -2) {
-      this.onFriendClick(this.state.friends[0]);
+      this.onFriendClick(this.state.friends[this.state.friendsShowingIndex.start]);
       return;
     }
 
@@ -189,8 +192,10 @@ class VRStories extends React.Component {
       while (nextFriend && nextFriend.stories.length === 0) {
         if (nextFriendIndex + 1 === friends.length) {
           nextFriendIndex = 0;
+          nextFriend = friends[nextFriendIndex];
         } else {
           nextFriendIndex++;
+          nextFriend = friends[nextFriendIndex];
         }
       }
 
@@ -225,6 +230,18 @@ class VRStories extends React.Component {
     }
   }
 
+  onShowMoreFriendsClick() {
+    if (this.state.friendsShowingIndex.end >= this.state.friends.length) {
+      this.setState({
+        friendsShowingIndex: {start: 0, end: this.state.displayNumFriends}
+      });
+    } else {
+      this.setState({
+        friendsShowingIndex: {start: this.state.friendsShowingIndex.end, end: this.state.friendsShowingIndex.end + this.state.displayNumFriends}
+      });
+    }
+  }
+
   setAutoPlayOrSplash() {
     if (this.state.autoPlayStart) {
       this.onFriendClick(this.state.friends[0]);
@@ -232,7 +249,7 @@ class VRStories extends React.Component {
       this.setSplashScreen();
     }
   }
-
+//
   createAssets() {
     let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous'/>);
     let allStories = [];
@@ -286,22 +303,22 @@ class VRStories extends React.Component {
   }
 
   render () {
-    const { currentStory, currentStories, friends, user, splashScreen, profiles, currentStoriesDuration, exitCallback, enableAnimation } = this.state;
-
+    const { currentStory, currentStories, currentStoriesDuration, exitCallback, enableAnimation } = this.state;
+    const showProfiles = [this.state.user].concat((this.state.friends).slice(this.state.friendsShowingIndex.start,this.state.friendsShowingIndex.end));
     let exitButton;
     if (exitCallback) {
       exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations} enableAnimation={enableAnimation}/>
     }
-
     return (
       <a-entity>
         <VRProfiles
-          friends={profiles}
+          friends={showProfiles}
           currentStory={currentStory}
           animations={this.animations}
           enableAnimation={enableAnimation}
           currentStories={currentStories}
           onFriendClick={this.onFriendClick}
+          onShowMoreFriendsClick={this.onShowMoreFriendsClick}
           currentStoriesDuration={currentStoriesDuration}
         />;
 
