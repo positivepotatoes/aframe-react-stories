@@ -59,18 +59,6 @@ class VRStories extends React.Component {
     this.setExitRefs();
   }
 
-<<<<<<< HEAD
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined && this.state.currentStory.uploadId !== this.state.user.profile.uploadId) {
-  //     this.props.viewCallback(this.state.currentStory.storyDBId)
-  //   }
-  //   if (this.state.currentStory.uploadId === this.state.user.profile.uploadId && prevState.currentStoriesDuration !== this.state.currentStoriesDuration) {
-  //     this.props.ownStoryViewsCallback(this.state.currentStory.storyDBId);
-  //   }
-  // }
-
-=======
->>>>>>> Refactor - user object no longer has profile key.
   setExitRefs() {
     if (this.state.exitCallback) {
       this.setState({
