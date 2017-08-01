@@ -41,7 +41,6 @@ class VRNext extends React.Component {
     let nextText = 'Next';
     let position = '.3 -2 -3';
     if (!this.props.enableAnimation) {
-      position = '0 -2 -3';
       if (this.props.currentStory.index === -2) {
         nextText = 'Play';
       }
