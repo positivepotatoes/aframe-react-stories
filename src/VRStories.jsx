@@ -59,6 +59,7 @@ class VRStories extends React.Component {
     this.setExitRefs();
   }
 
+<<<<<<< HEAD
   // componentDidUpdate(prevProps, prevState) {
   //   if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined && this.state.currentStory.uploadId !== this.state.user.profile.uploadId) {
   //     this.props.viewCallback(this.state.currentStory.storyDBId)
@@ -68,6 +69,8 @@ class VRStories extends React.Component {
   //   }
   // }
 
+=======
+>>>>>>> Refactor - user object no longer has profile key.
   setExitRefs() {
     if (this.state.exitCallback) {
       this.setState({
@@ -81,7 +84,7 @@ class VRStories extends React.Component {
   setId(data, isUser = false) {
     data.forEach((user, i) => {
       if (isUser) { i = -1; }
-      user.profile.id = i;
+      user.id = i;
       user.stories.forEach((story, j) => {
         story.id = i;
         story.index = j;
@@ -213,7 +216,7 @@ class VRStories extends React.Component {
 
     if (friendData.stories.length === 0) {
       this.setSplashScreen();
-    } else if (friendData.profile.id === currentStory.id) {
+    } else if (friendData.id === currentStory.id) {
       if ((currentStory.index + 1) === currentStories.length) {
         this.setSplashScreen();
       } else {
@@ -221,7 +224,7 @@ class VRStories extends React.Component {
       }
     } else {
       this.setState({
-        lastClickedFriendIndex: friendData.profile.id,
+        lastClickedFriendIndex: friendData.id,
         currentStories: friendData.stories,
         currentStory: friendData.stories[0],
         currentStoriesDuration: {}
@@ -256,7 +259,7 @@ class VRStories extends React.Component {
     this.state.profiles.forEach((profile, profileIndex) => {
       let idenifier = 'profile' + (profileIndex - 1).toString();
       allPics.push(
-        <img id={idenifier} key={idenifier} src={profile.profile.img_url} crossOrigin='anonymous'/>
+        <img id={idenifier} key={idenifier} src={profile.img_url} crossOrigin='anonymous'/>
       );
 
       profile.stories.forEach(story => {
