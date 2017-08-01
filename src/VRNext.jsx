@@ -7,12 +7,11 @@ class VRNext extends React.Component {
 
   componentDidMount() {
     const animateWhen = this.props.animations;
+    let next = document.getElementById('next');
+    let nextbutton = document.getElementById('nextbutton');
+    let nexttext = document.getElementById('nexttext');
 
     if (this.props.enableAnimation) {
-      let next = document.getElementById('next');
-      let nextbutton = document.getElementById('nextbutton');
-      let nexttext = document.getElementById('nexttext');
-
       next.setAttribute('position', '0 0 -3');
       next.setAttribute('animation__playpos', animateWhen('playing', 'moveTo', '.3 -2 -3'));
       next.setAttribute('animation__pausepos', animateWhen('stopping', 'moveTo', '0 0 -3'));
@@ -28,6 +27,8 @@ class VRNext extends React.Component {
       nexttext.setAttribute('opacity', '0');
       nexttext.setAttribute('animation__showtext', animateWhen('playing', 'fadeTextTo', '1'));
       nexttext.setAttribute('animation__hidetext', animateWhen('stopping', 'fadeTextTo', '0'));
+    } else {
+      nexttext.setAttribute('opacity', '1');
     }
   }
 
@@ -54,7 +55,6 @@ class VRNext extends React.Component {
           id='nexttext'
           value={nextText}
           width='2'
-          opacity='1'
           align='center'
           rotation='0 0 90'
           position='.23 0 0'
