@@ -20,7 +20,7 @@ class VRStories extends React.Component {
       exitCallback: props.exitCallback,
       enableAnimation: props.enableAnimation || false,
       assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assetes for all your media')),
-      viewCountCallback: props.viewCountCallback || (() => console.log('viewCallback was not provided as a prop to VRStories')),
+      viewCallback: props.viewCallback || (() => console.log('viewCallback was not provided as a prop to VRStories')),
       splashScreen: {
         id: -2,
         index: -2,
@@ -61,7 +61,7 @@ class VRStories extends React.Component {
 
   // componentDidUpdate(prevProps, prevState) {
   //   if (prevState.currentStory.index !== this.state.currentStory.index && this.state.currentStory.storyDBId !== undefined && this.state.currentStory.uploadId !== this.state.user.profile.uploadId) {
-  //     this.props.viewCountCallback(this.state.currentStory.storyDBId)
+  //     this.props.viewCallback(this.state.currentStory.storyDBId)
   //   }
   //   if (this.state.currentStory.uploadId === this.state.user.profile.uploadId && prevState.currentStoriesDuration !== this.state.currentStoriesDuration) {
   //     this.props.ownStoryViewsCallback(this.state.currentStory.storyDBId);
@@ -127,8 +127,8 @@ class VRStories extends React.Component {
       currentStory: this.state.splashScreen
     }, () => {
       this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('stopping'));
-      // invoke viewCountCallback here, after splash screen appears
-      this.props.viewCountCallback(this.state.currentStory);
+      // invoke viewCallback here, after splash screen appears
+      this.props.viewCallback(this.state.currentStory);
     });
   }
 
@@ -143,13 +143,13 @@ class VRStories extends React.Component {
     this.pauseStories();
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
       initTimeoutAndProgress(this.state.defaultDuration);
-      this.props.viewCountCallback(this.state.currentStory);
+      this.props.viewCallback(this.state.currentStory);
     } else {
       storyDom.play()
         .then(() => {
           initTimeoutAndProgress(storyDom.duration * 1000);
-          // put viewCountCallback here
-          this.props.viewCountCallback(this.state.currentStory);
+          // put viewCallback here
+          this.props.viewCallback(this.state.currentStory);
         });
     }
     this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('playing'));
