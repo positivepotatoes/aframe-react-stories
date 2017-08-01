@@ -1,69 +1,67 @@
 import React from 'react';
 
-const VRNext = (props) => {
-  const animateWhen = props.animations;
-  
-  let initPosition = '0 0 -3';
-  let nextTextOpacity = '0';
-  let nextText = 'Next';
-  let playMoveTo = '.3 -2 -3';
-  let animationInitScale = { 
-    height: '.47',
-    top: '.008',
-    bottom: '.26'
-  };
+class VRNext extends React.Component {
+  constructor(props) {
+    super(props)
+  }
 
-  if (!props.enableAnimation) {
-    initPosition = '.3 -2 -3';
-    animationInitScale = { 
-      height: '.235',
-      top: '.004',
-      bottom: '.13'
-    };
-    nextTextOpacity = 1;
-    if (props.currentStory.index === -2) {
-      nextText = 'Play';
+  componentDidMount() {
+    const animateWhen = this.props.animations;
+
+    if (this.props.enableAnimation) {
+      let next = document.getElementById('next');
+      let nextbutton = document.getElementById('nextbutton');
+      let nexttext = document.getElementById('nexttext');
+
+      next.setAttribute('position', '0 0 -3');
+      next.setAttribute('animation__playpos', animateWhen('playing', 'moveTo', '.3 -2 -3'));
+      next.setAttribute('animation__pausepos', animateWhen('stopping', 'moveTo', '0 0 -3'));
+
+      nextbutton.setAttribute('height', '.47');
+      nextbutton.setAttribute('radius-top', '.016');
+      nextbutton.setAttribute('radius-bottom', '.26');
+      nextbutton.setAttribute('animation__color', animateWhen('always', 'fadingTo', '#8e8e8e'));
+      nextbutton.setAttribute('animation__bounce', animateWhen('always', 'tiltingTo', '1.8'));
+      nextbutton.setAttribute('animation__playsize', animateWhen('playing', 'scaleTo', '.5 .5 .5'));
+      nextbutton.setAttribute('animation__pausesize', animateWhen('stopping', 'scaleTo', '1 1 1'));
+
+      nexttext.setAttribute('opacity', '0');
+      nexttext.setAttribute('animation__showtext', animateWhen('playing', 'fadeTextTo', '1'));
+      nexttext.setAttribute('animation__hidetext', animateWhen('stopping', 'fadeTextTo', '0'));
     }
   }
-  
-  if (!props.providedExitCallback) {
-    playMoveTo = '0 -2 -3';
-  }
 
-  return (
-    <a-entity position={initPosition} rotation='0 0 270' 
-      id='next'
-      animation__playpos={animateWhen('playing', 'moveTo', playMoveTo)}
-      animation__pausepos={animateWhen('stopping', 'moveTo', '0 0 -3')}
-    >
-      <a-cone 
-        id='nextbutton'
-        color='#c6c6c6'
-        height={animationInitScale.height}
-        radius-top={animationInitScale.top}
-        radius-bottom={animationInitScale.bottom}
-        onClick={props.playNext}
-        material='transparent: true; opacity: .55'
-        //ALWAYS PLAYING
-        animation__color={animateWhen('always', 'fadingTo', '#8e8e8e')}
-        animation__bounce={animateWhen('always', 'tiltingTo', '1.8')}
-        //SIZE TRANSITION
-        animation__playsize={animateWhen('playing', 'scaleTo', '.5 .5 .5')}
-        animation__pausesize={animateWhen('stopping', 'scaleTo', '1 1 1')}
-      />
-      <a-text 
-        id='nexttext'
-        value={nextText}
-        width='2'
-        opacity={nextTextOpacity}
-        align='center'
-        rotation='0 0 90'
-        position='.23 0 0'
-        animation__showtext={animateWhen('playing', 'fadeTextTo', '1')}
-        animation__hidetext={animateWhen('stopping', 'fadeTextTo', '0')}
-      />
-    </a-entity>
-  )
+  render() {
+    let nextText = 'Next';
+    if (!this.props.enableAnimation) {
+      if (this.props.currentStory.index === -2) {
+        nextText = 'Play';
+      }
+    }
+
+    return (
+      <a-entity id='next' position='.3 -2 -3' rotation='0 0 270'>
+        <a-cone 
+          id='nextbutton'
+          color='#c6c6c6'
+          height='.235'
+          radius-top='.004'
+          radius-bottom='.13'
+          onClick={this.props.playNext}
+          material='transparent: true; opacity: .55'
+        />
+        <a-text 
+          id='nexttext'
+          value={nextText}
+          width='2'
+          opacity='1'
+          align='center'
+          rotation='0 0 90'
+          position='.23 0 0'
+        />
+      </a-entity>
+    )
+  }
 };
 
 export default VRNext;
