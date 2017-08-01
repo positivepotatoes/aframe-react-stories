@@ -52,8 +52,8 @@ The component creates the list of assets because it tags each media element with
 | exitCallback      | Gets called when exit button is clicked                                 |               | callback function |
 | assetsCallback    | Gets called when initiated and returns a list of assets for all stories |               | callback function |
 | viewCountCallback | Gets called when a story is played and returns the story that is played |               | callback function |
-| user              | This profile will show at the beginning of stories                      |               | profile object    |
-| friends           | These are list of profiles to show stories of for each user |            |      list of profile objects |
+| user              | This profile will show at the beginning of stories                      |               | profile    |
+| friends           | These are list of profiles to show stories of for each user |            |      list of profiles |
 
 ##Example
 ```javascript
@@ -85,7 +85,7 @@ class App extends React.Component {
         <a-assets>
           {this.state.storyAssets}
         </a-assets>
-        <VRStories 
+        <vrStories 
           user={this.state.user}
           friends={this.state.friends}
           assetsCallback={this.assetsCallback.bind(this)}
