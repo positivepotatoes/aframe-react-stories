@@ -7,7 +7,7 @@ class VRProfile extends React.Component {
 
   componentDidMount() {
     const animateWhen = this.props.animations;
-    let animatefriend = document.getElementById(`animatefriend${this.props.friend.profile.id}`);
+    let animatefriend = document.getElementById(`animatefriend${this.props.friend.id}`);
 
     if (this.props.enableAnimation) {
       animatefriend.setAttribute('rotation', '0 -18 0');
@@ -21,7 +21,7 @@ class VRProfile extends React.Component {
     let circleFraction, circleProgress;
     let picRadius = 1;
 
-    if (this.props.currentStory.id === this.props.friend.profile.id) {
+    if (this.props.currentStory.id === this.props.friend.id) {
       let length = this.props.currentStories.length;
       let total = this.props.currentStoriesDuration.total;
       let current = this.props.currentStoriesDuration.current;
@@ -70,19 +70,19 @@ class VRProfile extends React.Component {
     return (
       <a-entity position={`${this.props.x} ${this.props.y}, ${this.props.z}`} rotation={`${this.props.xRotation} ${this.props.yRotation} ${0}`}>
         <a-entity
-          id={`animatefriend${this.props.friend.profile.id}`}
+          id={`animatefriend${this.props.friend.id}`}
           rotation='0 0 0'
         >
           <a-cylinder 
-            id={`friend${this.props.friend.profile.id}`} 
+            id={`friend${this.props.friend.id}`} 
             radius={picRadius}
             height='0.15'
             rotation="0 90 90"
-            material={`src: #profile${this.props.friend.profile.id}; npot:true`}
+            material={`src: #profile${this.props.friend.id}; npot:true`}
             onClick={() => this.props.onFriendClick(this.props.friend)}
           />
           <a-text 
-            value={this.props.friend.profile.first} 
+            value={this.props.friend.displayName} 
             align='center' 
             color='white'
             width='6'
