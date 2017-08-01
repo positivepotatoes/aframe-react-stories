@@ -13,7 +13,7 @@ class VRStories extends React.Component {
       friends: props.friends || [],
       profiles: [props.user].concat(props.friends),
       displayNumFriends: props.displayNumFriends || 5,
-      friendsShowingIndex: {start: 0, end: props.displayNumFriends || 5},
+      friendsShowingIndex: { start: 0, end: props.displayNumFriends || 5 },
       autoPlayNext: props.autoPlayNext || false,
       autoPlayStart: props.autoPlayStart || false,
       defaultDuration: props.defaultDuration || 7000,
@@ -144,7 +144,9 @@ class VRStories extends React.Component {
         });
     }
     this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('playing'));
-    document.getElementById(`animatefriend${this.state.currentStory.id}`).emit('trigger');
+    if (document.getElementById(`animatefriend${this.state.currentStory.id}`)) {
+      document.getElementById(`animatefriend${this.state.currentStory.id}`).emit('trigger');
+    }
   }
 
   playNext() {
@@ -223,11 +225,11 @@ class VRStories extends React.Component {
   onShowMoreFriendsClick() {
     if (this.state.friendsShowingIndex.end >= this.state.friends.length) {
       this.setState({
-        friendsShowingIndex: {start: 0, end: this.state.displayNumFriends}
+        friendsShowingIndex: { start: 0, end: this.state.displayNumFriends }
       });
     } else {
       this.setState({
-        friendsShowingIndex: {start: this.state.friendsShowingIndex.end, end: this.state.friendsShowingIndex.end + this.state.displayNumFriends}
+        friendsShowingIndex: { start: this.state.friendsShowingIndex.end, end: this.state.friendsShowingIndex.end + this.state.displayNumFriends }
       });
     }
   }
@@ -239,15 +241,15 @@ class VRStories extends React.Component {
       this.setSplashScreen();
     }
   }
-//
+  //
   createAssets() {
-    let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous'/>);
+    let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous' />);
     let allStories = [];
     let allPics = [];
     this.state.profiles.forEach((profile, profileIndex) => {
       let idenifier = 'profile' + (profileIndex - 1).toString();
       allPics.push(
-        <img id={idenifier} key={idenifier} src={profile.img_url} crossOrigin='anonymous'/>
+        <img id={idenifier} key={idenifier} src={profile.img_url} crossOrigin='anonymous' />
       );
 
       profile.stories.forEach(story => {
@@ -259,11 +261,11 @@ class VRStories extends React.Component {
       let id = story.id + ',' + story.index;
       if (story.type.slice(0, 5) === 'image') {
         return (
-          <img id={id} key={i} src={story.src} crossOrigin='anonymous'/>
+          <img id={id} key={i} src={story.src} crossOrigin='anonymous' />
         );
       } else {
         return (
-          <video id={id} key={i} src={story.src} crossOrigin='anonymous'/>
+          <video id={id} key={i} src={story.src} crossOrigin='anonymous' />
         );
       }
     });
@@ -281,18 +283,18 @@ class VRStories extends React.Component {
       bounceTo: `property: scale; dur: 150; easing: easeInSine; to: ${to}; startEvents: ${status}; dir: alternate`,
       fadingTo: `property: color; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
       tiltingTo: `property: rotation; dur: 1100; easing: easeInSine; from: 0 0 -${to}; to: 0 0 ${to}; dir: alternate; loop: true`,
-      shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`,
-      turningTo: `property: rotation; dur: 1100; easing: easeInSine; to: 0 ${to} 0; dir: alternate; loop: true; delay: ${Math.round(Math.random()*2000)}`
+      shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true; delay: ${Math.round(Math.random() * 2000)}`,
+      turningTo: `property: rotation; dur: 1100; easing: easeInSine; to: 0 ${to} 0; dir: alternate; loop: true; delay: ${Math.round(Math.random() * 2000)}`
     };
     return animations[animation];
   }
 
-  render () {
+  render() {
     const { currentStory, currentStories, currentStoriesDuration, exitCallback, enableAnimation } = this.state;
-    const showProfiles = [this.state.user].concat((this.state.friends).slice(this.state.friendsShowingIndex.start,this.state.friendsShowingIndex.end));
+    const showProfiles = [this.state.user].concat((this.state.friends).slice(this.state.friendsShowingIndex.start, this.state.friendsShowingIndex.end));
     let exitButton;
     if (exitCallback) {
-      exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations} enableAnimation={enableAnimation}/>
+      exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations} enableAnimation={enableAnimation} />
     }
     return (
       <a-entity>
@@ -307,8 +309,8 @@ class VRStories extends React.Component {
           currentStoriesDuration={currentStoriesDuration}
         />;
 
-        <VRPrimitive currentStory={currentStory}/>
-        <VRNext playNext={this.playNext} animations={this.animations} currentStory={currentStory} enableAnimation={enableAnimation} providedExitCallback={exitCallback}/>
+        <VRPrimitive currentStory={currentStory} />
+        <VRNext playNext={this.playNext} animations={this.animations} currentStory={currentStory} enableAnimation={enableAnimation} providedExitCallback={exitCallback} />
         {exitButton}
       </a-entity>
     );
