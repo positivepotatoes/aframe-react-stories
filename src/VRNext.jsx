@@ -11,9 +11,14 @@ class VRNext extends React.Component {
     let nextbutton = document.getElementById('nextbutton');
     let nexttext = document.getElementById('nexttext');
 
+    let playMoveTo = '.3 -2 -3';
+    if (!this.props.providedExitCallback) {
+      playMoveTo = '0 -2 -3';
+    }
+
     if (this.props.enableAnimation) {
       next.setAttribute('position', '0 0 -3');
-      next.setAttribute('animation__playpos', animateWhen('playing', 'moveTo', '.3 -2 -3'));
+      next.setAttribute('animation__playpos', animateWhen('playing', 'moveTo', playMoveTo));
       next.setAttribute('animation__pausepos', animateWhen('stopping', 'moveTo', '0 0 -3'));
 
       nextbutton.setAttribute('height', '.47');
@@ -34,14 +39,16 @@ class VRNext extends React.Component {
 
   render() {
     let nextText = 'Next';
+    let position = '.3 -2 -3';
     if (!this.props.enableAnimation) {
+      position = '0 -2 -3';
       if (this.props.currentStory.index === -2) {
         nextText = 'Play';
       }
     }
 
     return (
-      <a-entity id='next' position='.3 -2 -3' rotation='0 0 270'>
+      <a-entity id='next' position={position} rotation='0 0 270'>
         <a-cone 
           id='nextbutton'
           color='#c6c6c6'
