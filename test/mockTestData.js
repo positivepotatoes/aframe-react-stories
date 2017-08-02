@@ -1,11 +1,9 @@
 module.exports = {
   user: {
-    'profile': {
-      'first': 'David',
-      'last': 'Doe',
-      'display': 'David Doe',
-      'img_url': 'https://ssl.gstatic.com/images/branding/product/1x/avatar_square_grey_512dp.png'
-    },
+    'first': 'David',
+    'last': 'Doe',
+    'display': 'David Doe',
+    'img_url': 'https://ssl.gstatic.com/images/branding/product/1x/avatar_square_grey_512dp.png',
     'stories': [
       {
         'type': 'image/jpeg',
@@ -19,12 +17,12 @@ module.exports = {
   },
   friends: [
     {
-      'profile': {
+     
         'first': '0A',
         'last': 'B',
         'display': 'A B',
-        'img_url': 'https://thumb1.shutterstock.com/display_pic_with_logo/3799793/416374336/stock-vector-light-bulb-line-icon-vector-isolated-on-white-background-idea-sign-solution-thinking-concept-416374336.jpg'
-      },
+        'img_url': 'https://thumb1.shutterstock.com/display_pic_with_logo/3799793/416374336/stock-vector-light-bulb-line-icon-vector-isolated-on-white-background-idea-sign-solution-thinking-concept-416374336.jpg',
+     
       'stories': [
         {
           'type': 'image/jpeg',
@@ -41,12 +39,12 @@ module.exports = {
       ]
     },
     {
-      'profile': {
+     
         'first': '1C',
         'last': 'D',
         'display': 'C D',
-        'img_url': 'https://thumb1.shutterstock.com/display_pic_with_logo/3020312/289551026/stock-vector-people-icon-289551026.jpg'
-      },
+        'img_url': 'https://thumb1.shutterstock.com/display_pic_with_logo/3020312/289551026/stock-vector-people-icon-289551026.jpg',
+      
       'stories': [
         {
           'type': 'image/mp4',
@@ -63,12 +61,12 @@ module.exports = {
       ]
     },
     {
-      'profile': {
+      
         'first': '2E',
         'last': 'F',
         'display': 'E F',
-        'img_url': 'https://thumb9.shutterstock.com/display_pic_with_logo/2239973/363717575/stock-vector-heart-icon-vector-love-symbol-valentine-s-day-sign-emblem-isolated-on-white-background-with-363717575.jpg'
-      },
+        'img_url': 'https://thumb9.shutterstock.com/display_pic_with_logo/2239973/363717575/stock-vector-heart-icon-vector-love-symbol-valentine-s-day-sign-emblem-isolated-on-white-background-with-363717575.jpg',
+      
       'stories': [
         {
           'type': 'image/jpeg',
@@ -85,12 +83,12 @@ module.exports = {
       ]
     },
     {
-      'profile': {
+      
         'first': '3G',
         'last': 'H',
         'display': 'G H',
-        'img_url': 'https://thumb1.shutterstock.com/display_pic_with_logo/2299580/211546936/stock-vector-smartphone-icon-vector-illustration-211546936.jpg'
-      },
+        'img_url': 'https://thumb1.shutterstock.com/display_pic_with_logo/2299580/211546936/stock-vector-smartphone-icon-vector-illustration-211546936.jpg',
+      
       'stories': [
         {
           'type': 'image/mp4',
@@ -107,12 +105,12 @@ module.exports = {
       ]
     },
     {
-      'profile': {
+      
         'first': '4I',
         'last': 'J',
         'display': 'I J',
-        'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg'
-      },
+        'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg',
+      
       'stories': [
         {
           'type': 'image/jpeg',
@@ -129,21 +127,21 @@ module.exports = {
       ]
     },
     {
-      'profile': {
+      
         'first': '5K',
         'last': 'L',
         'display': 'K L',
-        'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg'
-      },
+        'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg',
+      
       'stories': []
     },
     {
-      'profile': {
+      
         'first': '6M',
         'last': 'N',
         'display': 'M N',
-        'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg'
-      },
+        'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg',
+      
       'stories': [
         {
           'type': 'image/jpeg',
@@ -160,12 +158,12 @@ module.exports = {
       ]
     },
     {
-      'profile': {
+      
         'first': '7O',
         'last': 'P',
         'display': 'O P',
-        'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg'
-      },
+        'img_url': 'https://thumb7.shutterstock.com/display_pic_with_logo/1246429/255118591/stock-vector-illustration-of-crowd-of-people-icon-silhouettes-vector-social-icon-flat-style-design-user-group-255118591.jpg',
+      
       'stories': []
     },
   ]
