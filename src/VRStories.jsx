@@ -254,12 +254,10 @@ class VRStories extends React.Component {
     let allPics = [];
 
     this.state.profiles.forEach((profile, profileIndex) => {
-
       let idenifier = 'profile' + (profileIndex - 1).toString();
       allPics.push(
         <img id={idenifier} key={idenifier} src={profile.img_url} crossOrigin='anonymous' />
       );
-
       profile.stories.forEach(story => {
         allStories.push(story);
       });
@@ -273,7 +271,7 @@ class VRStories extends React.Component {
         );
       } else {        
         return (
-          <video id={id} key={i} src={story.src} ref={el => this.state.assets.push(el)}  crossOrigin='anonymous' />
+          <video id={id} key={i} src={story.src} ref={el => this.state.assets.push(el)} crossOrigin='anonymous' />
         );
       }
     });
