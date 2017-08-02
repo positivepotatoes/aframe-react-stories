@@ -1,38 +1,79 @@
 import React from 'react';
 import VRStories from '../src/VRStories';
 import { shallow, mount, render } from 'enzyme';
-
 import mockData from './mockTestData.js';
 
+// const { JSDOM } = require('jsdom');
+// const jsdom = new JSDOM('<!doctype html><html><body><div>AYOOO</div></body></html>');
+// const { window } = jsdom;
+
+// function copyProps(src, target) {
+//   const props = Object.getOwnPropertyNames(src)
+//     .filter(prop => typeof target[prop] === 'undefined')
+//     .map(prop => Object.getOwnPropertyDescriptor(src, prop));
+//   Object.defineProperties(target, props);
+// }
+
+// global.window = window;
+// global.document = window.document;
+// global.navigator = {
+//   userAgent: 'node.js',
+// };
+// copyProps(window, global);
+
   
+
 
 describe('<VRStories />', () => {
   let wrapper, wrapperAutoPlayStart, wrapperM;
 
+  // let dummyElement = document.createElement('div');
+  // document.getElementById = jasmine.createSpy('HTML Element').andReturn(dummyElement);
+
+
   beforeEach(() => {
+    // let innerHtml = ''
+    // let doms = ['next', 'nextbutton', 'nexttext', 'exit', 'exitbutton', 'exittext1', 'exittext2'];
+    // doms.forEach(dom => {
+    //   // innerHtml += `<div id='${dom}'></div>`;
+    //   let x = document.createElement('div');
+    //   x.id = dom
+    //   global.document.body.append(x);
+    //   // jsdom.window.document.body.append(x);
+    // });
+    
+
+    // let document = window.document;
+    // console.log(window.document)
+    // document.body.innerHTML = innerHtml
+    // console.log(document.body, 'aa')
+
+
     wrapper = shallow(
       <VRStories 
         user={mockData.user}
         friends={mockData.friends}
         autoPlayNext={false}
         autoPlayStart={false}
+        enableAnimation={true}
         splashScreen={'./abc.jpg'}
         assetsCallback={() => { return; }}
-        viewCountCallback={() => { return; }}
+        viewCallback={() => { return; }}
       />
     );
+    
 
-    wrapperM = render(
-      <VRStories 
-        user={mockData.user}
-        friends={mockData.friends}
-        autoPlayNext={false}
-        autoPlayStart={false}
-        splashScreen={'./abc.jpg'}
-        assetsCallback={() => { return; }}
-        viewCountCallback={() => { return; }}
-      />
-    );
+    // wrapperM = render(
+    //   <VRStories 
+    //     user={mockData.user}
+    //     friends={mockData.friends}
+    //     autoPlayNext={false}
+    //     autoPlayStart={false}
+    //     splashScreen={'./abc.jpg'}
+    //     assetsCallback={() => { return; }}
+    //     viewCountCallback={() => { return; }}
+    //   />
+    // );
 
     wrapperAutoPlayStart = shallow(
       <VRStories 
@@ -44,10 +85,14 @@ describe('<VRStories />', () => {
         assetsCallback={() => { return; } }
       />
     );
+
+
+
   });
 
   describe('upon initialization', () => {
     it('should have multiple friends in props when friend data is provided', () => {
+      console.log(wrapper.getDOMNode());
       expect(wrapper.state().friends.length).toBeGreaterThan(1);
     });
 
