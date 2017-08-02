@@ -40,6 +40,7 @@ class VRStories extends React.Component {
       currentStoriesDuration: {},
       lastClickedFriendIndex: null,
       animationRefs: [],
+      assets: [],
       // USE FOR MOCK DATA
       // friends: mockData.friends,
       // user: mockData.user,
@@ -72,19 +73,23 @@ class VRStories extends React.Component {
     });
   }
 
+  getStoryDom(id, index) {
+    return this.state.assets.filter(asset => asset.id === id + ',' + index)[0];
+  }
+
   pauseStories() {
-    let stories = Array.prototype.slice.call(document.getElementsByTagName('video'));
-    stories.forEach(story => {
-      story.pause();
-      story.currentTime = 0;
+    this.state.assets.forEach(story => {
+      if (story.nodeName === 'VIDEO') {
+        story.pause();
+        story.currentTime = 0;
+      }
     });
     clearTimeout(this.state.storyInTimeout);
     clearInterval(this.state.durationInTimeout);
   }
 
   setDurationCounter() {
-    let story = this.state.currentStory;
-    let storyDom = document.getElementById(story.id + ',' + story.index);
+    let storyDom = this.getStoryDom(this.state.currentStory.id, this.state.currentStory.index);
     let totalDuration = storyDom.duration || this.state.defaultDuration / 1000;
 
     this.setState({
@@ -110,13 +115,13 @@ class VRStories extends React.Component {
       currentStory: this.state.splashScreen
     }, () => {
       this.state.animationRefs.forEach(ref => ref.emit('stopping'));
-      this.props.viewCallback(this.state.currentStory);
+      this.state.viewCallback(this.state.currentStory);
     });
   }
 
   // THIS NEEDS TO BE INVOKED EVERYTIME THE STATE OF THE CURRENT STORY IS CHANGED
   invokePlay() {
-    let storyDom = document.getElementById(this.state.currentStory.id + ',' + this.state.currentStory.index);
+    let storyDom = this.getStoryDom(this.state.currentStory.id, this.state.currentStory.index);
     const initTimeoutAndProgress = (duration) => {
       this.state.storyInTimeout = setTimeout(() => this.playNext(), duration);
       this.setDurationCounter();
@@ -130,8 +135,7 @@ class VRStories extends React.Component {
       storyDom.play()
         .then(() => {
           initTimeoutAndProgress(storyDom.duration * 1000);
-          // put viewCallback here
-          this.props.viewCallback(this.state.currentStory);
+          this.state.viewCallback(this.state.currentStory);
         });
     }
 
@@ -255,11 +259,11 @@ class VRStories extends React.Component {
       let id = story.id + ',' + story.index;
       if (story.type.slice(0, 5) === 'image') {
         return (
-          <img id={id} key={i} src={story.src} crossOrigin='anonymous' />
+          <img id={id} key={i} src={story.src} ref={el => this.state.assets.push(el)} crossOrigin='anonymous' />
         );
-      } else {
+      } else {        
         return (
-          <video id={id} key={i} src={story.src} crossOrigin='anonymous' />
+          <video id={id} key={i} src={story.src} ref={el => this.state.assets.push(el)} crossOrigin='anonymous' />
         );
       }
     });
@@ -315,7 +319,7 @@ class VRStories extends React.Component {
           addToAnimationRefs={this.addToAnimationRefs}
           currentStoriesDuration={currentStoriesDuration}
           onShowMoreFriendsClick={this.onShowMoreFriendsClick}
-        />;
+        />
 
         <VRPrimitive currentStory={currentStory}/>
         <VRNext
