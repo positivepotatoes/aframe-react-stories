@@ -7,11 +7,11 @@ class VRProfile extends React.Component {
 
   componentDidMount() {
     const animateWhen = this.props.animations;
-    // let animatefriend = document.getElementById(`animatefriend${this.props.friend.id}`);
     let animatefriend = this[`animatefriend${this.props.friend.id}`];
-    this.props.addToAnimationRefs(animatefriend)
 
     if (this.props.enableAnimation) {
+      this.props.addToAnimationRefs(animatefriend);
+
       animatefriend.setAttribute('rotation', '0 -18 0');
       animatefriend.setAttribute('animation__bounce', animateWhen('trigger', 'bounceTo', '1.1 1.1 1.1'));
       animatefriend.setAttribute('animation__shrinking', animateWhen('always', 'shrinkingTo', '.92 .92 .92'));
@@ -72,14 +72,13 @@ class VRProfile extends React.Component {
     return (
       <a-entity position={`${this.props.x} ${this.props.y}, ${this.props.z}`} rotation={`${this.props.xRotation} ${this.props.yRotation} ${0}`}>
         <a-entity
-          
-          // id={`animatefriend${this.props.friend.id}`}
           rotation='0 0 0'
+          id={`animatefriend${this.props.friend.id}`}
           ref={el => this[`animatefriend${this.props.friend.id}`] = el}
         >
-          <a-cylinder 
+          <a-cylinder
+            //NEED TO ASK IF LINE BELOW CAN BE REMOVED
             id={`friend${this.props.friend.id}`}
-            // el={el => this[`friend${this.props.friend.id}`] = el}
             radius={picRadius}
             height='0.15'
             rotation="0 90 90"

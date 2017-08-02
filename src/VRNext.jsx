@@ -5,24 +5,22 @@ class VRNext extends React.Component {
     super(props)
   }
 
-
-
   componentDidMount() {
     const animateWhen = this.props.animations;
-    
     let next = this.next;
     let nextButton = this.nextButton;
     let nextText= this.nextText;
-    this.props.addToAnimationRefs(next)
-    this.props.addToAnimationRefs(nextButton)
-    this.props.addToAnimationRefs(nextText)
-
     let playMoveTo = '.3 -2 -3';
+    
     if (!this.props.providedExitCallback) {
       playMoveTo = '0 -2 -3';
     }
 
     if (this.props.enableAnimation) {
+      this.props.addToAnimationRefs(next);
+      this.props.addToAnimationRefs(nextButton);
+      this.props.addToAnimationRefs(nextText);
+
       next.setAttribute('position', '0 0 -3');
       next.setAttribute('animation__playpos', animateWhen('playing', 'moveTo', playMoveTo));
       next.setAttribute('animation__pausepos', animateWhen('stopping', 'moveTo', '0 0 -3'));
@@ -50,6 +48,9 @@ class VRNext extends React.Component {
       if (this.props.currentStory.index === -2) {
         nextText = 'Play';
       }
+    }
+    if (!this.props.providedExitCallback) {
+      position = '0 -2 -3';
     }
 
     return (
