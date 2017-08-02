@@ -1,13 +1,13 @@
 {
   "name": "aframe-react-stories",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "Social media style stories in VR with A-Frame",
+  "author": "Alexander Schnapp, Anna Zharkova, Corey Chau, David Oh",
   "main": "dist/index.js",
-  "peerDependencies": {
-    "aframe": "^0.6.1",
-    "aframe-animation-component": "^3.2.5",
-    "react": "^15.5.4"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/positivepotatoes/aframe-react-stories.git"
   },
   "keywords": [
     "react",
@@ -15,19 +15,20 @@
     "vr",
     "stories"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/positivepotatoes/aframe-react-stories.git"
-  },
-  "dependencies": {
-    "react": "^15.5.4"
-  },
   "scripts": {
     "dev-start": "webpack --watch",
     "build": "webpack",
     "test": "jest"
   },
-  "author": "Alexander Schnapp, Anna Zharkova, Corey Chau, David Oh",
+  "peerDependencies": {
+    "aframe": "^0.6.1",
+    "aframe-animation-component": "^3.2.5",
+    "react": "^15.5.4",
+    "react-dom": "^15.6.1"
+  },
+  "dependencies": {
+    "react": "^15.5.4"
+  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
