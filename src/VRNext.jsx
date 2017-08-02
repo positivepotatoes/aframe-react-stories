@@ -14,10 +14,12 @@ class VRNext extends React.Component {
     
     if (!this.props.providedExitCallback) {
       playMoveTo = '0 -2 -3';
+      next.setAttribute('position', '0 -2 -3');
     }
 
+    this.props.addToAnimationRefs(next);
+
     if (this.props.enableAnimation) {
-      this.props.addToAnimationRefs(next);
       this.props.addToAnimationRefs(nextButton);
       this.props.addToAnimationRefs(nextText);
 
@@ -38,23 +40,18 @@ class VRNext extends React.Component {
       nextText.setAttribute('animation__hidetext', animateWhen('stopping', 'fadeTextTo', '0'));
     } else {
       nextText.setAttribute('opacity', '1');
+      next.addEventListener('playing', () => {
+        nextText.setAttribute('value', 'Next')
+      });
+      next.addEventListener('stopping', () => {
+        nextText.setAttribute('value', 'Play')
+      });
     }
   }
 
   render() {
-    let nextText = 'Next';
-    let position = '.3 -2 -3';
-    if (!this.props.enableAnimation) {
-      if (this.props.currentStory.index === -2) {
-        nextText = 'Play';
-      }
-    }
-    if (!this.props.providedExitCallback) {
-      position = '0 -2 -3';
-    }
-
     return (
-      <a-entity position={position} rotation='0 0 270' ref={el => this.next = el}>
+      <a-entity position='.3 -2 -3' rotation='0 0 270' ref={el => this.next = el}>
         <a-cone
           color='#c6c6c6'
           height='.235'
@@ -66,7 +63,7 @@ class VRNext extends React.Component {
         />
         <a-text 
           ref='nexttext'
-          value={nextText}
+          value='Play'
           width='2'
           align='center'
           rotation='0 0 90'

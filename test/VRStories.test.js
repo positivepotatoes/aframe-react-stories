@@ -35,14 +35,8 @@ describe('<VRStories />', () => {
 
   describe('upon initialization', () => {
     it('should have multiple friends in props when friend data is provided', () => {
-      console.log(wrapper.getDOMNode());
       wrapper.instance().componentWillMount();
-     
       expect(wrapper.state().friends.length).toBeGreaterThan(1);
-    });
-
-    it('removing friends from state.friends who do not have at least one story', () => {
-      expect(wrapper.state().friends.length).toBe(5);
     });
 
     describe('when autoPlayStart is false', () => {
@@ -130,10 +124,10 @@ describe('<VRStories />', () => {
 
   describe('handling playNext', () => {
     describe('when no story is currently playing', () => {
-      it('should do nothing', () => {
+      it('should play the first friend\'s story', () => {
         wrapper.instance().playNext();
-        expect(wrapper.state().currentStory.id).toBe(-2);
-        expect(wrapper.state().currentStory.index).toBe(-2);
+        expect(wrapper.state().currentStory.id).toBe(0);
+        expect(wrapper.state().currentStory.index).toBe(0);
       });
     });
 
@@ -228,10 +222,11 @@ describe('<VRStories />', () => {
         currentStories: mockData.friends[0].stories,
         currentStory: mockData.friends[0].stories[0]
       });
-      wrapper.instance().setInitialStoriesDuration();
+      wrapper.instance().setDurationCounter();
     });
     describe('when starting a brand new stories', () => {
       it('should set currentStoriesDuration to correct states', () => {
+        console.log(wrapper.state());
         expect(wrapper.state().currentStoriesDuration.current).toBe(0);
         expect(wrapper.state().currentStoriesDuration.storyBeginning).toBe(0);
         expect(wrapper.state().currentStoriesDuration.total).toBe(21);

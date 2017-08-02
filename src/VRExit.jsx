@@ -12,12 +12,16 @@ class VRExit extends React.Component {
     let exitText1 = this.exitText1;
     let exitText2 = this.exitText2;
 
+    exitText1.setAttribute('opacity', '1'); 
+    exitText2.setAttribute('opacity', '0');
+
+    this.props.addToAnimationRefs(exit);
+    
     if (this.props.enableAnimation) {
-      this.props.addToAnimationRefs(exit);
       this.props.addToAnimationRefs(exitButton);
       this.props.addToAnimationRefs(exitText1);
       this.props.addToAnimationRefs(exitText2);
-
+      
       exit.setAttribute('position', '0 -2 -3');
       exit.setAttribute('animation__playpos', animateWhen('playing', 'moveTo', '-.3 -2 -3'));
       exit.setAttribute('animation__puasepos', animateWhen('stopping', 'moveTo', '0 -2 -3'));
@@ -30,19 +34,19 @@ class VRExit extends React.Component {
 
       exitText2.setAttribute('animation__showtext', animateWhen('playing', 'fadeTextTo', '1'));
       exitText2.setAttribute('animation__hidetext', animateWhen('stopping', 'fadeTextTo', '0'));
+    } else {
+      exit.addEventListener('playing', () => {
+        exitText1.setAttribute('opacity', '0'); 
+        exitText2.setAttribute('opacity', '1');
+      });
+      exit.addEventListener('stopping', () => {
+        exitText1.setAttribute('opacity', '1'); 
+        exitText2.setAttribute('opacity', '0');
+      })
     }
   }
 
   render() {
-    let exitText1Opacity = '1';
-    let exitText2Opacity = '0';
-    if (!this.props.enableAnimation) {
-      if (this.props.currentStory.index !== -2) {
-        exitText1Opacity = '0';
-        exitText2Opacity = '1';
-      }
-    }
-
     return (
       <a-entity position='-.3 -2 -3' ref={el => this.exit = el}>
         <a-sphere
@@ -62,16 +66,14 @@ class VRExit extends React.Component {
           value='Exit'
           width='2'
           align='center'
-          position='0 -.13 .12'
-          opacity={exitText1Opacity}
+          position='0 -.23 0'
           ref={el => this.exitText1 = el}
         />
         <a-text 
           value='Stop'
           width='2'
           align='center'
-          position='0 -.13 .12'
-          opacity={exitText2Opacity}
+          position='0 -.23 0'
           ref={el => this.exitText2 = el}
         />
       </a-entity>
