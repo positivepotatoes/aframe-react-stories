@@ -7,7 +7,9 @@ class VRProfile extends React.Component {
 
   componentDidMount() {
     const animateWhen = this.props.animations;
-    let animatefriend = document.getElementById(`animatefriend${this.props.friend.id}`);
+    // let animatefriend = document.getElementById(`animatefriend${this.props.friend.id}`);
+    let animatefriend = this[`animatefriend${this.props.friend.id}`];
+    this.props.addToAnimationRefs(animatefriend)
 
     if (this.props.enableAnimation) {
       animatefriend.setAttribute('rotation', '0 -18 0');
@@ -70,11 +72,14 @@ class VRProfile extends React.Component {
     return (
       <a-entity position={`${this.props.x} ${this.props.y}, ${this.props.z}`} rotation={`${this.props.xRotation} ${this.props.yRotation} ${0}`}>
         <a-entity
-          id={`animatefriend${this.props.friend.id}`}
+          
+          // id={`animatefriend${this.props.friend.id}`}
           rotation='0 0 0'
+          ref={el => this[`animatefriend${this.props.friend.id}`] = el}
         >
           <a-cylinder 
-            id={`friend${this.props.friend.id}`} 
+            id={`friend${this.props.friend.id}`}
+            // el={el => this[`friend${this.props.friend.id}`] = el}
             radius={picRadius}
             height='0.15'
             rotation="0 90 90"

@@ -19,7 +19,7 @@ class VRStories extends React.Component {
       defaultDuration: props.defaultDuration || 7000,
       exitCallback: props.exitCallback,
       enableAnimation: props.enableAnimation || false,
-      assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assetes for all your media')),
+      assetsCallback: props.assetsCallback || (() => console.log('This module will not work without an assetsCallback. Please provide a callback to receive a list of generated assets for all your media')),
       viewCallback: props.viewCallback || (() => console.log('viewCallback was not provided as a prop to VRStories')),
       splashScreen: {
         id: -2,
@@ -39,7 +39,7 @@ class VRStories extends React.Component {
       durationInTimeout: null,
       currentStoriesDuration: {},
       lastClickedFriendIndex: null,
-      animationRefs: ['next', 'nextbutton', 'nexttext'],
+      animationRefs: [],
       // USE FOR MOCK DATA
       // friends: mockData.friends,
       // user: mockData.user,
@@ -49,6 +49,7 @@ class VRStories extends React.Component {
     this.setSplashScreen = this.setSplashScreen.bind(this);
     this.animations = this.animations.bind(this);
     this.onShowMoreFriendsClick = this.onShowMoreFriendsClick.bind(this);
+    this.addToAnimationRefs = this.addToAnimationRefs.bind(this);
   }
 
   componentWillMount() {
@@ -56,16 +57,16 @@ class VRStories extends React.Component {
     this.setId([this.state.user], true);
     this.createAssets();
     this.setAutoPlayOrSplash();
-    this.setExitRefs();
+    // this.setExitRefs();
   }
 
-  setExitRefs() {
-    if (this.state.exitCallback) {
-      this.setState({
-        animationRefs: this.state.animationRefs.concat(['exit', 'exitbutton', 'exittext1', 'exittext2'])
-      });
-    }
-  }
+  // setExitRefs() {
+  //   if (this.state.exitCallback) {
+  //     this.setState({
+  //       animationRefs: this.state.animationRefs.concat(['exit', 'exitbutton', 'exittext1', 'exittext2'])
+  //     });
+  //   }
+  // }
 
   // SINCE USER OF THIS MODULE WILL ONLY PROVIDE LIST OF FRIENDS AND NOT ANY KEYS
   // WE BUILT THIS HELPER FUNCTION TO IDENTIFY EVERY VIDEO TO EACH FRIEND
@@ -94,6 +95,7 @@ class VRStories extends React.Component {
     let story = this.state.currentStory;
     let storyDom = document.getElementById(story.id + ',' + story.index);
     let totalDuration = storyDom.duration || this.state.defaultDuration / 1000;
+    // let totalDuration = this.state.defaultDuration / 1000;
 
     this.setState({
       currentStoriesDuration: {
@@ -117,8 +119,7 @@ class VRStories extends React.Component {
     this.setState({
       currentStory: this.state.splashScreen
     }, () => {
-      this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('stopping'));
-      // invoke viewCallback here, after splash screen appears
+      this.state.animationRefs.forEach(ref => ref.emit('stopping'));
       this.props.viewCallback(this.state.currentStory);
     });
   }
@@ -134,7 +135,7 @@ class VRStories extends React.Component {
     this.pauseStories();
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
       initTimeoutAndProgress(this.state.defaultDuration);
-      this.props.viewCallback(this.state.currentStory);
+      this.state.viewCallback(this.state.currentStory);
     } else {
       storyDom.play()
         .then(() => {
@@ -143,10 +144,14 @@ class VRStories extends React.Component {
           this.props.viewCallback(this.state.currentStory);
         });
     }
-    this.state.animationRefs.forEach(ref => document.getElementById(ref).emit('playing'));
-    if (document.getElementById(`animatefriend${this.state.currentStory.id}`)) {
-      document.getElementById(`animatefriend${this.state.currentStory.id}`).emit('trigger');
-    }
+    this.state.animationRefs.forEach(ref => {
+      console.log(ref);
+      ref.emit('playing');
+    });
+
+    // if (document.getElementById(`animatefriend${this.state.currentStory.id}`)) {
+    //   document.getElementById(`animatefriend${this.state.currentStory.id}`).emit('trigger');
+    // }
   }
 
   playNext() {
@@ -289,12 +294,16 @@ class VRStories extends React.Component {
     return animations[animation];
   }
 
+  addToAnimationRefs(ref) {
+    this.state.animationRefs.push(ref)
+  }
+
   render() {
-    const { currentStory, currentStories, currentStoriesDuration, exitCallback, enableAnimation } = this.state;
+    const { currentStory, currentStories, currentStoriesDuration, exitCallback, enableAnimation, animationRefs } = this.state;
     const showProfiles = [this.state.user].concat((this.state.friends).slice(this.state.friendsShowingIndex.start, this.state.friendsShowingIndex.end));
     let exitButton;
     if (exitCallback) {
-      exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations} enableAnimation={enableAnimation} />
+      exitButton = <VRExit exitCallback={exitCallback} currentStory={currentStory} setSplashScreen={this.setSplashScreen} animations={this.animations} enableAnimation={enableAnimation} addToAnimationRefs={this.addToAnimationRefs}/>
     }
     return (
       <a-entity>
@@ -302,15 +311,16 @@ class VRStories extends React.Component {
           friends={showProfiles}
           currentStory={currentStory}
           animations={this.animations}
-          enableAnimation={enableAnimation}
           currentStories={currentStories}
+          enableAnimation={enableAnimation}
           onFriendClick={this.onFriendClick}
-          onShowMoreFriendsClick={this.onShowMoreFriendsClick}
+          addToAnimationRefs={this.addToAnimationRefs}
           currentStoriesDuration={currentStoriesDuration}
+          onShowMoreFriendsClick={this.onShowMoreFriendsClick}
         />;
 
         <VRPrimitive currentStory={currentStory} />
-        <VRNext playNext={this.playNext} animations={this.animations} currentStory={currentStory} enableAnimation={enableAnimation} providedExitCallback={exitCallback} />
+        <VRNext playNext={this.playNext} animations={this.animations} currentStory={currentStory} enableAnimation={enableAnimation} providedExitCallback={exitCallback} animationRefs={animationRefs} addToAnimationRefs={this.addToAnimationRefs}/>
         {exitButton}
       </a-entity>
     );
