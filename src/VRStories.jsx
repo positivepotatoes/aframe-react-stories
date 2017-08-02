@@ -252,12 +252,12 @@ class VRStories extends React.Component {
     let splashScreenAsset = (<img id='-2,-2' key='-2' src={this.props.splashScreen} crossOrigin='anonymous' />);
     let allStories = [];
     let allPics = [];
+
     this.state.profiles.forEach((profile, profileIndex) => {
       let idenifier = 'profile' + (profileIndex - 1).toString();
       allPics.push(
         <img id={idenifier} key={idenifier} src={profile.img_url} crossOrigin='anonymous' />
       );
-
       profile.stories.forEach(story => {
         allStories.push(story);
       });

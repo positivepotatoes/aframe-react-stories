@@ -3,7 +3,6 @@ import VRStories from '../src/VRStories';
 import { shallow, mount, render } from 'enzyme';
 import mockData from './mockTestData.js';
 
-
 describe('<VRStories />', () => {
   let wrapper, wrapperAutoPlayStart;
 
@@ -35,7 +34,6 @@ describe('<VRStories />', () => {
 
   describe('upon initialization', () => {
     it('should have multiple friends in props when friend data is provided', () => {
-      wrapper.instance().componentWillMount();
       expect(wrapper.state().friends.length).toBeGreaterThan(1);
     });
 
@@ -57,6 +55,7 @@ describe('<VRStories />', () => {
       it('should apply a key and index to each friend\'s story', () => {
         wrapper.instance().state.friends.forEach(friend => {
           friend.stories.forEach(story => {
+
             expect(story).toHaveProperty('id');
             expect(story).toHaveProperty('index');
           });
@@ -206,7 +205,6 @@ describe('<VRStories />', () => {
               wrapper.instance().playNext();
             });
             it('should loop back to the beginning of the user\'s first friend\'s story', () => {
-              // console.log(wrapper.state(), 'state');
               expect(wrapper.state().currentStory.id).toBe(0);
               expect(wrapper.state().currentStory.index).toBe(0);
             });
@@ -226,7 +224,6 @@ describe('<VRStories />', () => {
     });
     describe('when starting a brand new stories', () => {
       it('should set currentStoriesDuration to correct states', () => {
-        console.log(wrapper.state());
         expect(wrapper.state().currentStoriesDuration.current).toBe(0);
         expect(wrapper.state().currentStoriesDuration.storyBeginning).toBe(0);
         expect(wrapper.state().currentStoriesDuration.total).toBe(21);
