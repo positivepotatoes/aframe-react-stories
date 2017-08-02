@@ -3,52 +3,11 @@ import VRStories from '../src/VRStories';
 import { shallow, mount, render } from 'enzyme';
 import mockData from './mockTestData.js';
 
-// const { JSDOM } = require('jsdom');
-// const jsdom = new JSDOM('<!doctype html><html><body><div>AYOOO</div></body></html>');
-// const { window } = jsdom;
-
-// function copyProps(src, target) {
-//   const props = Object.getOwnPropertyNames(src)
-//     .filter(prop => typeof target[prop] === 'undefined')
-//     .map(prop => Object.getOwnPropertyDescriptor(src, prop));
-//   Object.defineProperties(target, props);
-// }
-
-// global.window = window;
-// global.document = window.document;
-// global.navigator = {
-//   userAgent: 'node.js',
-// };
-// copyProps(window, global);
-
-  
-
 
 describe('<VRStories />', () => {
-  let wrapper, wrapperAutoPlayStart, wrapperM;
-
-  // let dummyElement = document.createElement('div');
-  // document.getElementById = jasmine.createSpy('HTML Element').andReturn(dummyElement);
-
+  let wrapper, wrapperAutoPlayStart;
 
   beforeEach(() => {
-    // let innerHtml = ''
-    // let doms = ['next', 'nextbutton', 'nexttext', 'exit', 'exitbutton', 'exittext1', 'exittext2'];
-    // doms.forEach(dom => {
-    //   // innerHtml += `<div id='${dom}'></div>`;
-    //   let x = document.createElement('div');
-    //   x.id = dom
-    //   global.document.body.append(x);
-    //   // jsdom.window.document.body.append(x);
-    // });
-    
-
-    // let document = window.document;
-    // console.log(window.document)
-    // document.body.innerHTML = innerHtml
-    // console.log(document.body, 'aa')
-
-
     wrapper = shallow(
       <VRStories 
         user={mockData.user}
@@ -61,19 +20,6 @@ describe('<VRStories />', () => {
         viewCallback={() => { return; }}
       />
     );
-    
-
-    // wrapperM = render(
-    //   <VRStories 
-    //     user={mockData.user}
-    //     friends={mockData.friends}
-    //     autoPlayNext={false}
-    //     autoPlayStart={false}
-    //     splashScreen={'./abc.jpg'}
-    //     assetsCallback={() => { return; }}
-    //     viewCountCallback={() => { return; }}
-    //   />
-    // );
 
     wrapperAutoPlayStart = shallow(
       <VRStories 
@@ -85,18 +31,17 @@ describe('<VRStories />', () => {
         assetsCallback={() => { return; } }
       />
     );
-
-
-
   });
 
   describe('upon initialization', () => {
     it('should have multiple friends in props when friend data is provided', () => {
       console.log(wrapper.getDOMNode());
+      wrapper.instance().componentWillMount();
+     
       expect(wrapper.state().friends.length).toBeGreaterThan(1);
     });
 
-    xit('removing friends from state.friends who do not have at least one story', () => {
+    it('removing friends from state.friends who do not have at least one story', () => {
       expect(wrapper.state().friends.length).toBe(5);
     });
 
@@ -133,7 +78,7 @@ describe('<VRStories />', () => {
     });
   });
 
-  xdescribe('handling onFriendClick', () => {
+  describe('handling onFriendClick', () => {
     describe('when no story is currently playing', () => {
       describe('when a user with stories is clicked', () => {
         it('should play the user\'s first story', () => {
@@ -183,7 +128,7 @@ describe('<VRStories />', () => {
     });
   });
 
-  xdescribe('handling playNext', () => {
+  describe('handling playNext', () => {
     describe('when no story is currently playing', () => {
       it('should do nothing', () => {
         wrapper.instance().playNext();
@@ -277,7 +222,7 @@ describe('<VRStories />', () => {
     });
   });
 
-  xdescribe('calling setInitialStoriesDuration', () => {
+  describe('calling setInitialStoriesDuration', () => {
     beforeEach(() => {
       wrapper.setState({
         currentStories: mockData.friends[0].stories,

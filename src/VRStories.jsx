@@ -92,6 +92,10 @@ class VRStories extends React.Component {
     let storyDom = this.getStoryDom(this.state.currentStory.id, this.state.currentStory.index);
     let totalDuration = storyDom.duration || this.state.defaultDuration / 1000;
 
+    if (!storyDom) {
+      return;
+    }
+
     this.setState({
       currentStoriesDuration: {
         current: 0,
@@ -126,6 +130,10 @@ class VRStories extends React.Component {
       this.state.storyInTimeout = setTimeout(() => this.playNext(), duration);
       this.setDurationCounter();
     };
+
+    if (!storyDom) {
+      return;
+    }
 
     this.pauseStories();
     if (this.state.currentStory.type.slice(0, 5) === 'image') {
