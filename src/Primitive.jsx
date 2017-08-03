@@ -1,6 +1,6 @@
 import React from 'react';
 
-const VRPrimitive = (props) => {
+const Primitive = (props) => {
   let src = '#' + props.currentStory.id + ',' + props.currentStory.index;
   let primitive = <a-videosphere src={src} rotation="0 -90 0"/>;
   
@@ -15,4 +15,4 @@ const VRPrimitive = (props) => {
   );
 };
 
-export default VRPrimitive;
+export default Primitive;

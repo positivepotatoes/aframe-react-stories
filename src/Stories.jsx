@@ -1,11 +1,11 @@
 import React from 'react';
-import VRProfiles from './VRProfiles.jsx';
-import VRPrimitive from './VRPrimitive.jsx';
-import VRNext from './VRNext.jsx';
-import VRExit from './VRExit.jsx';
+import Profiles from './Profiles.jsx';
+import Primitive from './Primitive.jsx';
+import Next from './Next.jsx';
+import Exit from './Exit.jsx';
 
 
-class VRStories extends React.Component {
+class Stories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -324,7 +324,7 @@ class VRStories extends React.Component {
     let exitButton;
 
     if (exitCallback) {
-      exitButton = <VRExit 
+      exitButton = <Exit 
         exitCallback={exitCallback}
         currentStory={currentStory}
         animations={this.animations}
@@ -336,7 +336,7 @@ class VRStories extends React.Component {
 
     return (
       <a-entity>
-        <VRProfiles
+        <Profiles
           friends={showProfiles}
           currentStory={currentStory}
           animations={this.animations}
@@ -348,8 +348,8 @@ class VRStories extends React.Component {
           onShowMoreFriendsClick={this.onShowMoreFriendsClick}
         />
 
-        <VRPrimitive currentStory={currentStory}/>
-        <VRNext
+        <Primitive currentStory={currentStory}/>
+        <Next
           playNext={this.playNext}
           currentStory={currentStory}
           animations={this.animations}
@@ -364,4 +364,4 @@ class VRStories extends React.Component {
   }
 }
 
-export default VRStories;
+export default Stories;

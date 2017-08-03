@@ -1,6 +1,6 @@
 import React from 'react';
 
-class VRExit extends React.Component {
+class Exit extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -81,4 +81,4 @@ class VRExit extends React.Component {
   }
 };
 
-export default VRExit;
+export default Exit;

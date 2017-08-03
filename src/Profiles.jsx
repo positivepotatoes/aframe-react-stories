@@ -1,7 +1,7 @@
 import React from 'react';
-import Profile from './VRProfile.jsx';
+import Profile from './Profile.jsx';
 
-class VRProfiles extends React.Component {
+class Profiles extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -82,4 +82,4 @@ class VRProfiles extends React.Component {
   }
 }
 
-export default VRProfiles;
+export default Profiles;
