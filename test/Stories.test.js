@@ -1,5 +1,5 @@
 import React from 'react';
-import VRStories from '../src/VRStories';
+import Stories from '../src/Stories';
 import { shallow, mount, render } from 'enzyme';
 import mockData from './mockTestData.js';
 
@@ -8,7 +8,7 @@ describe('<VRStories />', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <VRStories 
+      <Stories 
         user={mockData.user}
         friends={mockData.friends}
         autoPlayNext={false}
@@ -21,7 +21,7 @@ describe('<VRStories />', () => {
     );
 
     wrapperAutoPlayStart = shallow(
-      <VRStories 
+      <Stories 
         user={mockData.user}
         friends={mockData.friends}
         autoPlayNext={false}
