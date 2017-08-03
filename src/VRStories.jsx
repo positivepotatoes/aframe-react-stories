@@ -309,7 +309,8 @@ class VRStories extends React.Component {
       fadingTo: `property: color; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true`,
       tiltingTo: `property: rotation; dur: 1100; easing: easeInSine; from: 0 0 -${to}; to: 0 0 ${to}; dir: alternate; loop: true`,
       shrinkingTo: `property: scale; dur: 1100; easing: easeInSine; to: ${to}; dir: alternate; loop: true; delay: ${Math.round(Math.random() * 2000)}`,
-      turningTo: `property: rotation; dur: 1100; easing: easeInSine; to: 0 ${to} 0; dir: alternate; loop: true; delay: ${Math.round(Math.random() * 2000)}`
+      turningTo: `property: rotation; dur: 1100; easing: easeInSine; to: 0 ${to} 0; dir: alternate; loop: true; delay: ${Math.round(Math.random() * 2000)}`,
+      turningZ: `property: rotation; dur: 1100; easing: easeInSine; to: 0 0 ${to}; dir: alternate; loop: true; delay: ${Math.round(Math.random() * 2000)}`
     };
     return animations[animation];
   }

@@ -6,6 +6,18 @@ class VRProfiles extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    if (this.props.enableAnimation) {
+      const animateWhen = this.props.animations;
+      let animateButton = this.moreFriendsButton;
+      this.props.addToAnimationRefs(animateButton);
+      animateButton.setAttribute('rotation', '0 0 -18');
+      animateButton.setAttribute('animation__bounce', animateWhen('trigger', 'bounceTo', '1.1 1.1 1.1'));
+      animateButton.setAttribute('animation__shrinking', animateWhen('always', 'shrinkingTo', '.92 .92 .92'));
+      animateButton.setAttribute('animation__turning', animateWhen('always', 'turningZ', '18'));
+    }
+  }
+
   render() {
     let n = this.props.friends.length;
     let start = (n) * Math.PI / 12;
@@ -14,10 +26,10 @@ class VRProfiles extends React.Component {
     let radius = 10;
     let showFriendsRadius = radius - 0.1;
     let y = -4;
-    return (
+    let moreFriendsButton = this.moreFriendsButton;
 
+    return (
       <a-entity>
-        
         {
           this.props.friends.map((friend, i) => {
             x = -Math.cos(theta) * radius;
@@ -47,21 +59,24 @@ class VRProfiles extends React.Component {
             );
           })
         }
-        <a-cylinder
-          geometry="width: 2; height: 0.15; depth: 0.15"
-          material="color: white; opacity: 0.5"
-          position={`${(-Math.cos(theta) * radius)} ${y} ${(-Math.sin(theta) * radius)}`}
-          rotation={`${90 + (Math.atan(Math.abs(y) / radius) * 180 / Math.PI)} ${180 + ((Math.PI / 2) - theta) * 180 / Math.PI} 0`}
-          onClick={this.props.onShowMoreFriendsClick}
-        />
-        <a-text
-          value='show\nmore\nfriends'
-          align='center'
-          material='color: white'
-          width='10'
-          position={`${-Math.cos(theta) * showFriendsRadius} ${y} ${-Math.sin(theta) * showFriendsRadius}`}
-          rotation={`${-Math.atan(Math.abs(y) / showFriendsRadius) * 180 / Math.PI} ${((Math.PI / 2) - theta) * 180 / Math.PI} 0`}
-        />
+        <a-entity position={`${(-Math.cos(theta) * radius)} ${y} ${(-Math.sin(theta) * radius)}`}
+            rotation={`${90 + (Math.atan(Math.abs(y) / radius) * 180 / Math.PI)} ${180 + ((Math.PI / 2) - theta) * 180 / Math.PI} 0`}>
+          <a-cylinder
+            ref={el => this.moreFriendsButton = el}
+            geometry="width: 2; height: 0.15; depth: 0.15"
+            material="color: white; opacity: 0.5"
+            onClick={this.props.onShowMoreFriendsClick}
+          >
+            <a-text
+              value='More'
+              align='center'
+              material='color: white'
+              width='10'
+              position="0 0 0"
+              rotation="90 0 180"
+            />
+          </a-cylinder>
+        </a-entity>
       </a-entity>
     );
   }
