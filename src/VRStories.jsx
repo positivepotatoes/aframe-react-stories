@@ -178,7 +178,6 @@ class VRStories extends React.Component {
       } else {
         this.onFriendClick(this.firstFriendWithStory());
         return;
-      }
     }
 
     if (nextStoryIndex < currentStories.length) {
