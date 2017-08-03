@@ -1,11 +1,20 @@
 {
   "name": "aframe-react-stories",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": false,
   "description": "Instagram stories like UI in A-Frame",
   "main": "dist/index.js",
+  "author": "Alexander Schnapp, Anna Zharkova, Corey Chau, David Oh",
   "peerDependencies": {
-    "react": "^15.5.4"
+    "aframe": "^0.6.1",
+    "aframe-animation-component": "^3.2.5",
+    "react": "^15.5.4",
+    "react-dom": "^15.6.1"
+  },
+  "scripts": {
+    "dev-start": "webpack --watch",
+    "build": "webpack",
+    "test": "jest"
   },
   "keywords": [
     "react",
@@ -18,21 +27,8 @@
     "url": "https://github.com/positivepotatoes/aframe-react-stories.git"
   },
   "dependencies": {
-    "aframe": "^0.6.1",
-    "aframe-animation-component": "^3.2.5",
-    "aframe-particle-system-component": "^1.0.10",
-    "aframe-react": "^4.3.0",
-    "babel-polyfill": "^6.23.0",
-    "react": "^15.5.4",
-    "react-dom": "^15.6.1",
-    "webpack": "^2.6.1"
+    "react": "^15.5.4"
   },
-  "scripts": {
-    "dev-start": "webpack --watch",
-    "build": "webpack",
-    "test": "jest"
-  },
-  "author": "Alexander Schnapp, Anna Zharkova, Corey Chau, David Oh",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
@@ -42,6 +38,8 @@
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.9.1",
     "jest": "^20.0.4",
-    "react-test-renderer": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
+    "webpack": "^2.6.1"
   }
 }

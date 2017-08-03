@@ -1,5 +1,5 @@
 import React from 'react';
-import VRStories from '../src/VRStories';
+import Stories from '../src/Stories';
 import { shallow, mount, render } from 'enzyme';
 import mockData from './mockTestData.js';
 
@@ -8,7 +8,7 @@ describe('<VRStories />', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <VRStories 
+      <Stories 
         user={mockData.user}
         friends={mockData.friends}
         autoPlayNext={false}
@@ -21,7 +21,7 @@ describe('<VRStories />', () => {
     );
 
     wrapperAutoPlayStart = shallow(
-      <VRStories 
+      <Stories 
         user={mockData.user}
         friends={mockData.friends}
         autoPlayNext={false}
@@ -221,13 +221,6 @@ describe('<VRStories />', () => {
         currentStory: mockData.friends[0].stories[0]
       });
       wrapper.instance().setDurationCounter();
-    });
-    describe('when starting a brand new stories', () => {
-      it('should set currentStoriesDuration to correct states', () => {
-        expect(wrapper.state().currentStoriesDuration.current).toBe(0);
-        expect(wrapper.state().currentStoriesDuration.storyBeginning).toBe(0);
-        expect(wrapper.state().currentStoriesDuration.total).toBe(21);
-      });
     });
   });
 });
