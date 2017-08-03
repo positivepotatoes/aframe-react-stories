@@ -77,6 +77,16 @@ class VRStories extends React.Component {
     return this.state.assets.filter(asset => asset.id === id + ',' + index)[0];
   }
 
+  firstFriendWithStory() {
+    for (let i = this.state.friendsShowingIndex.start; i < this.state.friendsShowingIndex.end; i ++) {
+      let friend = this.state.friends[i];
+      if (friend.stories.length > 0) {
+        return friend;
+      }
+    }
+    return false;
+  }
+
   pauseStories() {
     this.state.assets.forEach(story => {
       if (story.nodeName === 'VIDEO') {
@@ -163,8 +173,12 @@ class VRStories extends React.Component {
     let reachedLastStory = nextStoryIndex === currentStories.length;
 
     if (currentStory.index === -2) {
-      this.onFriendClick(this.state.friends[this.state.friendsShowingIndex.start]);
-      return;
+      if (!!this.firstFriendWithStory()) {
+        return;
+      } else 
+        this.onFriendClick(this.firstFriendWithStory());
+        return;
+      }
     }
 
     if (nextStoryIndex < currentStories.length) {
@@ -186,6 +200,11 @@ class VRStories extends React.Component {
           }, () => this.invokePlay());
         }
       };
+
+      if (!nextFriend) {
+        nextFriendIndex = 0;
+        nextFriend = friends[nextFriendIndex];
+      }
 
       while (nextFriend && nextFriend.stories.length === 0) {
         if (nextFriendIndex + 1 === friends.length) {
@@ -242,7 +261,7 @@ class VRStories extends React.Component {
 
   setAutoPlayOrSplash() {
     if (this.state.autoPlayStart) {
-      this.onFriendClick(this.state.friends[0]);
+      this.onFriendClick(this.firstFriendWithStory());
     } else {
       this.setSplashScreen();
     }
