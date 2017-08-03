@@ -78,12 +78,13 @@ class VRStories extends React.Component {
   }
 
   firstFriendWithStory() {
-    for (let i = 0; i < this.state.friends.length; i ++) {
+    for (let i = this.state.friendsShowingIndex.start; i < this.state.friendsShowingIndex.end; i ++) {
       let friend = this.state.friends[i];
       if (friend.stories.length > 0) {
         return friend;
       }
     }
+    return false;
   }
 
   pauseStories() {
@@ -172,8 +173,12 @@ class VRStories extends React.Component {
     let reachedLastStory = nextStoryIndex === currentStories.length;
 
     if (currentStory.index === -2) {
-      this.onFriendClick(this.firstFriendWithStory());
-      return;
+      if (!!this.firstFriendWithStory()) {
+        return;
+      } else 
+        this.onFriendClick(this.firstFriendWithStory());
+        return;
+      }
     }
 
     if (nextStoryIndex < currentStories.length) {
