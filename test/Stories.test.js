@@ -3,7 +3,7 @@ import Stories from '../src/Stories';
 import { shallow, mount, render } from 'enzyme';
 import mockData from './mockTestData.js';
 
-describe('<VRStories />', () => {
+describe('<Stories />', () => {
   let wrapper, wrapperAutoPlayStart;
 
   beforeEach(() => {
