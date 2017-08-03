@@ -78,11 +78,8 @@ class VRStories extends React.Component {
   }
 
   firstFriendWithStory() {
-    let friends = this.state.friends;
-    let friendWithStory;
-    
-    for (let i = 0; i < friends.length; i ++) {
-      let friend = friends[i];
+    for (let i = 0; i < this.state.friends.length; i ++) {
+      let friend = this.state.friends[i];
       if (friend.stories.length > 0) {
         return friend;
       }
