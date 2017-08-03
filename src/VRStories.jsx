@@ -175,7 +175,7 @@ class VRStories extends React.Component {
     if (currentStory.index === -2) {
       if (!!this.firstFriendWithStory()) {
         return;
-      } else 
+      } else {
         this.onFriendClick(this.firstFriendWithStory());
         return;
       }
