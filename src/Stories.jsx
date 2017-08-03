@@ -173,7 +173,7 @@ class Stories extends React.Component {
     let reachedLastStory = nextStoryIndex === currentStories.length;
 
     if (currentStory.index === -2) {
-      if (!!this.firstFriendWithStory()) {
+      if (!this.firstFriendWithStory()) {
         return;
       } else {
         this.onFriendClick(this.firstFriendWithStory());
