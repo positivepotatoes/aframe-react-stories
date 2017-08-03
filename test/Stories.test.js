@@ -222,12 +222,5 @@ describe('<VRStories />', () => {
       });
       wrapper.instance().setDurationCounter();
     });
-    describe('when starting a brand new stories', () => {
-      it('should set currentStoriesDuration to correct states', () => {
-        expect(wrapper.state().currentStoriesDuration.current).toBe(0);
-        expect(wrapper.state().currentStoriesDuration.storyBeginning).toBe(0);
-        expect(wrapper.state().currentStoriesDuration.total).toBe(21);
-      });
-    });
   });
 });
