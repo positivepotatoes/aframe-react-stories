@@ -1,6 +1,6 @@
 {
   "name": "aframe-react-stories",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": false,
   "description": "Instagram stories like UI in A-Frame",
   "main": "dist/index.js",
