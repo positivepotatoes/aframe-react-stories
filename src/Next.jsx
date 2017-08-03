@@ -1,6 +1,6 @@
 import React from 'react';
 
-class VRNext extends React.Component {
+class Next extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -75,4 +75,4 @@ class VRNext extends React.Component {
   }
 };
 
-export default VRNext;
+export default Next;

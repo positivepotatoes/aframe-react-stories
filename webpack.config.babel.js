@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 module.exports = {
-  entry: './src/VRStories.jsx',
+  entry: './src/Stories.jsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',

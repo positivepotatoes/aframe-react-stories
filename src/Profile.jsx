@@ -1,6 +1,6 @@
 import React from 'react';
 
-class VRProfile extends React.Component {
+class Profile extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -100,4 +100,4 @@ class VRProfile extends React.Component {
   }
 };
 
-export default VRProfile;
+export default Profile;

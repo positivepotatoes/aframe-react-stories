@@ -19,7 +19,7 @@ $ yarn add aframe-react-stories
 ## Usage
 In React:
 ```javascript
-import VRStories from 'aframe-react-stories';
+import Stories from 'aframe-react-stories';
 ```
 
 ## Setup
@@ -75,7 +75,7 @@ import ReactDOM from 'react-dom';
 import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-mouse-cursor-component';
-import VRStories from 'aframe-react-stories';
+import Stories from 'aframe-react-stories';
 
 class App extends React.Component {
   constructor() {
@@ -97,7 +97,7 @@ class App extends React.Component {
         <a-assets>
           {this.state.storyAssets}
         </a-assets>
-        <VRStories 
+        <Stories 
           user={this.state.user}
           friends={this.state.friends}
           assetsCallback={this.assetsCallback.bind(this)}
