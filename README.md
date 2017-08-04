@@ -4,10 +4,10 @@ Click [here](http://13.56.166.182/) to see the demo.
 
 ##Getting Started
 ###Prerequisites
-A-Frame
-Aframe-animation-component
-React
-React-Dom
+* A-Frame
+* Aframe-animation-component
+* React
+* React-Dom
 
 ### Install
 Using npm or yarn:
@@ -43,13 +43,13 @@ Each profile should to be formatted as shown below
   ]
 }
 ```
-The aframe-react-stories component takes in a **user** prop and **friends** prop. The **user** prop should be a single profile and the **friends** prop should be a list of profiles as shown above.
+The aframe-react-stories component takes in a **user** prop and **friends** prop. The **user** prop should be a single profile and the **friends** prop should be a list of profiles.
 
 ####Media Type:
 Pictures will need to be specified with the type, 'image/jpeg', 'image/png', 'image', etc..., in order for aframe-react-stories to display the media in the `img` tag under assets.  Otherwise, all other types will default to playing in the `video` tag.
 
 ####Assets Callback:
-The aframe-react-stories component takes in a callback function through the `assetsCallback` prop.  Once mounted, the aframe-react-stories component will run process that tags all the video and image assets for the stories playback logic. It will then pass the processed assets into callback function in the `assetsCallback` once it's done. The list of assets returned needs to be saved inside `<a-assets>` tag for the component to work properly.
+The aframe-react-stories component takes in a callback function through the `assetsCallback` prop.  Once mounted, the aframe-react-stories component will run a process that tags all the video and image assets for the stories playback logic. It will then pass the processed assets into callback function in the `assetsCallback` once it's done. The list of assets returned needs to be saved inside `<a-assets>` tag for the component to work properly.
 
 ####View Callback:
 This callback is invoked every time a story is played. It should take in an object that contains the current story and metadata. 
