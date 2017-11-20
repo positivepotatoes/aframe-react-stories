@@ -1,6 +1,6 @@
 #AFrame React Stories
 A plug and play react UI module that lets you quickly add social media style stories into your current VR project. 
-Click [here](http://13.56.166.182/) to see the demo.
+Click [here](https://aschnapp.com/aframe-react-stories-demo) to see the demo.
 
 ##Getting Started
 ###Prerequisites
